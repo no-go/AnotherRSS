@@ -39,7 +39,7 @@ import java.util.TimeZone;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private static final String PROJECT_LINK = "https://github.com/no-go/AnotherRSS/";
+    private static final String PROJECT_LINK = "https://no-go.github.io/AnotherRSS/";
     private static final String FLATTR_ID = "o6wo7q";
     private String FLATTR_LINK;
 
