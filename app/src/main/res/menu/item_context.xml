@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_share"
+        android:title="@string/share" />
+    <item
+        android:id="@+id/action_openFeed"
+        android:title="@string/open" />
+    <item
+        android:id="@+id/action_readedFeed"
+        android:title="@string/no_readed" />
+    <item
+        android:id="@+id/action_deleteFeed"
+        android:title="@string/delete" />
+
+</menu>

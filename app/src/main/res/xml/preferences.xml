@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/preferences">
+
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="rss_url"
+            android:summary="@string/rss_url_desc"
+            android:title="@string/rss_url" />
+
+        <ListPreference
+            android:defaultValue="10800"
+            android:entries="@array/rss_sec_names"
+            android:entryValues="@array/rss_sec_values"
+            android:key="rss_sec"
+            android:summary="@string/rss_sec_desc"
+            android:title="@string/rss_sec" />
+
+        <ListPreference
+            android:defaultValue="2"
+            android:entries="@array/notify_type"
+            android:entryValues="@array/notify_type_values"
+            android:key="notify_type"
+            android:summary="@string/notify_type_desc"
+            android:title="@string/notify_type_title" />
+
+        <ListPreference
+            android:defaultValue="#FF00FFFF"
+            android:entries="@array/notify_color"
+            android:entryValues="@array/notify_color_values"
+            android:key="notify_color"
+            android:summary="@string/notify_color_desc"
+            android:title="@string/notify_color_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/cleanup" >
+
+        <de.digisocken.anotherrss.IntEditPreference
+            android:key="autodelete"
+            android:title="@string/removeNonFav"
+            android:summary="@string/removeNonFav_summary"
+            android:numeric="integer"
+            android:maxLength="2" />
+
+        <EditTextPreference
+            android:defaultValue="DEG,Kader,DEL,enalty,pielfeld,DFB,ockey,Rennfahr,Boxwelt,edallie,NBA,EM,WM,Borussia,Fortuna,Basket,Tennis,Boxer,rainer,VfC,Fußball,Wasserball,Handball,sport,Sport,FC ,Spieltag,Bundesliga,ennbahn,eltmeister,UEFA,League"
+            android:key="blacklist"
+            android:summary="@string/blacklist_desc"
+            android:title="@string/blacklist" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/nightmode" >
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="nightmode_use"
+            android:summary="@string/nightmode_summary"
+            android:title="@string/nightmode_use" />
+
+        <de.digisocken.anotherrss.HourEditPreference
+            android:key="nightmode_use_start"
+            android:title="@string/nightmode_use_start"
+            android:numeric="integer"
+            android:maxLength="2" />
+
+        <de.digisocken.anotherrss.HourEditPreference
+            android:key="nightmode_use_stop"
+            android:title="@string/nightmode_use_stop"
+            android:numeric="integer"
+            android:maxLength="2" />
+
+    </PreferenceCategory>
+</PreferenceScreen>

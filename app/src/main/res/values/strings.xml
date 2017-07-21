@@ -1,0 +1,109 @@
+<resources>
+    <string name="app_name">Another RSS</string>
+    <string name="rss_url">Feeds</string>
+    <string name="rss_url_desc">The http path to the rss 2.0 feed (with space seperated)</string>
+    <string name="rss_sec">Timer</string>
+    <string name="rss_sec_desc">Check feed every &#8230; minutes</string>
+    <string name="feedCheck">try feed check</string>
+    <string name="preferences">&gt; Preferences</string>
+    <string name="notify_type_title">Notify LED</string>
+    <string name="notify_type_desc">Control the LED behavior</string>
+    <string name="notify_color_title">color</string>
+    <string name="notify_color_desc">Change the LED color</string>
+    <string name="delNotifies">delete notifications</string>
+    <string name="readedFeeds">mark all feeds as readed</string>
+    <string name="delFeeds">delete all feeds</string>
+    <string name="delDb">destroy all feeds (DEBUG)</string>
+    <string name="noData">No Data</string>
+    <string name="dateForm">HH:mm</string>
+    <string name="dateForm2">MM/dd</string>
+
+    <string name="open">open with browser</string>
+    <string name="delete">delete</string>
+    <string name="destroy">destroy (DEBUG)</string>
+
+    <string name="no_readed">(un)readed</string>
+    <string name="deleted">deleted</string>
+    <string name="destroyed">destroyed</string>
+
+    <string name="rssUrlWrong">Your feed has a wrong URL</string>
+    <string name="noConnection">no connection to site or internet</string>
+    <string name="newFeeds">New feeds</string>
+    <string name="responseStrange">URL Respose is strange:</string>
+    <string name="waitOnNextSync">there are (still) no feeds …</string>
+
+    <string name="serviceHasNews">de.digisocken.anotherrss.ALARM_HAS_NEWS</string>
+    <string name="nightmode">Nightmode (good on Android &gt; 6)</string>
+    <string name="nightmode_summary">between a timespan the App is optimized for a dark environment</string>
+    <string name="nightmode_use">test it</string>
+    <string name="nightmode_use_start">from …:00 o\'clock</string>
+    <string name="nightmode_use_stop">to …:59 o\'clock</string>
+
+    <string name="blacklist">Blacklist (comma sperated)</string>
+    <string name="blacklist_desc">new feeds will be ignored, if them consist these chars</string>
+
+    <string name="searching">searching</string>
+    <string name="action_search">search</string>
+    <string name="start_search">please enter keyword</string>
+    <string name="close_search">search function closed</string>
+
+    <string name="favorite">favorite</string>
+    <string name="nofavorite">not my favorite anymore</string>
+
+    <string name="cleanup">Clean Up</string>
+    <string name="removeNonFav">Automatic Delete</string>
+    <string name="removeNonFav_summary">non favorite feeds will be deleted after … days</string>
+
+    <string name="share">share with …</string>
+
+    <string name="flattr_this">Micro-Donate !</string>
+    <string name="projPage">Project Page</string>
+
+    <string-array name="rss_sec_names">
+        <item>30 minutes</item>
+        <item>1 hours</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+    </string-array>
+
+    <string-array name="rss_sec_values">
+        <item>1800</item>
+        <item>3600</item>
+        <item>10800</item>
+        <item>21600</item>
+    </string-array>
+
+    <string-array name="notify_color">
+        <item>red</item>
+        <item>cyan</item>
+        <item>green</item>
+        <item>pink</item>
+        <item>white</item>
+        <item>blue</item>
+        <item>yellow</item>
+    </string-array>
+
+    <string-array name="notify_color_values">
+        <item>#FFFF0000</item>
+        <item>#FF00FFFF</item>
+        <item>#FF00FF00</item>
+        <item>#FFFF00FF</item>
+        <item>#FFFFFFFF</item>
+        <item>#FF0000FF</item>
+        <item>#FFFFFF00</item>
+    </string-array>
+
+    <string-array name="notify_type">
+        <item>no LED</item>
+        <item>static</item>
+        <item>slow</item>
+        <item>fast</item>
+    </string-array>
+
+    <string-array name="notify_type_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+</resources>

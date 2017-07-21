@@ -1,0 +1,51 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    android:installLocation="internalOnly"
+    package="de.digisocken.anotherrss">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <uses-sdk android:minSdkVersion="16" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:name=".AnotherRSS"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="de.digisocken.anotherrss.ALARM_HAS_NEWS" />
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".PreferencesActivity"
+            android:parentActivityName=".MainActivity" />
+
+        <receiver android:name=".Alarm" />
+
+        <!-- exported: receive messages from sources outside its application -->
+        <receiver
+            android:name="de.digisocken.anotherrss.DeviceBootReceiver"
+            android:exported="true"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <provider
+            android:name=".FeedContentProvider"
+            android:authorities="de.digisocken.anotherrss.contentprovider" >
+        </provider>
+
+    </application>
+
+</manifest>
