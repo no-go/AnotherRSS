@@ -52,10 +52,20 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="source name"
+        android:id="@+id/sourceName"
+        android:enabled="false"
+        android:textSize="10dp"
+        android:layout_below="@+id/feedBody"
+        android:layout_alignLeft="@+id/feedTitle" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/tvLine"
         android:enabled="false"
         android:layout_marginTop="10px"
-        android:layout_below="@+id/feedBody"
+        android:layout_below="@+id/sourceName"
         android:textSize="0px"
         android:height="1dp"
         android:background="@color/colorOldText"

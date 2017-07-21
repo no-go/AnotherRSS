@@ -19,6 +19,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -203,6 +204,7 @@ public class Refresher {
     public boolean newStuff(URL url, int expunge) throws Exception {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         String now = ifModifiedSinceDate(url.toString(), expunge);
+        Log.d(AnotherRSS.TAG, "url: " + url.toString());
         Log.d(AnotherRSS.TAG, "If-Modified-Since: " + now);
         conn.setRequestProperty("If-Modified-Since", now);
         int responseCode = conn.getResponseCode();
@@ -279,7 +281,26 @@ public class Refresher {
         }
 
         String[] blacklist = getBlacklist();
-        NodeList nodeList = doc.getElementsByTagName("item");
+        boolean isRdf = true;
+
+        String feedName = null;
+        NodeList nodeList = doc.getElementsByTagName("title");
+        Element ee = (Element) nodeList.item(0);
+        NodeList nl = ee.getChildNodes();
+        Node n2 = (Node) nl.item(0);
+        feedName = n2.getNodeValue();
+        if (feedName == null) feedName = "News!?";
+
+        if (BuildConfig.DEBUG) {
+            Log.d(AnotherRSS.TAG, "Feed title: " + feedName);
+            Log.d(AnotherRSS.TAG, "Feed id: " + Integer.toString(sourceId));
+        }
+
+        nodeList = doc.getElementsByTagName("item");
+        if (nodeList.getLength() < 1) {
+            nodeList = doc.getElementsByTagName("entry");
+            isRdf = false;
+        }
         // put to database if not the same  -------------------------------------------------
         try {
             Node n;
@@ -287,9 +308,16 @@ public class Refresher {
             feediter:
             for (int i = 0; i < nodeList.getLength(); i++) {
                 n = nodeList.item(i);
-                String title = FeedContract.extract(n, "title");
-                String body = FeedContract.extract(n, "description");
-                String dateStr = FeedContract.extract(n, "pubDate");
+                String title,body,dateStr;
+                if (isRdf) {
+                    title = FeedContract.extract(n, "title");
+                    body = FeedContract.extract(n, "description");
+                    dateStr = FeedContract.extract(n, "pubDate");
+                } else {
+                    title = FeedContract.extract(n, "title");
+                    body = FeedContract.extract(n, "summary");
+                    dateStr = FeedContract.extract(n, "published");
+                }
                 Date date = FeedContract.rawToDate(dateStr);
                 for (String bl: blacklist) {
                     Log.v(AnotherRSS.TAG, "Check Blacklist: " + bl);
@@ -308,12 +336,17 @@ public class Refresher {
                     ContentValues values = new ContentValues();
                     values.put(FeedContract.Feeds.COLUMN_Title, title);
                     values.put(FeedContract.Feeds.COLUMN_Date, FeedContract.dbFriendlyDate(date));
-                    values.put(FeedContract.Feeds.COLUMN_Link, FeedContract.extract(n, "link"));
+                    if (isRdf) {
+                        values.put(FeedContract.Feeds.COLUMN_Link, FeedContract.extract(n, "link"));
+                    } else {
+                        values.put(FeedContract.Feeds.COLUMN_Link, FeedContract.extract(n, "link", "href"));
+                    }
                     values.put(FeedContract.Feeds.COLUMN_Body, body);
                     values.put(FeedContract.Feeds.COLUMN_Image, FeedContract.getBytes(
                             FeedContract.getImage(n)
                     ));
                     values.put(FeedContract.Feeds.COLUMN_Source, sourceId);
+                    values.put(FeedContract.Feeds.COLUMN_Souname, feedName);
                     values.put(FeedContract.Feeds.COLUMN_Deleted, FeedContract.Flag.VISIBLE);
                     values.put(FeedContract.Feeds.COLUMN_Flag, FeedContract.Flag.NEW);
 

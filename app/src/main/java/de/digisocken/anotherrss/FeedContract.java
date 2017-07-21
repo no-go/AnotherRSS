@@ -51,6 +51,7 @@ public class FeedContract {
         public static final String COLUMN_Body = "feed_body";
         public static final String COLUMN_Image = "feed_image";
         public static final String COLUMN_Source = "feed_source";
+        public static final String COLUMN_Souname = "feed_souname";
         public static final String COLUMN_Deleted = "feed_deleted";
         public static final String COLUMN_Flag = "feed_isnew";
     }
@@ -85,6 +86,7 @@ public class FeedContract {
      * @see FeedContract#rawToDate(String)
      */
     public static final String[] FEEDRAW_DATETIME_FORMAT = {
+            "yyyy-MM-dd'T'HH:mm:ssZ",
             "d M yyyy HH:mm:ss Z",
             "d MMM yyyy HH:mm:ss Z",
             "EEE, d M yyyy HH:mm:ss Z",
@@ -121,6 +123,7 @@ public class FeedContract {
                     Feeds.COLUMN_Body + TEXT_TYPE + COMMA_SEP +
                     Feeds.COLUMN_Image + IMAGE_TYPE + COMMA_SEP +
                     Feeds.COLUMN_Source + INTEGER_TYPE + COMMA_SEP +
+                    Feeds.COLUMN_Souname + TEXT_TYPE + COMMA_SEP +
                     Feeds.COLUMN_Deleted + INTEGER_TYPE + COMMA_SEP +
                     Feeds.COLUMN_Flag + INTEGER_TYPE + " )";
 
@@ -135,6 +138,7 @@ public class FeedContract {
             Feeds.COLUMN_Body,
             Feeds.COLUMN_Image,
             Feeds.COLUMN_Source,
+            Feeds.COLUMN_Souname,
             Feeds.COLUMN_Deleted,
             Feeds.COLUMN_Flag
     };
@@ -320,15 +324,26 @@ public class FeedContract {
         if (nl == null) return null;
         ee = (Element) nl.item(0);
         if (ee == null) return null;
-        if (tag == "enclosure" || tag == "media:thumbnail" ) {
-            return ee.getAttributes().getNamedItem("url").getNodeValue();
-        } else {
-            nl = ee.getChildNodes();
-            if (nl == null) return null;
-            Node n2 = (Node) nl.item(0);
-            if (n2 == null) return null;
-            return n2.getNodeValue();
-        }
+
+        nl = ee.getChildNodes();
+        if (nl == null) return null;
+        Node n2 = (Node) nl.item(0);
+        if (n2 == null) return null;
+
+        return n2.getNodeValue();
+    }
+
+    static public String extract(Node n, String tag, String atr) {
+        Element e = null;
+        Element ee = null;
+        NodeList nl = null;
+        e = (Element) n;
+        nl = e.getElementsByTagName(tag);
+        if (nl == null) return null;
+        ee = (Element) nl.item(0);
+        if (ee == null) return null;
+
+        return ee.getAttributes().getNamedItem(atr).getNodeValue();
     }
 
     /**
@@ -389,15 +404,15 @@ public class FeedContract {
     }
 
     public static Bitmap getImage(Node n) {
-        // img+src tag from <body>, <content:encoded>, or url attribute from <enclosure> or <media:thumbnail>
         Bitmap result = null;
         InputStream is = null;
         String path = null;
 
-        String e = extract(n, "enclosure");
-        String t = extract(n, "media:thumbnail");
+        String e = extract(n, "enclosure", "url");
+        String t = extract(n, "media:thumbnail", "url");
         String c = extract(n, "content:encoded");
         String b = extract(n, "description");
+        String q = extract(n, "img", "src");
         boolean well = false;
 
         if (b != null && b.contains("<img ")) {
@@ -425,6 +440,11 @@ public class FeedContract {
                 well = true;
                 path = c;
             }
+        }
+        if (well == false && q != null) {
+            Log.d(AnotherRSS.TAG, "img   " + q);
+            well = true;
+            path = q;
         }
         if (well == false && t != null) {
             path = t;

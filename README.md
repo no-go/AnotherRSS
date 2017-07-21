@@ -1,14 +1,15 @@
 # AnotherRSS
 
-![logo](app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
+![logo](app/src/main/res/mipmap-xxhdpi/ic_launcher.png)
 
 The App *AnotherRSS* is a Atom RSS Feed Reader and very similar to [ViboraFeed](https://github.com/no-go/ViboraFeed).
 You can add (space seperated) your RSS-Urls.
 
-Support me: <a href="https://flattr.com/submit/auto?fid=o6wo7q&url=https%3A%2F%2Fgithub.com%2Fno-go%2FAnotherRSS" target="_blank">![Flattr This](flattr-badge-large.png)</a>
+Support me: <a href="https://flattr.com/submit/auto?fid=o6wo7q&url=https%3A%2F%2Fgithub.com%2Fno-go%2FAnotherRSS" target="_blank">![Flattr This](img/flattr-badge-large.png)</a>
 
 ## Features
 
+- english and german interface
 - it is orange
 - everyting in one list
 - images
@@ -23,6 +24,12 @@ Support me: <a href="https://flattr.com/submit/auto?fid=o6wo7q&url=https%3A%2F%2
 ## Get the App
 
 You can get a signed APK from here (Android 4.1+): [APK](https://raw.githubusercontent.com/no-go/AnotherRSS/master/app/app-release.apk)
+
+## Screenshots
+
+![Landscape mode](img/Screenshot_1.png)
+![Search content and mark them](img/Screenshot_2.png)
+![blacklist to filter the news and hide them](img/Screenshot_3.png)
 
 ## Privacy Policy
 

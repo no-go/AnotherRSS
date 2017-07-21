@@ -23,8 +23,10 @@ public class AnotherRSS extends Application {
 
     public static final String urls =
             "http://www.tagesschau.de/xml/rss2 " +
-                "https://www.amnesty.de/rss/news " +
+                    "https://www.heise.de/security/news/news-atom.xml " +
+                    "https://www.amnesty.de/rss/news " +
                     "http://www.taz.de/!p4608;rss/ " +
+                    "http://feeds.reuters.com/reuters/scienceNews?format=xml " +
                     "http://www.deutschlandfunk.de/die-nachrichten.353.de.rss " +
                     "http://www.wz.de/cmlink/wz-rss-uebersicht-1.516698 " +
                     "http://digisocken.de/_p/wdrWetter/?rss=true " +

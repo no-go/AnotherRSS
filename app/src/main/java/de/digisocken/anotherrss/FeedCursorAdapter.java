@@ -69,8 +69,15 @@ public class FeedCursorAdapter extends CursorAdapter {
             tb.setText(body);
         }
 
+        TextView sn = (TextView) view.findViewById(R.id.sourceName);
+        sn.setText(
+                FeedContract.removeHtml(
+                        cursor.getString(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Souname))
+                )
+        );
         tt.setPadding(10, 20,  5, 0);
         tb.setPadding(10,  0, 10, 0);
+        sn.setPadding(10,  0, 10, 0);
 
         Bitmap bmp = FeedContract.getImage(
                 cursor.getBlob(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Image))
@@ -91,6 +98,7 @@ public class FeedCursorAdapter extends CursorAdapter {
             tt.setTextColor(oldTxt);
             td.setTextColor(oldTxt);
             tb.setTextColor(oldTxt);
+            sn.setTextColor(oldTxt);
             iv.setAlpha(0.3f);
             view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorOld));
             td.setBackground(null);
@@ -98,6 +106,7 @@ public class FeedCursorAdapter extends CursorAdapter {
             tt.setTextColor(ContextCompat.getColor(context, R.color.colorTitle));
             td.setTextColor(ContextCompat.getColor(context, R.color.colorDate));
             tb.setTextColor(ContextCompat.getColor(context, R.color.colorBody));
+            sn.setTextColor(ContextCompat.getColor(context, R.color.colorDate));
             iv.setAlpha(1.0f);
             view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorBackground));
             td.setBackground(favoriteIcon);
@@ -105,6 +114,7 @@ public class FeedCursorAdapter extends CursorAdapter {
             tt.setTextColor(ContextCompat.getColor(context, R.color.colorTitle));
             td.setTextColor(ContextCompat.getColor(context, R.color.colorDate));
             tb.setTextColor(ContextCompat.getColor(context, R.color.colorBody));
+            sn.setTextColor(ContextCompat.getColor(context, R.color.colorDate));
             iv.setAlpha(1.0f);
             view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorBackground));
             td.setBackground(null);
