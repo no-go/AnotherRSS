@@ -3,7 +3,7 @@
 ![logo](img/Icon.png)
 
 The App *AnotherRSS* is a Atom RSS Feed Reader and very similar to [ViboraFeed](https://github.com/no-go/ViboraFeed).
-You can add many the RSS-Urls.
+You can add many RSS-Urls.
 
 <a href="https://f-droid.org/repository/browse/?fdid=de.digisocken.anotherrss" target="_blank">
 <img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="90"/></a>
