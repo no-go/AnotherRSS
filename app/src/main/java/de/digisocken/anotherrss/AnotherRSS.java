@@ -23,7 +23,7 @@ public class AnotherRSS extends Application {
 
     /*
     http://feeds.bbci.co.uk/news/world/europe/rss.xml
-http://news.yahoo.com/rss/
+http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml
 http://feeds.t-online.de/rss/nachrichten
 http://www.wz.de/cmlink/wz-rss-uebersicht-1.516698
 http://www.deutschlandfunk.de/die-nachrichten.353.de.rss
@@ -38,7 +38,7 @@ http://feeds.reuters.com/reuters/scienceNews?format=xml
     public static final String urls =
             "http://www.tagesschau.de/xml/rss2 " +
                     "https://www.heise.de/security/news/news-atom.xml " +
-                    "http://news.yahoo.com/rss/ " +
+                    "http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml " +
                     "https://www.amnesty.de/rss/news " +
                     "http://feeds.reuters.com/reuters/scienceNews?format=xml " +
                     "http://www.deutschlandfunk.de/die-nachrichten.353.de.rss " +

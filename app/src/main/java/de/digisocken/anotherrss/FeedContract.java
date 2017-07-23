@@ -410,12 +410,33 @@ public class FeedContract {
 
         String e = extract(n, "enclosure", "url");
         String t = extract(n, "media:thumbnail", "url");
+        String u = extract(n, "media:content", "url");
         String c = extract(n, "content:encoded");
         String b = extract(n, "description");
         String q = extract(n, "img", "src");
         boolean well = false;
 
-        if (b != null && b.contains("<img ")) {
+        if (well == false && q != null) {
+            Log.d(AnotherRSS.TAG, "img   " + path);
+            well = true;
+            path = q;
+        }
+        if (well == false && t != null) {
+            path = t;
+            Log.d(AnotherRSS.TAG, "media:thumbnail " + path);
+            well = true;
+        }
+        if (well == false && u != null) {
+            path = u;
+            Log.d(AnotherRSS.TAG, "media:content " + path);
+            well = true;
+        }
+        if (well == false && e != null) {
+            path = e;
+            Log.d(AnotherRSS.TAG, "enclosure " + path);
+            well = true;
+        }
+        if (well == false && b != null && b.contains("<img ")) {
             int start = b.indexOf(" src=\"");
             int stopp = b.indexOf(".jpg\" ");
             if (stopp < 0) stopp = b.indexOf(".JPG\" ");
@@ -440,21 +461,6 @@ public class FeedContract {
                 well = true;
                 path = c;
             }
-        }
-        if (well == false && q != null) {
-            Log.d(AnotherRSS.TAG, "img   " + q);
-            well = true;
-            path = q;
-        }
-        if (well == false && t != null) {
-            path = t;
-            Log.d(AnotherRSS.TAG, "media:thumbnail " + t);
-            well = true;
-        }
-        if (well == false && e != null) {
-            path = e;
-            Log.d(AnotherRSS.TAG, "enclosure " + e);
-            well = true;
         }
 
         if (well) {
