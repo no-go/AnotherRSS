@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory
-        android:title="@string/preferences">
 
-        <EditTextPreference
+        <!-- EditTextPreference
             android:defaultValue=""
             android:key="rss_url"
             android:summary="@string/rss_url_desc"
-            android:title="@string/rss_url" />
+            android:title="@string/rss_url" / -->
 
         <ListPreference
             android:defaultValue="10800"
@@ -33,7 +31,6 @@
             android:summary="@string/notify_color_desc"
             android:title="@string/notify_color_title" />
 
-    </PreferenceCategory>
 
     <PreferenceCategory
         android:title="@string/cleanup" >

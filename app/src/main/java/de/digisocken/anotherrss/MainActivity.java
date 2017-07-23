@@ -107,6 +107,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent intentProj= new Intent(Intent.ACTION_VIEW, Uri.parse(PROJECT_LINK));
                 startActivity(intentProj);
                 break;
+            case R.id.action_feedsources:
+                Intent intentfs = new Intent(MainActivity.this, FeedSourcesActivity.class);
+                intentfs.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intentfs);
+                break;
             case R.id.action_preferences:
                 Intent intent = new Intent(MainActivity.this, PreferencesActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);

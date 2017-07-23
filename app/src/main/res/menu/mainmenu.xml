@@ -25,6 +25,11 @@
     </item>
 
     <item
+        android:id="@+id/action_feedsources"
+        android:title="@string/rss_url">
+    </item>
+
+    <item
         android:id="@+id/action_preferences"
         android:title="@string/preferences">
     </item>

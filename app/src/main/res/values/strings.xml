@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">Another RSS</string>
-    <string name="rss_url">Feeds (space seperated)</string>
-    <string name="rss_url_desc">The http path to the rss 2.0 feed</string>
+    <string name="rss_url">FEED SOURCES</string>
+    <string name="rss_url_desc">Edit the path to the rss/atom feeds</string>
     <string name="rss_sec">Timer</string>
     <string name="rss_sec_desc">Check feed every &#8230; minutes</string>
     <string name="feedCheck">try feed check</string>
-    <string name="preferences">&gt; PREFERENCES</string>
+    <string name="preferences">PREFERENCES</string>
     <string name="notify_type_title">Notify LED</string>
     <string name="notify_type_desc">Control the LED behavior</string>
     <string name="notify_color_title">color</string>

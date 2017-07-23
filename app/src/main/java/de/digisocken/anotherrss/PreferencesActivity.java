@@ -36,7 +36,10 @@ public class PreferencesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pref_main);
         ActionBar ab = getSupportActionBar();
-        if (ab != null) ab.setDisplayHomeAsUpEnabled(true);
+        if (ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setTitle(getString(R.string.preferences));
+        }
     }
 
     @Override
