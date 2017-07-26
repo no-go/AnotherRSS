@@ -7,6 +7,8 @@ You can add many RSS-Urls.
 
 <a href="https://f-droid.org/repository/browse/?fdid=de.digisocken.anotherrss" target="_blank">
 <img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="90"/></a>
+<a href="https://play.google.com/store/apps/details?id=de.digisocken.anotherrss" target="_blank">
+<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="90"/></a>
 
 Support me: <a href="https://flattr.com/submit/auto?fid=o6wo7q&url=https%3A%2F%2Fgithub.com%2Fno-go%2FAnotherRSS" target="_blank">![Flattr This](img/flattr-badge-large.png)</a>
 
