@@ -1,0 +1,109 @@
+<resources>
+    <string name="app_name">Another RSS</string>
+    <string name="rss_url">フィード元</string>
+    <string name="rss_url_desc">rss/atom フィードへのパスを編集します</string>
+    <string name="rss_sec">タイマー</string>
+    <string name="rss_sec_desc">&#8230; 分ごとにフィードをチェックします</string>
+    <string name="feedCheck">フィードをチェック</string>
+    <string name="preferences">プリファレンス</string>
+    <string name="notify_type_title">通知 LED</string>
+    <string name="notify_type_desc">LED の動作をコントロールします</string>
+    <string name="notify_color_title">色</string>
+    <string name="notify_color_desc">LED の色を変更します</string>
+    <string name="delNotifies">通知を削除</string>
+    <string name="readedFeeds">フィードをすべて既読にする</string>
+    <string name="delFeeds">すべてのフィードを削除</string>
+    <string name="delDb">すべてのフィードを破棄 (デバッグ)</string>
+    <string name="noData">データなし</string>
+    <string name="dateForm">HH:mm</string>
+    <string name="dateForm2">MM/dd</string>
+
+    <string name="open">ブラウザーで開く</string>
+    <string name="delete">削除</string>
+    <string name="destroy">破棄 (デバッグ)</string>
+
+    <string name="no_readed">(未)既読</string>
+    <string name="deleted">削除済</string>
+    <string name="destroyed">破棄済</string>
+
+    <string name="rssUrlWrong">フィードの URL が間違っています</string>
+    <string name="noConnection">サイトまたはインターネットへの接続がありません</string>
+    <string name="newFeeds">新しいフィード</string>
+    <string name="responseStrange">URL レスポンスに問題があります:</string>
+    <string name="waitOnNextSync">(まだ) フィードがありません …</string>
+
+    <string name="serviceHasNews">de.digisocken.anotherrss.ALARM_HAS_NEWS</string>
+    <string name="nightmode">夜間モード (Android &gt; 6 用)</string>
+    <string name="nightmode_summary">アプリが暗い環境に最適化する時間帯</string>
+    <string name="nightmode_use">テストする</string>
+    <string name="nightmode_use_start">開始時刻 …:00</string>
+    <string name="nightmode_use_stop">終了時刻 …:59</string>
+
+    <string name="blacklist">ブラックリスト (カンマ区切り)</string>
+    <string name="blacklist_desc">これらの文字が含まれる場合、新しいフィードは無視されます</string>
+
+    <string name="searching">検索中</string>
+    <string name="action_search">検索</string>
+    <string name="start_search">キーワードを入力してください</string>
+    <string name="close_search">検索機能をクローズしました</string>
+
+    <string name="favorite">お気に入り</string>
+    <string name="nofavorite">もうお気に入りではありません</string>
+
+    <string name="cleanup">クリーンアップ</string>
+    <string name="removeNonFav">自動削除</string>
+    <string name="removeNonFav_summary">お気に入りでないフィードは … 日後に削除されます</string>
+
+    <string name="share">共有 …</string>
+
+    <string name="flattr_this">マイクロ寄付 !</string>
+    <string name="projPage">プロジェクトページ</string>
+
+    <string-array name="rss_sec_names">
+        <item>30 分</item>
+        <item>1 時間</item>
+        <item>3 時間</item>
+        <item>6 時間</item>
+    </string-array>
+
+    <string-array name="rss_sec_values">
+        <item>1800</item>
+        <item>3600</item>
+        <item>10800</item>
+        <item>21600</item>
+    </string-array>
+
+    <string-array name="notify_color">
+        <item>赤</item>
+        <item>シアン</item>
+        <item>緑</item>
+        <item>ピンク</item>
+        <item>白</item>
+        <item>青</item>
+        <item>黄</item>
+    </string-array>
+
+    <string-array name="notify_color_values">
+        <item>#FFFF0000</item>
+        <item>#FF00FFFF</item>
+        <item>#FF00FF00</item>
+        <item>#FFFF00FF</item>
+        <item>#FFFFFFFF</item>
+        <item>#FF0000FF</item>
+        <item>#FFFFFF00</item>
+    </string-array>
+
+    <string-array name="notify_type">
+        <item>LED なし</item>
+        <item>固定</item>
+        <item>おそい</item>
+        <item>はやい</item>
+    </string-array>
+
+    <string-array name="notify_type_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+</resources>
