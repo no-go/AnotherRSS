@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -394,7 +395,29 @@ public class Refresher {
      * @param pi Der PendingIntent, wenn man auf die Notification klickt
      */
     public void makeNotify(PendingIntent pi) {
-        Uri sound = Uri.parse("android.resource://" + AnotherRSS.getContextOfApplication().getPackageName() + "/" + R.raw.notifysnd);
+        int noteSnd = Integer.parseInt(_pref.getString("notify_sound", AnotherRSS.Config.DEFAULT_notifySound));
+        int src = 0;
+        Uri sound = null;
+        switch (noteSnd) {
+            case 2:
+                src = R.raw.notifysnd;
+                break;
+            case 3:
+                src = R.raw.dideldoing;
+                break;
+            case 4:
+                src = R.raw.doding;
+                break;
+            case 5:
+                src = R.raw.ploing;
+                break;
+            default:
+                break;
+        }
+
+        if (noteSnd > 0) {
+            sound = Uri.parse("android.resource://" + AnotherRSS.getContextOfApplication().getPackageName() + "/" + src);
+        }
         notify(_newFeeds.get(_newFeeds.size()-1), pi, sound, true);
     }
 
@@ -405,7 +428,29 @@ public class Refresher {
      * @param pi Der PendingIntent, wenn man auf die Notification klickt
      */
     public void makeNotifies(PendingIntent pi) {
-        Uri sound = Uri.parse("android.resource://" + AnotherRSS.getContextOfApplication().getPackageName() + "/" + R.raw.notifysnd);
+        int noteSnd = Integer.parseInt(_pref.getString("notify_sound", AnotherRSS.Config.DEFAULT_notifySound));
+        int src = 0;
+        Uri sound = null;
+        switch (noteSnd) {
+            case 2:
+                src = R.raw.notifysnd;
+                break;
+            case 3:
+                src = R.raw.dideldoing;
+                break;
+            case 4:
+                src = R.raw.doding;
+                break;
+            case 5:
+                src = R.raw.ploing;
+                break;
+            default:
+                break;
+        }
+
+        if (noteSnd > 0) {
+            sound = Uri.parse("android.resource://" + AnotherRSS.getContextOfApplication().getPackageName() + "/" + src);
+        }
 
         for (ContentValues cv : _newFeeds) {
             notify(cv, pi, sound, false);
@@ -467,7 +512,16 @@ public class Refresher {
             mBuilder.setPriority(Notification.PRIORITY_HIGH);
         }
 
-        if (sound != null) mBuilder.setSound(sound);
+        if (sound != null) {
+            mBuilder.setSound(sound);
+        } else {
+            if (_pref.getString("notify_sound", AnotherRSS.Config.DEFAULT_notifySound).equals("1")) {
+                // default Handy sound
+                sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                mBuilder.setSound(sound);
+            }
+            // no sound
+        }
 
         switch (_notifyType) {
             case 1:

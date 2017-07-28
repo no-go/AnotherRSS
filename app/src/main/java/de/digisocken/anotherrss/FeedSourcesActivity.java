@@ -5,18 +5,22 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
+
 public class FeedSourcesActivity extends AppCompatActivity {
     private SharedPreferences _pref;
-    private String[] _urls;
+    private ArrayList<String> _urls;
     private LinearLayout _linearLayout;
-    private EditText[] _urlEdit;
+    private ArrayList<EditText> _urlEdit;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -57,23 +61,29 @@ public class FeedSourcesActivity extends AppCompatActivity {
         super.onResume();
     }
 
+    public void addLine(View v) {
+        int id = _urlEdit.size();
+        _urlEdit.add(id, new EditText(this));
+        _linearLayout.addView(_urlEdit.get(id), id);
+    }
+
     private void loadUrls() {
         _linearLayout = (LinearLayout) findViewById(R.id.feedsourceList);
         _linearLayout.removeAllViews();
-        _urls = _pref.getString("rss_url", AnotherRSS.urls).split(" ");
-        _urlEdit = new EditText[_urls.length +5];
+        String urls[] = _pref.getString("rss_url", AnotherRSS.urls).split(" ");
+        _urlEdit = new ArrayList<>();
 
-        for (int i=0; i < _urlEdit.length; i++) {
-            _urlEdit[i] = new EditText(this);
-            if (i < _urls.length) _urlEdit[i].setText(_urls[i]);
-            _linearLayout.addView(_urlEdit[i], i);
+        for (int i=0; i < urls.length + 5; i++) {
+            _urlEdit.add(i, new EditText(this));
+            if (i < urls.length) _urlEdit.get(i).setText(urls[i]);
+            _linearLayout.addView(_urlEdit.get(i), i);
         }
     }
 
     private void storeUrls() {
         String newurls = "";
-        for (int i=0; i < _urlEdit.length; i++) {
-            String tmp = _urlEdit[i].getText().toString().trim().replace(" ", "%20");
+        for (int i=0; i < _urlEdit.size(); i++) {
+            String tmp = _urlEdit.get(i).getText().toString().trim().replace(" ", "%20");
             if (tmp != null && !tmp.equals("")) {
                 newurls += tmp + " ";
             }

@@ -39,8 +39,8 @@ http://feeds.reuters.com/reuters/scienceNews?format=xml
             "http://www.tagesschau.de/xml/rss2 " +
                     "https://www.heise.de/security/news/news-atom.xml " +
                     "http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml " +
-                    "https://www.amnesty.de/rss/news " +
-                    "http://feeds.reuters.com/reuters/scienceNews?format=xml " +
+                    "https://www.amnesty.de/rss/urgent-actions " +
+                    "http://feeds.reuters.com/Reuters/UKWorldNews " +
                     "http://www.deutschlandfunk.de/die-nachrichten.353.de.rss " +
                     "http://digisocken.de/_p/wdrWetter/?rss=true " +
                     "https://www.umwelt.nrw.de/rss.xml";
@@ -52,6 +52,7 @@ http://feeds.reuters.com/reuters/scienceNews?format=xml
          */
         public static final int DEFAULT_expunge = 5;
         public static final String DEFAULT_rsssec = "10800";
+        public static final String DEFAULT_notifySound = "2";
         public static final String DEFAULT_notifyColor = "#FF00FFFF";
         public static final String DEFAULT_notifyType = "2";
         public static final int DEFAULT_NIGHT_START = 18;

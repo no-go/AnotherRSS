@@ -31,6 +31,13 @@
             android:summary="@string/notify_color_desc"
             android:title="@string/notify_color_title" />
 
+    <ListPreference
+        android:defaultValue="2"
+        android:entries="@array/notify_sound"
+        android:entryValues="@array/notify_sound_values"
+        android:key="notify_sound"
+        android:summary="@string/notify_sound_desc"
+        android:title="@string/notify_sound_title" />
 
     <PreferenceCategory
         android:title="@string/cleanup" >

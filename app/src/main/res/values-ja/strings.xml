@@ -18,6 +18,9 @@
     <string name="dateForm">HH:mm</string>
     <string name="dateForm2">MM/dd</string>
 
+    <string name="notify_sound_title">sound</string>
+    <string name="notify_sound_desc">Change the sound</string>
+
     <string name="open">ブラウザーで開く</string>
     <string name="delete">削除</string>
     <string name="destroy">破棄 (デバッグ)</string>
@@ -71,6 +74,24 @@
         <item>3600</item>
         <item>10800</item>
         <item>21600</item>
+    </string-array>
+
+    <string-array name="notify_sound">
+        <item>silent</item>
+        <item>default</item>
+        <item>Riiiiing</item>
+        <item>DidelDoing</item>
+        <item>DoDing</item>
+        <item>Ploing</item>
+    </string-array>
+
+    <string-array name="notify_sound_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
     </string-array>
 
     <string-array name="notify_color">
