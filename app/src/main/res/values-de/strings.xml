@@ -10,6 +10,8 @@
     <string name="notify_type_desc">Einstellung, wie sich die LED verhält</string>
     <string name="notify_color_title">Farbe</string>
     <string name="notify_color_desc">Wahl der Farbe für die LED</string>
+    <string name="tap_behaviour">Tipp-Verhalten</string>
+    <string name="tap_behaviour_desc">Ändert das kurz-antippen Verhalten. "Öffnen" hat einen wechselnden Markier-Modus.</string>
     <string name="delNotifies">Benachrichtigungen löschen</string>
     <string name="readedFeeds">Feedsammlung gelesen</string>
     <string name="delFeeds">Feedsammlung leeren</string>
@@ -74,6 +76,20 @@
         <item>3600</item>
         <item>10800</item>
         <item>21600</item>
+    </string-array>
+
+    <string-array name="tap_mode">
+        <item>öffne Rechts (Querformat)</item>
+        <item>öffne im Browser</item>
+        <item>(un-)gelesen</item>
+        <item>(nicht) mögen</item>
+    </string-array>
+
+    <string-array name="tap_mode_values">
+        <item>intern</item>
+        <item>extern</item>
+        <item>readed</item>
+        <item>marked</item>
     </string-array>
 
     <string-array name="notify_sound">

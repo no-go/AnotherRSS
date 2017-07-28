@@ -10,6 +10,8 @@
     <string name="notify_type_desc">Control the LED behavior</string>
     <string name="notify_color_title">color</string>
     <string name="notify_color_desc">Change the LED color</string>
+    <string name="tap_behaviour">Tap behaviour</string>
+    <string name="tap_behaviour_desc">Change the short press behaviour. "open" is a alternate mode.</string>
     <string name="delNotifies">delete notifications</string>
     <string name="readedFeeds">mark all feeds as readed</string>
     <string name="delFeeds">delete all feeds</string>
@@ -74,6 +76,20 @@
         <item>3600</item>
         <item>10800</item>
         <item>21600</item>
+    </string-array>
+
+    <string-array name="tap_mode">
+        <item>open right-hand (landscape)</item>
+        <item>open in Browser</item>
+        <item>(un)read</item>
+        <item>(un)favourite</item>
+    </string-array>
+
+    <string-array name="tap_mode_values">
+        <item>intern</item>
+        <item>extern</item>
+        <item>readed</item>
+        <item>marked</item>
     </string-array>
 
     <string-array name="notify_sound">

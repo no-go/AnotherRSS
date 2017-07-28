@@ -10,6 +10,8 @@
     <string name="notify_type_desc">LED の動作をコントロールします</string>
     <string name="notify_color_title">色</string>
     <string name="notify_color_desc">LED の色を変更します</string>
+    <string name="tap_behaviour">Tap behaviour</string>
+    <string name="tap_behaviour_desc">Change the short press behaviour. "open" is a alternate mode.</string>
     <string name="delNotifies">通知を削除</string>
     <string name="readedFeeds">フィードをすべて既読にする</string>
     <string name="delFeeds">すべてのフィードを削除</string>
@@ -74,6 +76,20 @@
         <item>3600</item>
         <item>10800</item>
         <item>21600</item>
+    </string-array>
+
+    <string-array name="tap_mode">
+        <item>open right-hand (landscape)</item>
+        <item>open in Browser</item>
+        <item>(un)read</item>
+        <item>(un)favourite</item>
+    </string-array>
+
+    <string-array name="tap_mode_values">
+        <item>intern</item>
+        <item>extern</item>
+        <item>readed</item>
+        <item>marked</item>
     </string-array>
 
     <string-array name="notify_sound">

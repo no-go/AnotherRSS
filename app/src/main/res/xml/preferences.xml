@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <!-- EditTextPreference
-            android:defaultValue=""
-            android:key="rss_url"
-            android:summary="@string/rss_url_desc"
-            android:title="@string/rss_url" / -->
-
         <ListPreference
             android:defaultValue="10800"
             android:entries="@array/rss_sec_names"
@@ -38,6 +32,14 @@
         android:key="notify_sound"
         android:summary="@string/notify_sound_desc"
         android:title="@string/notify_sound_title" />
+
+    <ListPreference
+        android:defaultValue="intern"
+        android:entries="@array/tap_mode"
+        android:entryValues="@array/tap_mode_values"
+        android:key="tap_mode"
+        android:summary="@string/tap_behaviour_desc"
+        android:title="@string/tap_behaviour" />
 
     <PreferenceCategory
         android:title="@string/cleanup" >

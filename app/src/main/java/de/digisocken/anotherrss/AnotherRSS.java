@@ -33,17 +33,17 @@ https://www.heise.de/security/news/news-atom.xml
 https://www.amnesty.de/rss/news
 http://digisocken.de/_p/wdrWetter/?rss=true
 https://www.umwelt.nrw.de/rss.xml
+http://feeds.reuters.com/Reuters/UKWorldNews
 http://feeds.reuters.com/reuters/scienceNews?format=xml
      */
     public static final String urls =
-            "http://www.tagesschau.de/xml/rss2 " +
+            "http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml " +
+                    "http://www.taz.de/!p4608;rss/ " +
                     "https://www.heise.de/security/news/news-atom.xml " +
-                    "http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml " +
                     "https://www.amnesty.de/rss/urgent-actions " +
                     "http://feeds.reuters.com/Reuters/UKWorldNews " +
                     "http://www.deutschlandfunk.de/die-nachrichten.353.de.rss " +
-                    "http://digisocken.de/_p/wdrWetter/?rss=true " +
-                    "https://www.umwelt.nrw.de/rss.xml";
+                    "http://feeds.bbci.co.uk/news/world/europe/rss.xml";
 
     public static class Config {
         /**

@@ -6,10 +6,12 @@ import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -68,8 +70,57 @@ public class FeedListFragment extends ListFragment implements LoaderManager.Load
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Cursor c = (Cursor) adapter.getItem(position);
+
+                long id = c.getInt(c.getColumnIndex(FeedContract.Feeds._ID));
+                Uri uri = Uri.parse(FeedContentProvider.CONTENT_URI + "/" + id);
+                int flagVal = c.getInt(c.getColumnIndex(FeedContract.Feeds.COLUMN_Flag));
                 String link = c.getString(c.getColumnIndex(FeedContract.Feeds.COLUMN_Link));
-                ((MainActivity) getActivity()).setWebView(link);
+                ContentValues values = new ContentValues();
+
+                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(AnotherRSS.getContextOfApplication());
+                String tap_mode = pref.getString("tap_mode", "intern");
+
+                if (tap_mode.equals("intern") || tap_mode.equals("extern")) {
+
+                    if (flagVal == FeedContract.Flag.NEW || flagVal == FeedContract.Flag.FAVORITE) {
+                        // if unreaded or marked:
+                        // -> mark readed +
+                        // -> open in browser
+                        values.put(FeedContract.Feeds.COLUMN_Flag, FeedContract.Flag.READED);
+                        getActivity().getContentResolver().update(uri, values, null, null);
+
+                        if (tap_mode.equals("intern")) {
+                            ((MainActivity) getActivity()).setWebView(link);
+                        } else {
+                            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                            startActivity(i);
+                        }
+
+                    } else if (flagVal == FeedContract.Flag.READED) {
+                        // if readed
+                        // -> mark
+                        values.put(FeedContract.Feeds.COLUMN_Flag, FeedContract.Flag.FAVORITE);
+                        getActivity().getContentResolver().update(uri, values, null, null);
+                    }
+
+                } else if (tap_mode.equals("readed")) {
+
+                    if (flagVal == FeedContract.Flag.NEW) {
+                        values.put(FeedContract.Feeds.COLUMN_Flag, FeedContract.Flag.READED);
+                    } else {
+                        values.put(FeedContract.Feeds.COLUMN_Flag, FeedContract.Flag.NEW);
+                    }
+                    getActivity().getContentResolver().update(uri, values, null, null);
+
+                } else if (tap_mode.equals("marked")) {
+
+                    if (flagVal == FeedContract.Flag.FAVORITE) {
+                        values.put(FeedContract.Feeds.COLUMN_Flag, FeedContract.Flag.NEW);
+                    } else {
+                        values.put(FeedContract.Feeds.COLUMN_Flag, FeedContract.Flag.FAVORITE);
+                    }
+                    getActivity().getContentResolver().update(uri, values, null, null);
+                }
             }
         });
     }
