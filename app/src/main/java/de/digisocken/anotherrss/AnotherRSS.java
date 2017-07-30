@@ -37,13 +37,11 @@ http://feeds.reuters.com/Reuters/UKWorldNews
 http://feeds.reuters.com/reuters/scienceNews?format=xml
      */
     public static final String urls =
-            "http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml " +
+            "http://www.wz.de/cmlink/wz-rss-uebersicht-1.516698 " +
                     "http://www.taz.de/!p4608;rss/ " +
                     "https://www.heise.de/security/news/news-atom.xml " +
                     "https://www.amnesty.de/rss/urgent-actions " +
-                    "http://feeds.reuters.com/Reuters/UKWorldNews " +
-                    "http://www.deutschlandfunk.de/die-nachrichten.353.de.rss " +
-                    "http://feeds.bbci.co.uk/news/world/europe/rss.xml";
+                    "http://digisocken.de/_p/wdrWetter/?rss=true";
 
     public static class Config {
         /**
@@ -68,8 +66,8 @@ http://feeds.reuters.com/reuters/scienceNews?format=xml
         /**
          * sets a static image size to {@value #MAX_IMG_WIDTH}
          */
-        public static final int MAX_IMG_WIDTH = 120;
-        public static final float IMG_ROUND = 20f;
+        public static final int MAX_IMG_WIDTH = 100;
+        public static final float IMG_ROUND = 70f;
         /**
          * sollte eine Verbindung nicht zu sande kommen, wird ein neuer
          * Alarm in {@value #RETRYSEC_AFTER_OFFLINE} sec ausgelöst

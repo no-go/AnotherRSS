@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Another RSS</string>
+    <string name="app_name">Another RSS - C64</string>
     <string name="rss_url">フィード元</string>
     <string name="rss_url_desc">rss/atom フィードへのパスを編集します</string>
     <string name="rss_sec">タイマー</string>

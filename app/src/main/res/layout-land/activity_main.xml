@@ -6,7 +6,11 @@
     android:orientation="horizontal"
     tools:context="de.digisocken.anotherrss.MainActivity"
     android:weightSum="2"
-    android:background="@color/colorBackground">
+    android:background="@color/colorPrimary"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="10dp"
+    android:paddingTop="0dp" >
 
     <fragment
         android:id="@+id/feedlist"

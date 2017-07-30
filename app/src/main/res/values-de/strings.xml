@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Another RSS</string>
+    <string name="app_name">Another RSS - C64</string>
     <string name="rss_url">FEED QUELLEN</string>
     <string name="rss_url_desc">Pflege hier die Pfade zu den RSS/Atom Feeds</string>
     <string name="rss_sec">Synchronisation</string>

@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.MenuItemCompat;
@@ -28,6 +29,7 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.Date;
@@ -48,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     private WebView webView;
     private ProgressBar progressBar;
     private UiModeManager umm;
+
+    boolean fulls = false;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -167,11 +171,10 @@ public class MainActivity extends AppCompatActivity {
         try {
             ActionBar ab = getSupportActionBar();
             if (ab != null) {
-                ab.setDisplayShowHomeEnabled(true);
-                ab.setHomeButtonEnabled(true);
-                ab.setDisplayUseLogoEnabled(true);
-                ab.setLogo(R.mipmap.ic_launcher);
-                ab.setTitle(" " + getString(R.string.app_name));
+                ab.setElevation(0);
+                File f = this.getDatabasePath(FeedHelper.DATABASE_NAME);
+                long dbSize = f.length();
+                ab.setTitle(String.valueOf(dbSize/1024) + " kB used");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -197,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter filter = new IntentFilter();
         filter.addAction(getString(R.string.serviceHasNews));
         registerReceiver(alarmReceiver, filter);
+        toFullscreen();
     }
 
     public boolean setWebView(String url) {
@@ -234,6 +238,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         Log.d(AnotherRSS.TAG, "onPause");
         AnotherRSS.withGui = false;
+        fulls = false;
         super.onPause();
     }
 
@@ -242,6 +247,18 @@ public class MainActivity extends AppCompatActivity {
         Log.d(AnotherRSS.TAG, "onResume");
         AnotherRSS.withGui = true;
         new DbExpunge().execute();
+        toFullscreen();
+        try {
+            ActionBar ab = getSupportActionBar();
+            if (ab != null) {
+                ab.setElevation(0);
+                File f = this.getDatabasePath(FeedHelper.DATABASE_NAME);
+                long dbSize = f.length();
+                ab.setTitle(String.valueOf(dbSize/1024) + " kB used");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         boolean night = mPreferences.getBoolean("nightmode_use", false);
@@ -363,6 +380,28 @@ public class MainActivity extends AppCompatActivity {
             );
 
             return null;
+        }
+    }
+
+    public void toFullscreen() {
+        if (!fulls) {
+            int uiOptions = getWindow().getDecorView().getSystemUiVisibility();
+            int newUiOptions = uiOptions;
+
+            if (Build.VERSION.SDK_INT >= 14) {
+                newUiOptions ^= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+            }
+
+            if (Build.VERSION.SDK_INT >= 16) {
+                newUiOptions ^= View.SYSTEM_UI_FLAG_FULLSCREEN;
+            }
+
+            if (Build.VERSION.SDK_INT >= 18) {
+                newUiOptions ^= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+            }
+
+            getWindow().getDecorView().setSystemUiVisibility(newUiOptions);
+            fulls = true;
         }
     }
 }

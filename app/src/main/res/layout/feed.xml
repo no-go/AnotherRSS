@@ -30,6 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="title"
+        android:typeface="monospace"
         android:id="@+id/feedTitle"
         android:enabled="false"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -46,6 +47,7 @@
         android:text="body"
         android:id="@+id/feedBody"
         android:enabled="false"
+        android:typeface="monospace"
         android:layout_below="@+id/feedTitle"
         android:layout_alignLeft="@+id/feedTitle" />
 
