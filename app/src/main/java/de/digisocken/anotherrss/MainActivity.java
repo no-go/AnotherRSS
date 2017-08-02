@@ -28,6 +28,7 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.Date;
@@ -57,6 +58,11 @@ public class MainActivity extends AppCompatActivity {
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
+        MenuItem sizeItem = menu.findItem(R.id.size_info);
+        File f = this.getDatabasePath(FeedHelper.DATABASE_NAME);
+        long dbSize = f.length();
+        sizeItem.setTitle(String.valueOf(dbSize/1024) + getString(R.string.kB_used));
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -98,6 +104,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         DbClear dbClear = new DbClear();
+        int size;
+        float fontSize;
+
+        SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         switch (item.getItemId()) {
             case R.id.action_flattr:
                 Intent intentFlattr = new Intent(Intent.ACTION_VIEW, Uri.parse(FLATTR_LINK));
@@ -127,6 +137,28 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.action_delFeeds:
                 dbClear.execute(R.id.action_delFeeds);
+                break;
+            case R.id.action_biggerText:
+                fontSize = mPreferences.getFloat("font_size", AnotherRSS.Config.DEFAULT_FONT_SIZE);
+                fontSize = fontSize * 1.1f;
+                mPreferences.edit().putFloat("font_size", fontSize).apply();
+                break;
+            case R.id.action_smallerText:
+                fontSize = mPreferences.getFloat("font_size", AnotherRSS.Config.DEFAULT_FONT_SIZE);
+                fontSize = fontSize * 0.9f;
+                if (fontSize < 3.0f) fontSize = 3.0f;
+                mPreferences.edit().putFloat("font_size", fontSize).apply();
+                break;
+            case R.id.action_biggerImageSize:
+                size = mPreferences.getInt("image_width", AnotherRSS.Config.DEFAULT_MAX_IMG_WIDTH);
+                size = size + 10;
+                mPreferences.edit().putInt("image_width", size).apply();
+                break;
+            case R.id.action_smallerImageSize:
+                size = mPreferences.getInt("image_width", AnotherRSS.Config.DEFAULT_MAX_IMG_WIDTH);
+                size = size - 10;
+                if (size < 0) size = 0;
+                mPreferences.edit().putInt("image_width", size).apply();
                 break;
             default:
                 break;

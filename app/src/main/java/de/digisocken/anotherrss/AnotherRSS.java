@@ -58,6 +58,9 @@ http://feeds.reuters.com/reuters/scienceNews?format=xml
         public static final int DEFAULT_NIGHT_START = 18;
         public static final int DEFAULT_NIGHT_STOP = 6;
         public static final String SEARCH_HINT_COLOR = "#FFAA00";
+        public static final float DEFAULT_FONT_SIZE = 14.0f;
+        public static final int DEFAULT_MAX_IMG_WIDTH = 120;
+        public static final float IMG_ROUND = 20f;
 
         /**
          * im Feed Text kann leider einen total überflüssiger Inhalt enthalten,
@@ -65,11 +68,6 @@ http://feeds.reuters.com/reuters/scienceNews?format=xml
          */
         public static final String DEFAULT_lastRssWord = "weiterlesen";
 
-        /**
-         * sets a static image size to {@value #MAX_IMG_WIDTH}
-         */
-        public static final int MAX_IMG_WIDTH = 120;
-        public static final float IMG_ROUND = 20f;
         /**
          * sollte eine Verbindung nicht zu sande kommen, wird ein neuer
          * Alarm in {@value #RETRYSEC_AFTER_OFFLINE} sec ausgelöst

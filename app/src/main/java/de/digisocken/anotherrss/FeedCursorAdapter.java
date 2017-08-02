@@ -1,13 +1,16 @@
 package de.digisocken.anotherrss;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.text.Spanned;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +24,13 @@ import android.widget.TextView;
 public class FeedCursorAdapter extends CursorAdapter {
     private Bitmap largeIcon;
     private Drawable favoriteIcon;
+    private SharedPreferences _pref;
 
     public FeedCursorAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
         largeIcon = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
         favoriteIcon = ContextCompat.getDrawable(context, R.drawable.favorite);
+        _pref = PreferenceManager.getDefaultSharedPreferences(AnotherRSS.getContextOfApplication());
     }
 
     @Override
@@ -48,6 +53,7 @@ public class FeedCursorAdapter extends CursorAdapter {
      */
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
+        float fontSize = _pref.getFloat("font_size", AnotherRSS.Config.DEFAULT_FONT_SIZE);
         TextView tt = (TextView) view.findViewById(R.id.feedTitle);
         String title = cursor.getString(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Title));
         if (!AnotherRSS.query.equals("")) {
@@ -55,13 +61,16 @@ public class FeedCursorAdapter extends CursorAdapter {
         } else {
             tt.setText(title);
         }
+        tt.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontSize * 1.25f);
 
         TextView td = (TextView) view.findViewById(R.id.feedDate);
+        td.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontSize * 0.75f);
         td.setText(FeedContract.getDate(cursor.getString(
                 cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Date)
         )));
 
         TextView tb = (TextView) view.findViewById(R.id.feedBody);
+        tb.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontSize);
         String body = FeedContract.removeHtml(cursor.getString(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Body)));
         if (!AnotherRSS.query.equals("")) {
             tb.setText(highlight(AnotherRSS.query, body));
@@ -70,6 +79,7 @@ public class FeedCursorAdapter extends CursorAdapter {
         }
 
         TextView sn = (TextView) view.findViewById(R.id.sourceName);
+        sn.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontSize * 0.75f);
         sn.setText(
                 FeedContract.removeHtml(
                         cursor.getString(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Souname))
@@ -86,7 +96,13 @@ public class FeedCursorAdapter extends CursorAdapter {
         iv.setImageBitmap(bmp);
         int source = cursor.getInt(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Source));
         if (bmp != null) {
+            int width = _pref.getInt("image_width", AnotherRSS.Config.DEFAULT_MAX_IMG_WIDTH);
             iv.setPadding(20, 30, 10, 0);
+            iv.setMaxWidth(width);
+            if (bmp.getWidth() != width) {
+                bmp = FeedContract.scale(bmp, width);
+                iv.setImageBitmap(bmp);
+            }
         } else {
             iv.setPadding( 0, 0, 0, 0);
             tt.setPadding(20, 10,  5, 0);

@@ -35,10 +35,41 @@
     </item>
 
     <item
-        android:id="@+id/action_project"
-        android:title="@string/projPage"></item>
+        android:id="@+id/zoom"
+        android:title="@string/zoom">
+        <menu>
+            <item
+                android:id="@+id/action_biggerText"
+                android:title="@string/bigger"/>
+            <item
+                android:id="@+id/action_smallerText"
+                android:title="@string/smaller"/>
+            <item
+                android:id="@+id/action_biggerImageSize"
+                android:title="@string/biggerImage"/>
+            <item
+                android:id="@+id/action_smallerImageSize"
+                android:title="@string/smallerImage"/>
+        </menu>
+    </item>
 
     <item
-        android:id="@+id/action_flattr"
-        android:title="@string/flattr_this"></item>
+        android:id="@+id/Info"
+        android:title="@string/info">
+        <menu>
+            <item
+                android:id="@+id/action_project"
+                android:title="@string/projPage"></item>
+
+            <item
+                android:id="@+id/action_flattr"
+                android:title="@string/flattr_this"></item>
+
+            <item
+                android:id="@+id/size_info"
+                android:enabled="false"
+                android:title=" "></item>
+        </menu>
+    </item>
+
 </menu>

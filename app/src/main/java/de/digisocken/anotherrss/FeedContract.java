@@ -1,6 +1,7 @@
 package de.digisocken.anotherrss;
 
 import android.app.AlarmManager;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
@@ -9,6 +10,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 import android.text.Html;
 import android.text.Spanned;
@@ -468,7 +470,9 @@ public class FeedContract {
                 is = new URL(path).openStream();
                 result = BitmapFactory.decodeStream(is);
                 is.close();
-                result = FeedContract.scale(result, AnotherRSS.Config.MAX_IMG_WIDTH);
+                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(AnotherRSS.getContextOfApplication());
+                int width = pref.getInt("image_width", AnotherRSS.Config.DEFAULT_MAX_IMG_WIDTH);
+                result = FeedContract.scale(result, width);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }

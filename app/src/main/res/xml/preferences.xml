@@ -52,7 +52,7 @@
             android:maxLength="2" />
 
         <EditTextPreference
-            android:defaultValue="DEG,Kader,DEL,enalty,pielfeld,DFB,ockey,Rennfahr,Boxwelt,edallie,NBA,EM,WM,Borussia,Fortuna,Basket,Tennis,Boxer,rainer,VfC,Fußball,Wasserball,Handball,sport,Sport,FC ,Spieltag,Bundesliga,ennbahn,eltmeister,UEFA,League"
+            android:defaultValue="DEG,DfB,Kader,DEL,enalty,pielfeld,DFB,ockey,Rennfahr,Boxwelt,edallie,NBA,EM,WM,Borussia,Fortuna,Basket,Tennis,Boxer,rainer,VfC,Fußball,Wasserball,Handball,sport,Sport,FC ,Spieltag,Bundesliga,ennbahn,eltmeister,UEFA,League"
             android:key="blacklist"
             android:summary="@string/blacklist_desc"
             android:title="@string/blacklist" />

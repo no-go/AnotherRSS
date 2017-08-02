@@ -64,6 +64,15 @@
     <string name="flattr_this">Micro-Spende !</string>
     <string name="projPage">Projekt Seite</string>
 
+    <string name="kB_used">kB verwendet</string>
+    <string name="info">Info</string>
+    <string name="zoom">Zoom und Skalieren</string>
+
+    <string name="bigger">+ Text</string>
+    <string name="smaller">- Text</string>
+    <string name="biggerImage">+ Bild</string>
+    <string name="smallerImage">- Bild</string>
+
     <string-array name="rss_sec_names">
         <item>30 Minuten</item>
         <item>1 Stunde</item>

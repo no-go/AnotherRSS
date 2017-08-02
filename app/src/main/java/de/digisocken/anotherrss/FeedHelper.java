@@ -10,7 +10,7 @@ import android.util.Log;
  */
 public class FeedHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "feeds.db";
+    public static final String DATABASE_NAME = "feeds.db";
     private static final int DATABASE_VERSION = 4;
 
     public FeedHelper(Context context) {

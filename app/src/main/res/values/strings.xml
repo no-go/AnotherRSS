@@ -64,6 +64,15 @@
     <string name="flattr_this">Micro-Donate !</string>
     <string name="projPage">Project Page</string>
 
+    <string name="kB_used">kB used</string>
+    <string name="info">Info</string>
+    <string name="zoom">Zoom and scale</string>
+
+    <string name="bigger">+ Text</string>
+    <string name="smaller">- Text</string>
+    <string name="biggerImage">+ Image</string>
+    <string name="smallerImage">- Image</string>
+
     <string-array name="rss_sec_names">
         <item>30 minutes</item>
         <item>1 hours</item>

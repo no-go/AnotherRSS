@@ -28,6 +28,8 @@ Website: [https://no-go.github.io/AnotherRSS](https://no-go.github.io/AnotherRSS
 - every news is a notification
 - mark feeds as deleted, readed, favourite
 - free content blacklist
+- Text and Image is resizeable
+- Tab behavior changeable
 - many more ...
 
 ## Get the App
