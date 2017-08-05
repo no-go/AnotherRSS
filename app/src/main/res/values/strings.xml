@@ -40,7 +40,7 @@
     <string name="serviceHasNews">de.digisocken.anotherrss.ALARM_HAS_NEWS</string>
     <string name="nightmode">Nightmode (good on Android &gt; 6)</string>
     <string name="nightmode_summary">between a timespan the App is optimized for a dark environment</string>
-    <string name="nightmode_use">test it</string>
+    <string name="nightmode_use">dark</string>
     <string name="nightmode_use_start">from …:00 o\'clock</string>
     <string name="nightmode_use_stop">to …:59 o\'clock</string>
 

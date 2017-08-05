@@ -40,7 +40,7 @@
     <string name="serviceHasNews">de.digisocken.anotherrss.ALARM_HAS_NEWS</string>
     <string name="nightmode">夜間モード (Android &gt; 6 用)</string>
     <string name="nightmode_summary">アプリが暗い環境に最適化する時間帯</string>
-    <string name="nightmode_use">テストする</string>
+    <string name="nightmode_use">dark</string>
     <string name="nightmode_use_start">開始時刻 …:00</string>
     <string name="nightmode_use_stop">終了時刻 …:59</string>
 

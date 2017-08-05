@@ -372,7 +372,7 @@ public class MainActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             Calendar c = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
             SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            int autodeleteDays = mPreferences.getInt("autodelete", 0);
+            int autodeleteDays = mPreferences.getInt("autodelete", AnotherRSS.Config.DEFAULT_autodelete);
             if (autodeleteDays < 1) return null;
 
             Date date = new Date();

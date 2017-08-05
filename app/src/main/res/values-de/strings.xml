@@ -40,7 +40,7 @@
     <string name="serviceHasNews">de.digisocken.anotherrss.ALARM_HAS_NEWS</string>
     <string name="nightmode">Nachtmodus (zuverlässig ab Android 6)</string>
     <string name="nightmode_summary">Stellt die App für eine Zeitspanne auf ein dunkles, nicht blendendes Design um</string>
-    <string name="nightmode_use">ausprobieren</string>
+    <string name="nightmode_use">dunkel</string>
     <string name="nightmode_use_start">von …:00 Uhr</string>
     <string name="nightmode_use_stop">bis …:59 Uhr</string>
 

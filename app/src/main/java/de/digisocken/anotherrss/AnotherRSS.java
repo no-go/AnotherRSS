@@ -50,6 +50,7 @@ http://feeds.reuters.com/reuters/scienceNews?format=xml
          * really delete old database entries (marked as deleted)
          * older than Config.DEFAULT_expunge days
          */
+        public static final int DEFAULT_autodelete = 14;
         public static final int DEFAULT_expunge = 5;
         public static final String DEFAULT_rsssec = "10800";
         public static final String DEFAULT_notifySound = "2";
@@ -100,6 +101,9 @@ http://feeds.reuters.com/reuters/scienceNews?format=xml
         }
         if (!mPreferences.contains("nightmode_use_stop")) {
             mPreferences.edit().putInt("nightmode_use_stop", Config.DEFAULT_NIGHT_STOP).commit();
+        }
+        if (!mPreferences.contains("autodelete")) {
+            mPreferences.edit().putInt("autodelete", Config.DEFAULT_autodelete).commit();
         }
 
         if (alarm == null) alarm = new Alarm();
