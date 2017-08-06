@@ -7,10 +7,6 @@ You can add many RSS-Urls.
 
 Support me: <a href="https://flattr.com/submit/auto?fid=o6wo7q&url=https%3A%2F%2Fgithub.com%2Fno-go%2FAnotherRSS" target="_blank">![Flattr This](img/flattr-badge-large.png)</a>
 
-<a href="https://f-droid.org/repository/browse/?fdid=de.digisocken.anotherrss" target="_blank">![Get it on F-Droid](img/get-it-on-fdroid.png)</a>
-<a href="https://play.google.com/store/apps/details?id=de.digisocken.anotherrss" target="_blank">
-<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="90"/></a>
-
 Source Code: [https://github.com/no-go/AnotherRSS](https://github.com/no-go/AnotherRSS)
 
 Website: [https://no-go.github.io/AnotherRSS](https://no-go.github.io/AnotherRSS)
@@ -33,11 +29,26 @@ Website: [https://no-go.github.io/AnotherRSS](https://no-go.github.io/AnotherRSS
 
 You can get a signed APK from here (Android 4.1+): [APK](https://raw.githubusercontent.com/no-go/AnotherRSS/master/app/app-release.apk)
 
+<a href="https://f-droid.org/repository/browse/?fdid=de.digisocken.anotherrss" target="_blank">![Get it on F-Droid](img/get-it-on-fdroid.png)</a>
+<a href="https://play.google.com/store/apps/details?id=de.digisocken.anotherrss" target="_blank">
+<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="90"/></a>
+
 ## Screenshots
 
+### Landscape mode
 ![Landscape mode](img/Screenshot_1.png)
+
+### Search
 ![Search content and mark them](img/Screenshot_2.png)
+
+### Blacklist
 ![blacklist to filter the news and hide them](img/Screenshot_3.png)
+
+### Search to select special feed source
+![Search to select special feed source](img/Screenshot_5.png)
+
+### Nightmode / Dark Theme
+![nightmode](img/Screenshot_6.png)
 
 ## License
 
