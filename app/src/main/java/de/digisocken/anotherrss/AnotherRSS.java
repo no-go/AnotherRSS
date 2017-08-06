@@ -22,7 +22,7 @@ public class AnotherRSS extends Application {
     public static String query = "";
 
     /*
-    http://feeds.bbci.co.uk/news/world/europe/rss.xml
+http://feeds.bbci.co.uk/news/world/europe/rss.xml
 http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml
 http://feeds.t-online.de/rss/nachrichten
 http://www.wz.de/cmlink/wz-rss-uebersicht-1.516698

@@ -80,11 +80,15 @@ public class FeedCursorAdapter extends CursorAdapter {
 
         TextView sn = (TextView) view.findViewById(R.id.sourceName);
         sn.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontSize * 0.75f);
-        sn.setText(
-                FeedContract.removeHtml(
-                        cursor.getString(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Souname))
-                )
+        String sName = FeedContract.removeHtml(
+                cursor.getString(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Souname))
         );
+        if (!AnotherRSS.query.equals("")) {
+            sn.setText(highlight(AnotherRSS.query, sName));
+        } else {
+            sn.setText(sName);
+        }
+
         tt.setPadding(10, 20,  5, 0);
         tb.setPadding(10,  0, 10, 0);
         sn.setPadding(10,  0, 10, 0);
@@ -107,6 +111,7 @@ public class FeedCursorAdapter extends CursorAdapter {
             iv.setPadding( 0, 0, 0, 0);
             tt.setPadding(20, 10,  5, 0);
             tb.setPadding(20,  0, 10, 0);
+            sn.setPadding(20,  0, 10, 0);
         }
         int hasFlag = cursor.getInt(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Flag));
         if (hasFlag == FeedContract.Flag.READED) {

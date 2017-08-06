@@ -6,9 +6,9 @@ android {
     defaultConfig {
         applicationId "de.digisocken.anotherrss"
         minSdkVersion 16
-        targetSdkVersion 23
-        versionCode 19
-        versionName "1.9"
+        targetSdkVersion 22
+        versionCode 195
+        versionName "1.95"
     }
     buildTypes {
         release {

@@ -148,10 +148,11 @@ public class FeedContract {
     public static final String SELECTION_SEARCH =
             Feeds.COLUMN_Deleted +"=? AND (" +
                     Feeds.COLUMN_Title + " LIKE ? OR " +
+                    Feeds.COLUMN_Souname + " LIKE ? OR " +
                     Feeds.COLUMN_Body + " LIKE ?)";
 
     public static String[] searchArgs(String query) {
-        return new String[]{Integer.toString(Flag.VISIBLE), "%"+query+"%", "%"+query+"%"};
+        return new String[]{Integer.toString(Flag.VISIBLE), "%"+query+"%", "%"+query+"%", "%"+query+"%"};
     }
 
     /**

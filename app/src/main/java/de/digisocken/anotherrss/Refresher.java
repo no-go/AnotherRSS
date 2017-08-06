@@ -209,7 +209,7 @@ public class Refresher {
         Log.d(AnotherRSS.TAG, "If-Modified-Since: " + now);
         conn.setRequestProperty("If-Modified-Since", now);
         int responseCode = conn.getResponseCode();
-        /**
+        /*
         this close() removes the strictMode Error:
         Explicit termination method 'end' not called
         at com.android.okhttp.okio.GzipSource.<init>(GzipSource.java:62)
@@ -290,7 +290,8 @@ public class Refresher {
         NodeList nl = ee.getChildNodes();
         Node n2 = (Node) nl.item(0);
         feedName = n2.getNodeValue();
-        if (feedName == null) feedName = "News!?";
+        if (feedName == null) feedName = "News Feed";
+        feedName += " #no" + Integer.toString(sourceId+1);
 
         if (BuildConfig.DEBUG) {
             Log.d(AnotherRSS.TAG, "Feed title: " + feedName);
