@@ -33,6 +33,30 @@ You can get a signed APK from here (Android 4.1+): [APK](https://raw.githubuserc
 <a href="https://play.google.com/store/apps/details?id=de.digisocken.anotherrss" target="_blank">
 <img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="90"/></a>
 
+## Example Feeds
+
+### German
+
+- [http://www.deutschlandfunk.de/die-nachrichten.353.de.rss](http://www.deutschlandfunk.de/die-nachrichten.353.de.rss)
+- [http://www.tagesschau.de/xml/rss2](http://www.tagesschau.de/xml/rss2)
+- [http://feeds.t-online.de/rss/nachrichten](http://feeds.t-online.de/rss/nachrichten)
+- [http://www.wz.de/cmlink/wz-rss-uebersicht-1.516698](http://www.wz.de/cmlink/wz-rss-uebersicht-1.516698)
+- [http://www.taz.de/!p4608;rss/](http://www.taz.de/!p4608;rss/)
+
+### English
+
+- [http://feeds.bbci.co.uk/news/world/europe/rss.xml](http://feeds.bbci.co.uk/news/world/europe/rss.xml)
+- [http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml](http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml)
+- [http://feeds.reuters.com/Reuters/UKWorldNews](http://feeds.reuters.com/Reuters/UKWorldNews)
+- [http://feeds.reuters.com/reuters/scienceNews?format=xml](http://feeds.reuters.com/reuters/scienceNews?format=xml)
+
+### Special
+
+- [https://www.amnesty.de/rss/news](https://www.amnesty.de/rss/news)
+- [http://digisocken.de/_p/wdrWetter/?rss=true](http://digisocken.de/_p/wdrWetter/?rss=true)
+- [https://www.umwelt.nrw.de/rss.xml](https://www.umwelt.nrw.de/rss.xml)
+- [https://www.heise.de/security/news/news-atom.xml](https://www.heise.de/security/news/news-atom.xml)
+
 ## Screenshots
 
 ### Landscape mode
