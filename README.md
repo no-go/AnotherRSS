@@ -56,6 +56,13 @@ You can get a signed APK from here (Android 4.1+): [APK](https://raw.githubuserc
 - [http://digisocken.de/_p/wdrWetter/?rss=true](http://digisocken.de/_p/wdrWetter/?rss=true)
 - [https://www.umwelt.nrw.de/rss.xml](https://www.umwelt.nrw.de/rss.xml)
 - [https://www.heise.de/security/news/news-atom.xml](https://www.heise.de/security/news/news-atom.xml)
+- [http://feeds.arstechnica.com/arstechnica/index/](http://feeds.arstechnica.com/arstechnica/index/)
+
+### Test some Comic RSS
+
+- [http://www.comicsrss.com/rss/dilbert-classics.rss](http://www.comicsrss.com/rss/dilbert-classics.rss)
+- [http://phdcomics.com/gradfeed.php](http://phdcomics.com/gradfeed.php)
+- [https://www.xkcd.com/rss.xml](https://www.xkcd.com/rss.xml)
 
 ## Screenshots
 
