@@ -35,23 +35,26 @@ http://digisocken.de/_p/wdrWetter/?rss=true
 https://www.umwelt.nrw.de/rss.xml
 http://feeds.reuters.com/Reuters/UKWorldNews
 http://feeds.reuters.com/reuters/scienceNews?format=xml
+http://www.wetterleitstelle.de/nordrhein-westfalen.xml
+
      */
     public static final String urls =
             "http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml " +
+                    "http://www.comicsrss.com/rss/dilbert-classics.rss " +
+                    "http://feeds.arstechnica.com/arstechnica/index/ " +
                     "http://www.taz.de/!p4608;rss/ " +
                     "https://www.heise.de/security/news/news-atom.xml " +
-                    "https://www.amnesty.de/rss/urgent-actions " +
-                    "http://feeds.reuters.com/Reuters/UKWorldNews " +
-                    "http://www.deutschlandfunk.de/die-nachrichten.353.de.rss " +
-                    "http://feeds.bbci.co.uk/news/world/europe/rss.xml";
+                    "https://www.amnesty.de/rss/news " +
+                    "http://feeds.bbci.co.uk/news/world/europe/rss.xml " +
+                    "http://www.wetterleitstelle.de/nordrhein-westfalen.xml";
 
     public static class Config {
         /**
          * really delete old database entries (marked as deleted)
          * older than Config.DEFAULT_expunge days
          */
-        public static final int DEFAULT_autodelete = 14;
-        public static final int DEFAULT_expunge = 5;
+        public static final int DEFAULT_autodelete = 20;
+        public static final int DEFAULT_expunge = 21;
         public static final String DEFAULT_rsssec = "10800";
         public static final String DEFAULT_notifySound = "2";
         public static final String DEFAULT_notifyColor = "#FF00FFFF";
@@ -61,7 +64,7 @@ http://feeds.reuters.com/reuters/scienceNews?format=xml
         public static final String SEARCH_HINT_COLOR = "#FFAA00";
         public static final float DEFAULT_FONT_SIZE = 14.0f;
         public static final int DEFAULT_MAX_IMG_WIDTH = 120;
-        public static final float IMG_ROUND = 20f;
+        public static final float IMG_ROUND = 15f;
 
         /**
          * im Feed Text kann leider einen total überflüssiger Inhalt enthalten,

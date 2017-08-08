@@ -34,7 +34,7 @@
     <string name="rssUrlWrong">Your feed has a wrong URL</string>
     <string name="noConnection">no connection to site or internet</string>
     <string name="newFeeds">New feeds</string>
-    <string name="responseStrange">URL Respose is strange:</string>
+    <string name="responseStrange">URL Respose is strange</string>
     <string name="waitOnNextSync">there are (still) no feeds …</string>
 
     <string name="serviceHasNews">de.digisocken.anotherrss.ALARM_HAS_NEWS</string>

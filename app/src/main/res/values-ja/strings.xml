@@ -34,7 +34,7 @@
     <string name="rssUrlWrong">フィードの URL が間違っています</string>
     <string name="noConnection">サイトまたはインターネットへの接続がありません</string>
     <string name="newFeeds">新しいフィード</string>
-    <string name="responseStrange">URL レスポンスに問題があります:</string>
+    <string name="responseStrange">URL レスポンスに問題があります</string>
     <string name="waitOnNextSync">(まだ) フィードがありません …</string>
 
     <string name="serviceHasNews">de.digisocken.anotherrss.ALARM_HAS_NEWS</string>

@@ -439,27 +439,71 @@ public class FeedContract {
             Log.d(AnotherRSS.TAG, "enclosure " + path);
             well = true;
         }
+        if (b != null) b = b.replace("&lt;", "<").replace("&gt;", ">").replace("&quot;","\"");
         if (well == false && b != null && b.contains("<img ")) {
+
             int start = b.indexOf(" src=\"");
-            int stopp = b.indexOf(".jpg\" ");
-            if (stopp < 0) stopp = b.indexOf(".JPG\" ");
-            if (stopp < 0) stopp = b.indexOf(".jpeg\"");
+            b = b.replace(".jpg\"",".jpg\" ");
+            b = b.replace(".png\"",".png\" ");
+            b = b.replace(".gif\"",".gif\" ");
+            b = b.replace(".jpeg\"",".jpeg\" ");
+
+            int stopp = b.indexOf(".jpg\" ", start);
+            int stoppPl = 4;
+            if (stopp < 0) {
+                stopp = b.indexOf(".JPG\" ", start);
+            }
+            if (stopp < 0) {
+                stopp = b.indexOf(".png\" ", start);
+            }
+            if (stopp < 0) {
+                stopp = b.indexOf(".gif\" ", start);
+            }
+            if (stopp < 0) {
+                stopp = b.indexOf(".jpeg\" ", start);
+                stoppPl = 5;
+            }
+            if (stopp < 0) {
+                stopp = b.indexOf("\" alt=", start);
+                stoppPl = 0;
+            }
             if (start > 0 && stopp > 0) {
-                b = b.substring(start + 6, stopp + 5);
-                b = b.replace("\"","");
+                b = b.substring(start + 6, stopp + stoppPl);
                 Log.d(AnotherRSS.TAG, "description  " + b);
                 well = true;
                 path = b;
             }
         }
+
+        if (c != null) c = c.replace("&lt;", "<").replace("&gt;", ">").replace("&quot;","\"");
         if (well == false && c != null && c.contains("<img ")) {
             int start = c.indexOf(" src=\"");
-            int stopp = c.indexOf(".jpg\" ");
-            if (stopp < 0) stopp = c.indexOf(".JPG\" ");
-            if (stopp < 0) stopp = c.indexOf(".jpeg\"");
+            c = c.replace(".jpg\"",".jpg\" ");
+            c = c.replace(".png\"",".png\" ");
+            c = c.replace(".gif\"",".gif\" ");
+            c = c.replace(".jpeg\"",".jpeg\" ");
+            int stopp = c.indexOf(".jpg\" ", start);
+
+            int stoppPl = 4;
+            if (stopp < 0) {
+                stopp = c.indexOf(".JPG\" ", start);
+            }
+            if (stopp < 0) {
+                stopp = c.indexOf(".png\" ", start);
+            }
+            if (stopp < 0) {
+                stopp = c.indexOf(".gif\" ", start);
+            }
+            if (stopp < 0) {
+                stopp = c.indexOf(".jpeg\" ", start);
+                stoppPl = 5;
+            }
+            if (stopp < 0) {
+                stopp = c.indexOf("\" alt=", start);
+                stoppPl = 0;
+            }
             if (start > 0 && stopp > 0) {
-                c = c.substring(start + 6, stopp + 5);
-                c = c.replace("\"","");
+                c = c.substring(start + 6, stopp + stoppPl);
                 Log.d(AnotherRSS.TAG, "content:encoded  " + c);
                 well = true;
                 path = c;

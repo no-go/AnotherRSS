@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.action_biggerImageSize:
                 size = mPreferences.getInt("image_width", AnotherRSS.Config.DEFAULT_MAX_IMG_WIDTH);
-                size = size + 10;
+                size = size + 20;
                 mPreferences.edit().putInt("image_width", size).apply();
                 break;
             case R.id.action_smallerImageSize:

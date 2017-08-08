@@ -34,7 +34,7 @@
     <string name="rssUrlWrong">Der Feed hat eine fehlerhafte URL</string>
     <string name="noConnection">Keine Verbindung zu dieser Seite oder Internet</string>
     <string name="newFeeds">Neue Feeds</string>
-    <string name="responseStrange">URL Respose ist unerwartet:</string>
+    <string name="responseStrange">URL Respose ist unerwartet</string>
     <string name="waitOnNextSync">(noch) keine Feeds vorhanden …</string>
 
     <string name="serviceHasNews">de.digisocken.anotherrss.ALARM_HAS_NEWS</string>
