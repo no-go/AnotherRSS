@@ -122,6 +122,11 @@ public class MainActivity extends AppCompatActivity {
                 intentfs.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intentfs);
                 break;
+            case R.id.action_regex:
+                Intent intentreg = new Intent(MainActivity.this, PrefRegexActivity.class);
+                intentreg.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intentreg);
+                break;
             case R.id.action_preferences:
                 Intent intent = new Intent(MainActivity.this, PreferencesActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);

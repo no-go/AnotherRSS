@@ -14,17 +14,16 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
-public class FeedSourcesActivity extends AppCompatActivity {
+public class PrefRegexActivity extends AppCompatActivity {
     private SharedPreferences _pref;
-    private ArrayList<String> _urls;
-    private LinearLayout _linearLayout;
-    private ArrayList<EditText> _urlEdit;
+    EditText _edAll;
+    EditText _edTo;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                storeUrls();
+                storePref();
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             default:
@@ -35,76 +34,58 @@ public class FeedSourcesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pref_sources);
+        setContentView(R.layout.pref_regex);
+        _edAll = (EditText) findViewById(R.id.editRegexAll);
+        _edTo = (EditText) findViewById(R.id.editRegexTo);
+
         ActionBar ab = getSupportActionBar();
         if (ab != null) {
             ab.setDisplayHomeAsUpEnabled(true);
-            ab.setTitle(getString(R.string.rss_url));
+            ab.setTitle(getString(R.string.regex));
         }
         _pref = PreferenceManager.getDefaultSharedPreferences(AnotherRSS.getContextOfApplication());
-        loadUrls();
+        loadPref();
     }
 
     @Override
     protected void onPause() {
-        Log.d(AnotherRSS.TAG, "FeedSources Pref onPause");
         AnotherRSS.withGui = false;
         super.onPause();
     }
 
     @Override
     protected void onResume() {
-        Log.d(AnotherRSS.TAG, "FeedSources Pref onResume");
         AnotherRSS.withGui = true;
         super.onResume();
     }
 
-    public void addLine(View v) {
-        int id = _urlEdit.size();
-        _urlEdit.add(id, new EditText(this));
-        _linearLayout.addView(_urlEdit.get(id), id);
+    private void loadPref() {
+        _edAll.setText(_pref.getString("regexAll", AnotherRSS.Config.DEFAULT_regexAll));
+        _edTo.setText(_pref.getString("regexTo", AnotherRSS.Config.DEFAULT_regexTo));
     }
 
-    private void loadUrls() {
-        _linearLayout = (LinearLayout) findViewById(R.id.feedsourceList);
-        _linearLayout.removeAllViews();
-        String urls[] = _pref.getString("rss_url", AnotherRSS.urls).split(" ");
-        _urlEdit = new ArrayList<>();
-
-        for (int i=0; i < urls.length + 5; i++) {
-            _urlEdit.add(i, new EditText(this));
-            if (i < urls.length) _urlEdit.get(i).setText(urls[i]);
-            _linearLayout.addView(_urlEdit.get(i), i);
-        }
-    }
-
-    private void storeUrls() {
-        String newurls = "";
-        for (int i=0; i < _urlEdit.size(); i++) {
-            String tmp = _urlEdit.get(i).getText().toString().trim().replace(" ", "%20");
-            if (tmp != null && !tmp.equals("")) {
-                newurls += tmp + " ";
-            }
-        }
-        newurls = newurls.trim();
-        _pref.edit().putString("rss_url", newurls).commit();
+    private void storePref() {
+        SharedPreferences.Editor editor = _pref.edit();
+        editor.putString("regexAll", _edAll.getText().toString());
+        editor.putString("regexTo", _edTo.getText().toString());
+        editor.apply();
     }
 
     @Override
     public void onBackPressed() {
-        storeUrls();
+        storePref();
         super.onBackPressed();
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        loadUrls();
+        loadPref();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        storeUrls();
+        storePref();
         super.onSaveInstanceState(outState);
     }
 }

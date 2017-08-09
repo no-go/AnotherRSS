@@ -73,6 +73,12 @@
     <string name="biggerImage">+ Image</string>
     <string name="smallerImage">- Image</string>
 
+    <string name="more">More …</string>
+    <string name="regex">Regular Expressions</string>
+    <string name="regex_desc">This is for experts only. Fails are (mostly) hidden. The REGEX is used on title and body before the blacklist runs.</string>
+    <string name="regex_all">String.replaceAll:</string>
+    <string name="regex_to">to:</string>
+
     <string-array name="rss_sec_names">
         <item>30 分</item>
         <item>1 時間</item>

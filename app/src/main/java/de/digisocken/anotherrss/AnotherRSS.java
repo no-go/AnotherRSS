@@ -44,17 +44,17 @@ http://www.wetterleitstelle.de/nordrhein-westfalen.xml
                     "http://feeds.arstechnica.com/arstechnica/index/ " +
                     "http://www.taz.de/!p4608;rss/ " +
                     "https://www.heise.de/security/news/news-atom.xml " +
-                    "https://www.amnesty.de/rss/news " +
+                    "http://digisocken.de/_p/wdrWetter/?rss=true " +
                     "http://feeds.bbci.co.uk/news/world/europe/rss.xml " +
-                    "http://www.wetterleitstelle.de/nordrhein-westfalen.xml";
+                    "https://www.amnesty.de/rss/news";
 
     public static class Config {
         /**
          * really delete old database entries (marked as deleted)
          * older than Config.DEFAULT_expunge days
          */
-        public static final int DEFAULT_autodelete = 20;
-        public static final int DEFAULT_expunge = 21;
+        public static final int DEFAULT_autodelete = 14;
+        public static final int DEFAULT_expunge = 5;
         public static final String DEFAULT_rsssec = "10800";
         public static final String DEFAULT_notifySound = "2";
         public static final String DEFAULT_notifyColor = "#FF00FFFF";
@@ -66,11 +66,8 @@ http://www.wetterleitstelle.de/nordrhein-westfalen.xml
         public static final int DEFAULT_MAX_IMG_WIDTH = 120;
         public static final float IMG_ROUND = 15f;
 
-        /**
-         * im Feed Text kann leider einen total überflüssiger Inhalt enthalten,
-         * wo hinter dem Wort {@value #DEFAULT_lastRssWord} abgeschnitten werden muss.
-         */
-        public static final String DEFAULT_lastRssWord = "weiterlesen";
+        public static final String DEFAULT_regexAll = "";
+        public static final String DEFAULT_regexTo = "";
 
         /**
          * sollte eine Verbindung nicht zu sande kommen, wird ein neuer
@@ -98,6 +95,12 @@ http://www.wetterleitstelle.de/nordrhein-westfalen.xml
         SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if (!mPreferences.contains("rss_url")) {
             mPreferences.edit().putString("rss_url", AnotherRSS.urls).commit();
+        }
+        if (!mPreferences.contains("regexAll")) {
+            mPreferences.edit().putString("regexAll", Config.DEFAULT_regexAll).commit();
+        }
+        if (!mPreferences.contains("regexTo")) {
+            mPreferences.edit().putString("regexTo", Config.DEFAULT_regexTo).commit();
         }
         if (!mPreferences.contains("nightmode_use_start")) {
             mPreferences.edit().putInt("nightmode_use_start", Config.DEFAULT_NIGHT_START).commit();

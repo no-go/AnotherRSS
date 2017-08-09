@@ -42,7 +42,7 @@ import java.util.Locale;
 public class FeedContract {
 
     /**
-     * Feeds enthölt die Datenbank-Spalten und den Tabellen Name
+     * Feeds enthält die Datenbank-Spalten und den Tabellen Name
      */
     public static class Feeds implements BaseColumns {
         public static final String TABLE_NAME = "feeds";
@@ -108,7 +108,6 @@ public class FeedContract {
     public static final String DEFAULT_SELECTION =
             Feeds.COLUMN_Deleted +"=? AND " + Feeds.COLUMN_Source + "=?";
     public static final String[] DEFAULT_SELECTION_ARGS =
-//      {Integer.toString(Flag.VISIBLE), Integer.toString(AnotherRSS.Source1.id)};
         {Integer.toString(Flag.VISIBLE), Integer.toString(0)};
 
     public static final String DEFAULT_SELECTION_ADD = Feeds.COLUMN_Deleted +"=?";
@@ -204,10 +203,6 @@ public class FeedContract {
      * @return result without html code
      */
     public String removeHtml(String html, boolean ignoreEntities) {
-        // get only "xxxxxxxxxx ..." without "weiterlesen" link
-        int tail = html.indexOf(AnotherRSS.Config.DEFAULT_lastRssWord);
-        if (tail > 0) html = html.substring(0, tail);
-
         html = html.replaceAll("<(.*?)\\>"," ");
         html = html.replaceAll("<(.*?)\\\n"," ");
         html = html.replaceFirst("(.*?)\\>", " ");
@@ -515,6 +510,7 @@ public class FeedContract {
                 is = new URL(path).openStream();
                 result = BitmapFactory.decodeStream(is);
                 is.close();
+                if (result.getWidth() < 16 || result.getHeight() < 16) return null;
                 SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(AnotherRSS.getContextOfApplication());
                 int width = pref.getInt("image_width", AnotherRSS.Config.DEFAULT_MAX_IMG_WIDTH);
                 result = FeedContract.scale(result, width);

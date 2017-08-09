@@ -25,13 +25,22 @@
     </item>
 
     <item
-        android:id="@+id/action_feedsources"
-        android:title="@string/rss_url">
-    </item>
-
-    <item
-        android:id="@+id/action_preferences"
+        android:id="@+id/action_prefmenu"
         android:title="@string/preferences">
+        <menu>
+            <item
+                android:id="@+id/action_regex"
+                android:title="@string/regex">
+            </item>
+            <item
+                android:id="@+id/action_feedsources"
+                android:title="@string/rss_url">
+            </item>
+            <item
+                android:id="@+id/action_preferences"
+                android:title="@string/more">
+            </item>
+        </menu>
     </item>
 
     <item

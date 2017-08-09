@@ -55,6 +55,8 @@ public class Refresher {
     private SharedPreferences _pref;
     private int _notifyColor;
     private int _notifyType;
+    private String _regexAll;
+    private String _regexTo;
 
     /**
      * Dieses Array nimmt neue Feeds auf, um beim Erzeugen von Notifikations nicht
@@ -266,6 +268,11 @@ public class Refresher {
         return null;
     }
 
+    public String doRegex(String val) {
+        val = val.replaceAll(_regexAll, _regexTo);
+        return val;
+    }
+
     /**
      * Das Doc wird ausgelesen und in die DB geschrieben.
      * Die neuen Feeds werden auch in _newFeeds abgelegt. Das _newFeeds Array wird
@@ -283,6 +290,9 @@ public class Refresher {
 
         String[] blacklist = getBlacklist();
         boolean isRdf = true;
+
+        _regexAll = _pref.getString("regexAll", AnotherRSS.Config.DEFAULT_regexAll);
+        _regexTo = _pref.getString("regexTo", AnotherRSS.Config.DEFAULT_regexTo);
 
         String feedName = null;
         NodeList nodeList = doc.getElementsByTagName("title");
@@ -321,6 +331,12 @@ public class Refresher {
                     dateStr = FeedContract.extract(n, "published");
                 }
                 Date date = FeedContract.rawToDate(dateStr);
+
+                if ((_regexAll.isEmpty() && _regexTo.isEmpty()) == false) {
+                    title = doRegex(title);
+                    body = doRegex(body);
+                }
+
                 for (String bl: blacklist) {
                     Log.v(AnotherRSS.TAG, "Check Blacklist: " + bl);
                     if (body.contains(bl)) {
