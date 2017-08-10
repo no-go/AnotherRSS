@@ -14,7 +14,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:minHeight="12dp"
-        android:background="@color/colorPrimary" />
+        android:background="@android:color/holo_orange_dark" />
 
     <TextView
         android:id="@+id/wTextApp"
@@ -24,7 +24,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:padding="1dp"
-        android:textColor="@android:color/black"
+        android:textColor="@color/colorTitle"
         android:textSize="8dp" />
 
     <TextView

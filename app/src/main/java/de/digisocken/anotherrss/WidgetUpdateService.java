@@ -34,6 +34,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class WidgetUpdateService extends Service {
     SharedPreferences mPreferences;
     String[] urls;
+    static String[] blacklist;
+    static String _regexAll;
+    static String _regexTo;
 
     public static String extractTitles(String resp) {
         String back = "";
@@ -50,9 +53,16 @@ public class WidgetUpdateService extends Service {
             }
 
             Node n;
+            String ti;
             for (int i = 0; i < nodeList.getLength(); i++) {
                 n = nodeList.item(i);
-                back += "<b>"+ Integer.toString(i+1) + ")</b> " + FeedContract.extract(n, "title") + "<br>";
+                boolean ff = true;
+                ti = FeedContract.extract(n, "title");
+                if ((_regexAll.isEmpty() && _regexTo.isEmpty()) == false) ti = ti.replaceAll(_regexAll, _regexTo);
+                for (String bl: blacklist) {
+                    if (ti.contains(bl)) ff = false;
+                }
+                if (ff) back += "<b>"+ Integer.toString(i+1) + ")</b> " + ti + "<br>";
             }
 
         } catch (Exception e) {
@@ -73,6 +83,11 @@ public class WidgetUpdateService extends Service {
 
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         urls = mPreferences.getString("rss_url", AnotherRSS.urls).split(" ");
+        _regexAll = mPreferences.getString("regexAll", AnotherRSS.Config.DEFAULT_regexAll);
+        _regexTo = mPreferences.getString("regexTo", AnotherRSS.Config.DEFAULT_regexTo);
+        blacklist = new String[]{};
+        String nos = mPreferences.getString("blacklist", "");
+        if (!nos.equals("")) blacklist = nos.split(",");
 
         RemoteViews views = new RemoteViews(getPackageName(), R.layout.main_widget);
 
