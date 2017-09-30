@@ -8,7 +8,7 @@
     <color name="colorBody">#cecece</color>
     <color name="colorBackground">#1f1f1f</color>
 
-    <color name="colorPrimary">#303030</color>
-    <color name="colorPrimaryDark">#202020</color>
-    <color name="colorAccent">#f18221</color>
+    <color name="colorPrimary">#6666ff</color>
+    <color name="colorPrimaryDark">#3333bb</color>
+    <color name="colorAccent">#ccccff</color>
 </resources>

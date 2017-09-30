@@ -226,13 +226,13 @@ public class Refresher {
         conn.getInputStream().close();
 
         Log.d(AnotherRSS.TAG, "Response Code: " + Integer.toString(responseCode));
-        if (BuildConfig.DEBUG) {
-            error(Integer.toString(responseCode), "if modified since " + now);
-        }
         if (responseCode == HttpURLConnection.HTTP_NOT_MODIFIED) {
             return false;
         }
         if (responseCode != HttpURLConnection.HTTP_OK) {
+            if (BuildConfig.DEBUG) {
+                error(Integer.toString(responseCode), "if modified since " + now);
+            }
             error(url.toString(), _ctx.getString(R.string.responseStrange));
             Log.e(AnotherRSS.TAG, _ctx.getString(R.string.responseStrange));
             return false;

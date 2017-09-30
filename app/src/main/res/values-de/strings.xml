@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">a RSS\'n\'Tweet</string>
+    <string name="app_name">RSS-o-Tweet</string>
     <string name="rss_url">Feed Quellen</string>
     <string name="rss_url_desc">Pflege hier die Pfade zu den RSS/Atom Feeds</string>
     <string name="rss_sec">Synchronisation</string>

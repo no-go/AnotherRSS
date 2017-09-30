@@ -1,4 +1,6 @@
-# a RSS-n-Tweet
+# RSS-o-Tweet
+
+![nightmode Twitter](img/Screenshot_7.png)
 
 ![logo](img/Icon.png)
 
@@ -41,6 +43,10 @@ You can get a signed APK from here (Android 4.1+): [APK](https://raw.githubuserc
 <img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="90"/></a>
 
 ## Screenshots
+
+### Read Twitter stuff
+
+![nightmode Twitter](img/Screenshot_7.png)
 
 ### Landscape mode
 ![Landscape mode](img/Screenshot_1.png)

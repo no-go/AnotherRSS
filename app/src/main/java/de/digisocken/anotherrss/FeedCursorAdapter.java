@@ -56,6 +56,7 @@ public class FeedCursorAdapter extends CursorAdapter {
         float fontSize = _pref.getFloat("font_size", AnotherRSS.Config.DEFAULT_FONT_SIZE);
         TextView tt = (TextView) view.findViewById(R.id.feedTitle);
         String title = cursor.getString(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Title));
+        title = title.replaceAll("(\\(\\d+\\))", "");
         if (!AnotherRSS.query.equals("")) {
             tt.setText(highlight(AnotherRSS.query, title));
         } else {

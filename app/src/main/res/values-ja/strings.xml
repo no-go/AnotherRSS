@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">a RSS\'n\'Tweet</string>
+    <string name="app_name">RSS-o-Tweet</string>
     <string name="rss_url">フィード元</string>
     <string name="rss_url_desc">rss/atom フィードへのパスを編集します</string>
     <string name="rss_sec">タイマー</string>
