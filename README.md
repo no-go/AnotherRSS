@@ -1,24 +1,19 @@
 # RSS-o-Tweet
 
+This Branch: Get a Twitter API Key and this version get additional Timelines of users and hashtags.
+
 ![nightmode Twitter](img/Screenshot_7.png)
 
 ![logo](img/Icon.png)
 
-The App *AnotherRSS* is a Atom RSS Feed Reader and very similar to [ViboraFeed](https://github.com/no-go/ViboraFeed).
-You can add many RSS-Urls.
+This is a Atom RSS Feed Reader and and Twitter Timeline and Hashtag Reader. It very similar to [ViboraFeed](https://github.com/no-go/ViboraFeed). You can add many RSS-Urls, Hashtags or Usernames (timelines).
 
 Support me: <a href="https://flattr.com/submit/auto?fid=o6wo7q&url=https%3A%2F%2Fgithub.com%2Fno-go%2FAnotherRSS" target="_blank">![Flattr This](img/flattr-badge-large.png)</a>
 
-Source Code: [https://github.com/no-go/AnotherRSS](https://github.com/no-go/AnotherRSS)
-
-Website: [https://no-go.github.io/AnotherRSS](https://no-go.github.io/AnotherRSS)
-
 ## Features
 
-This Branch: Get a Twitter API Key and this version get additional Timelines of users and hashtags.
-
 - english and german interface
-- it is orange
+- it is BLUE
 - everyting in one list
 - images
 - landscape mode with web preview
@@ -28,7 +23,7 @@ This Branch: Get a Twitter API Key and this version get additional Timelines of 
 - mark feeds as deleted, readed, favourite
 - blacklist
 - regex
-- widget
+- widget (?!?!?!?! should not work with a Twitter username or hashtag)
 - Text and Image is resizeable
 - Tab behavior changeable
 - many more ...
@@ -36,11 +31,6 @@ This Branch: Get a Twitter API Key and this version get additional Timelines of 
 ## Get the App
 
 You can get a signed APK from here (Android 4.1+): [APK](https://raw.githubusercontent.com/no-go/AnotherRSS/tweeted/app/app-release.apk)
-
-<a href="https://f-droid.org/repository/browse/?fdid=de.digisocken.anotherrss" target="_blank">
-<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="90"/></a>
-<a href="https://play.google.com/store/apps/details?id=de.digisocken.anotherrss" target="_blank">
-<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="90"/></a>
 
 ## Screenshots
 
@@ -59,9 +49,6 @@ You can get a signed APK from here (Android 4.1+): [APK](https://raw.githubuserc
 
 ### Search to select special feed source
 ![Search to select special feed source](img/Screenshot_5.png)
-
-### Nightmode / Dark Theme
-![nightmode](img/Screenshot_6.png)
 
 ## License
 
