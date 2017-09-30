@@ -7,6 +7,12 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatDelegate;
+import android.util.Log;
+
+import com.twitter.sdk.android.core.DefaultLogger;
+import com.twitter.sdk.android.core.Twitter;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterConfig;
 
 import java.util.Calendar;
 
@@ -45,8 +51,9 @@ http://www.wetterleitstelle.de/nordrhein-westfalen.xml
                     "http://www.taz.de/!p4608;rss/ " +
                     "https://www.heise.de/security/news/news-atom.xml " +
                     "http://digisocken.de/_p/wdrWetter/?rss=true " +
-                    "http://feeds.bbci.co.uk/news/world/europe/rss.xml " +
-                    "https://www.amnesty.de/rss/news";
+                    "@BBC " +
+                    "@amnesty " +
+                    "#weekend";
 
     public static class Config {
         /**
@@ -68,6 +75,8 @@ http://www.wetterleitstelle.de/nordrhein-westfalen.xml
 
         public static final String DEFAULT_regexAll = "";
         public static final String DEFAULT_regexTo = "";
+
+        public static final int DEFAULT_TWITTER_MAX = 10;
 
         /**
          * sollte eine Verbindung nicht zu sande kommen, wird ein neuer
@@ -111,6 +120,16 @@ http://www.wetterleitstelle.de/nordrhein-westfalen.xml
         if (!mPreferences.contains("autodelete")) {
             mPreferences.edit().putInt("autodelete", Config.DEFAULT_autodelete).commit();
         }
+
+        TwitterConfig config = new TwitterConfig.Builder(this)
+                .logger(new DefaultLogger(Log.DEBUG))
+                .twitterAuthConfig(new TwitterAuthConfig(
+                        mPreferences.getString("CONSUMER_KEY",""),
+                        mPreferences.getString("CONSUMER_SECRET","")
+                ))
+                .debug(BuildConfig.DEBUG)
+                .build();
+        Twitter.initialize(config);
 
         if (alarm == null) alarm = new Alarm();
     }

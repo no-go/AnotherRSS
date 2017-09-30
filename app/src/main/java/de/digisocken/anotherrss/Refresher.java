@@ -18,6 +18,11 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.twitter.sdk.android.core.models.Tweet;
+import com.twitter.sdk.android.tweetui.TweetView;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -28,6 +33,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -271,6 +277,84 @@ public class Refresher {
     public String doRegex(String val) {
         val = val.replaceAll(_regexAll, _regexTo);
         return val;
+    }
+
+    public void insertTweet(Tweet tweet, String uQuery, int expunge) throws ParseException {
+        String nextHop = extractRT(tweet.text);
+
+        String[] blacklist = getBlacklist();
+
+        _regexAll = _pref.getString("regexAll", AnotherRSS.Config.DEFAULT_regexAll);
+        _regexTo = _pref.getString("regexTo", AnotherRSS.Config.DEFAULT_regexTo);
+
+        // we do not want retweets !!
+        if (nextHop == null) {
+            String title = tweet.user.name + " (" + Long.toString(tweet.id) + ")";
+            Date date = FeedContract.tweetFormatDate.parse(tweet.createdAt);
+            if (isReallyFresh(date, title, expunge)) {
+                TweetView orgTweetView = new TweetView(AnotherRSS.getContextOfApplication(), tweet);
+                TextView textBody = (TextView) orgTweetView.findViewById(R.id.tw__tweet_text);
+                String body = textBody.getText().toString();
+
+                if ((_regexAll.isEmpty() && _regexTo.isEmpty()) == false) {
+                    title = doRegex(title);
+                    body = doRegex(body);
+                }
+
+                for (String bl: blacklist) {
+                    Log.v(AnotherRSS.TAG, "Check Blacklist: " + bl);
+                    if (body.contains(bl)) {
+                        Log.v(AnotherRSS.TAG, "in body");
+                        return;
+                    }
+                    if (title.contains(bl)) {
+                        Log.v(AnotherRSS.TAG, "in title");
+                        return;
+                    }
+                }
+
+                ContentValues values = new ContentValues();
+                values.put(FeedContract.Feeds.COLUMN_Title, title);
+                values.put(FeedContract.Feeds.COLUMN_Date, FeedContract.dbFriendlyDate(date));
+                values.put(FeedContract.Feeds.COLUMN_Link, "http://twitter.com/"+tweet.user.screenName+"/status/" + Long.toString(tweet.id));
+                values.put(FeedContract.Feeds.COLUMN_Body, body);
+                values.put(FeedContract.Feeds.COLUMN_Image, FeedContract.getBytes(
+                        BitmapFactory.decodeResource(
+                                AnotherRSS.getContextOfApplication().getResources(),
+                                R.drawable.tw__composer_logo_blue
+                        )
+                ));
+                values.put(FeedContract.Feeds.COLUMN_Source, tweet.user.id);
+                if (uQuery.equals(tweet.user.screenName)) {
+                    values.put(FeedContract.Feeds.COLUMN_Souname, "@" + tweet.user.screenName);
+                } else {
+                    values.put(FeedContract.Feeds.COLUMN_Souname, "#" + uQuery + " @" + tweet.user.screenName);
+                }
+                values.put(FeedContract.Feeds.COLUMN_Deleted, FeedContract.Flag.VISIBLE);
+                values.put(FeedContract.Feeds.COLUMN_Flag, FeedContract.Flag.NEW);
+
+                Uri uri = _ctx.getContentResolver().insert(FeedContentProvider.CONTENT_URI, values);
+
+                if (uri != null) {
+                    long id = Long.parseLong(uri.getLastPathSegment());
+                    values.put(FeedContract.Feeds._ID, id);
+                    _newFeeds.add(values);
+                }
+            }
+        }
+    }
+
+    public static String extractRT(String txt) {
+        int rtindex = txt.indexOf("RT @");
+        if (rtindex >= 0) {
+            String rtuser = txt.substring(
+                    rtindex,
+                    txt.indexOf(": ", rtindex)
+            );
+            return rtuser.replace("RT ", "");
+        } else {
+            return null;
+        }
     }
 
     /**

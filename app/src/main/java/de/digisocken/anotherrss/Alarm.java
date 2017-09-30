@@ -12,9 +12,19 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.models.Tweet;
+import com.twitter.sdk.android.tweetui.SearchTimeline;
+import com.twitter.sdk.android.tweetui.TimelineResult;
+import com.twitter.sdk.android.tweetui.UserTimeline;
 
 import org.w3c.dom.Document;
 
+import java.text.ParseException;
 import java.util.Random;
 import java.util.StringTokenizer;
 
@@ -29,7 +39,7 @@ public class Alarm extends BroadcastReceiver {
                 Context ctx = (Context) objs[0];
 
                 SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(ctx);
-                Refresher refresher = Refresher.ME(ctx);
+                final Refresher refresher = Refresher.ME(ctx);
 
                 if (refresher.isOnline()) {
                     if (pref.getBoolean("isRetry", false)) {
@@ -56,8 +66,54 @@ public class Alarm extends BroadcastReceiver {
 
                 for (int urli=0; urli < urls.length; urli++) {
                     if (!urls[urli].equals("")) {
-                        Document doc = refresher.getDoc(urls[urli], AnotherRSS.Config.DEFAULT_expunge);
-                        refresher.insertToDb(doc, AnotherRSS.Config.DEFAULT_expunge, urli);
+                        if (urls[urli].startsWith("#")) {
+                            final String uQuery =  urls[urli].replace("#","");
+                            SearchTimeline searchTimeline = new SearchTimeline.Builder()
+                                    .query(uQuery)
+                                    .maxItemsPerRequest(AnotherRSS.Config.DEFAULT_TWITTER_MAX)
+                                    .build();
+                            searchTimeline.next(null, new Callback<TimelineResult<Tweet>>() {
+                                @Override
+                                public void success(Result<TimelineResult<Tweet>> result) {
+                                    for(final Tweet tweet : result.data.items) {
+                                        try {
+                                            refresher.insertTweet(tweet, uQuery, AnotherRSS.Config.DEFAULT_expunge);
+                                        } catch (ParseException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+                                @Override
+                                public void failure(TwitterException e) {
+                                    e.printStackTrace();
+                                }
+                            });
+                        } else if (urls[urli].startsWith("@")) {
+                            final String uQuery =  urls[urli].replace("@","");
+                            UserTimeline userTimeline = new UserTimeline.Builder()
+                                    .screenName(uQuery)
+                                    .maxItemsPerRequest(AnotherRSS.Config.DEFAULT_TWITTER_MAX)
+                                    .build();
+                            userTimeline.next(null, new Callback<TimelineResult<Tweet>>() {
+                                @Override
+                                public void success(Result<TimelineResult<Tweet>> result) {
+                                    for(final Tweet tweet : result.data.items) {
+                                        try {
+                                            refresher.insertTweet(tweet, uQuery, AnotherRSS.Config.DEFAULT_expunge);
+                                        } catch (ParseException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+                                @Override
+                                public void failure(TwitterException e) {
+                                    e.printStackTrace();
+                                }
+                            });
+                        } else {
+                            Document doc = refresher.getDoc(urls[urli], AnotherRSS.Config.DEFAULT_expunge);
+                            refresher.insertToDb(doc, AnotherRSS.Config.DEFAULT_expunge, urli);
+                        }
                     }
                 }
 

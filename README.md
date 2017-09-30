@@ -1,4 +1,4 @@
-# AnotherRSS
+# a RSS-n-Tweet
 
 ![logo](img/Icon.png)
 
@@ -12,6 +12,8 @@ Source Code: [https://github.com/no-go/AnotherRSS](https://github.com/no-go/Anot
 Website: [https://no-go.github.io/AnotherRSS](https://no-go.github.io/AnotherRSS)
 
 ## Features
+
+This Branch: Get a Twitter API Key and this version get additional Timelines of users and hashtags.
 
 - english and german interface
 - it is orange
@@ -31,7 +33,7 @@ Website: [https://no-go.github.io/AnotherRSS](https://no-go.github.io/AnotherRSS
 
 ## Get the App
 
-You can get a signed APK from here (Android 4.1+): [APK](https://raw.githubusercontent.com/no-go/AnotherRSS/master/app/app-release.apk)
+You can get a signed APK from here (Android 4.1+): [APK](https://raw.githubusercontent.com/no-go/AnotherRSS/tweeted/app/app-release.apk)
 
 <a href="https://f-droid.org/repository/browse/?fdid=de.digisocken.anotherrss" target="_blank">
 <img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="90"/></a>

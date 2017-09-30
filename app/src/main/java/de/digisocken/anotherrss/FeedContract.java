@@ -9,6 +9,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
@@ -80,6 +82,8 @@ public class FeedContract {
      * Die Datenbank will für DATETIME dieses Format {@value #DATABASE_DATETIME_FORMAT}
      */
     public static final String DATABASE_DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+    public static SimpleDateFormat tweetFormatDate = new SimpleDateFormat("EEE MMM dd hh:mm:ss z yyyy", Locale.ENGLISH);
 
     /**
      * Das ist das Format, was von Feeds als String im pubDate TAG erwartet wird.
@@ -399,6 +403,29 @@ public class FeedContract {
         canvas.drawRoundRect(rect, AnotherRSS.Config.IMG_ROUND, AnotherRSS.Config.IMG_ROUND, paint);
 
         return output;
+    }
+
+
+    public static Bitmap drawableToBitmap(Drawable drawable) {
+        Bitmap bitmap = null;
+
+        if (drawable instanceof BitmapDrawable) {
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+            if(bitmapDrawable.getBitmap() != null) {
+                return bitmapDrawable.getBitmap();
+            }
+        }
+
+        if(drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
+            bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
+        } else {
+            bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        }
+
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+        return bitmap;
     }
 
     public static Bitmap getImage(Node n) {

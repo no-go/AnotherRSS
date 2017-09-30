@@ -60,6 +60,23 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="Twitter">
+
+        <EditTextPreference
+            android:defaultValue=""
+            android:summary="@string/apihint"
+            android:key="CONSUMER_KEY"
+            android:title="Consumer API KEY" />
+
+        <EditTextPreference
+            android:defaultValue=""
+            android:summary="@string/apihint"
+            android:key="CONSUMER_SECRET"
+            android:title="Consumer API SECRET" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/nightmode" >
 
         <CheckBoxPreference
