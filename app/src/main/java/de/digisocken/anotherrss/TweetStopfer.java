@@ -6,8 +6,6 @@ import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.models.Tweet;
 import com.twitter.sdk.android.tweetui.TimelineResult;
 
-import java.text.ParseException;
-
 public class TweetStopfer extends Callback<TimelineResult<Tweet>> {
     private Refresher _refresher;
     private String _query;
@@ -23,16 +21,28 @@ public class TweetStopfer extends Callback<TimelineResult<Tweet>> {
     @Override
     public void success(Result<TimelineResult<Tweet>> result) {
         for(Tweet tweet : result.data.items) {
-            try {
-                _refresher.insertTweet(tweet, _query, AnotherRSS.Config.DEFAULT_expunge, _sourceId);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            new InsertThread(tweet).start();
         }
     }
 
     @Override
     public void failure(TwitterException exception) {
         exception.printStackTrace();
+    }
+
+    class InsertThread extends Thread {
+        Tweet tweet;
+
+        public InsertThread(Tweet tweet) {
+            this.tweet = tweet;
+        }
+
+        public void run() {
+            try  {
+                _refresher.insertTweet(tweet, _query, AnotherRSS.Config.DEFAULT_expunge, _sourceId);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

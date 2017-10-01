@@ -15,6 +15,7 @@ import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -87,6 +88,9 @@ public class Refresher {
     }
 
     private Refresher(Context ctx) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         _ctx = ctx;
         _newFeeds = new ArrayList<>();
         _pref = PreferenceManager.getDefaultSharedPreferences(AnotherRSS.getContextOfApplication());
@@ -292,9 +296,7 @@ public class Refresher {
             String title = tweet.user.name + " (" + Long.toString(tweet.id) + ")";
             Date date = FeedContract.tweetFormatDate.parse(tweet.createdAt);
             if (isReallyFresh(date, title, expunge)) {
-                TweetView orgTweetView = new TweetView(AnotherRSS.getContextOfApplication(), tweet);
-                TextView textBody = (TextView) orgTweetView.findViewById(R.id.tw__tweet_text);
-                String body = textBody.getText().toString();
+                String body = tweet.text;
 
                 if ((_regexAll.isEmpty() && _regexTo.isEmpty()) == false) {
                     title = doRegex(title);
@@ -319,10 +321,7 @@ public class Refresher {
                 values.put(FeedContract.Feeds.COLUMN_Link, "http://twitter.com/"+tweet.user.screenName+"/status/" + Long.toString(tweet.id));
                 values.put(FeedContract.Feeds.COLUMN_Body, body);
                 values.put(FeedContract.Feeds.COLUMN_Image, FeedContract.getBytes(
-                        BitmapFactory.decodeResource(
-                                AnotherRSS.getContextOfApplication().getResources(),
-                                R.drawable.tw__composer_logo_blue
-                        )
+                        FeedContract.getImageFromUrl(tweet.user.profileImageUrl)
                 ));
                 values.put(FeedContract.Feeds.COLUMN_Source, sourceId);
                 if (uQuery.equals(tweet.user.screenName)) {

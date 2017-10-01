@@ -532,18 +532,26 @@ public class FeedContract {
             }
         }
 
-        if (well) {
-            try {
-                is = new URL(path).openStream();
-                result = BitmapFactory.decodeStream(is);
-                is.close();
-                if (result.getWidth() < 16 || result.getHeight() < 16) return null;
-                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(AnotherRSS.getContextOfApplication());
-                int width = pref.getInt("image_width", AnotherRSS.Config.DEFAULT_MAX_IMG_WIDTH);
-                result = FeedContract.scale(result, width);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+        if (well) result = getImageFromUrl(path);
+
+        return result;
+    }
+
+    public static Bitmap getImageFromUrl(String path) {
+        Bitmap result = null;
+        InputStream is = null;
+        Log.d(AnotherRSS.TAG, "get Image from " + path);
+
+        try {
+            is = new URL(path).openStream();
+            result = BitmapFactory.decodeStream(is);
+            is.close();
+            if (result.getWidth() < 16 || result.getHeight() < 16) return null;
+            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(AnotherRSS.getContextOfApplication());
+            int width = pref.getInt("image_width", AnotherRSS.Config.DEFAULT_MAX_IMG_WIDTH);
+            result = FeedContract.scale(result, width);
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
 
         return result;

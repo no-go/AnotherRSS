@@ -5,6 +5,7 @@ import android.app.UiModeManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;

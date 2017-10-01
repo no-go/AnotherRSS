@@ -2,7 +2,7 @@
 
 This Branch: Get a Twitter API Key and this version get additional Timelines of users and hashtags.
 
-![nightmode Twitter](img/Screenshot_7.png)
+![feature collection](img/Screenshot_8.png)
 
 ![logo](img/Icon.png)
 
@@ -23,7 +23,7 @@ Support me: <a href="https://flattr.com/submit/auto?fid=o6wo7q&url=https%3A%2F%2
 - mark feeds as deleted, readed, favourite
 - blacklist
 - regex
-- widget (?!?!?!?! should not work with a Twitter username or hashtag)
+- widget (only first source)
 - Text and Image is resizeable
 - Tab behavior changeable
 - many more ...

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">RSS-o-Tweet</string>
     <string name="rss_url">フィード元</string>
-    <string name="rss_url_desc">rss/atom フィードへのパスを編集します</string>
+    <string name="rss_url_desc">Edit and add URLs to your favourite RSS/Atom feeds or add each line a Twitter @username or #hashtag</string>
     <string name="rss_sec">タイマー</string>
     <string name="rss_sec_desc">&#8230; 分ごとにフィードをチェックします</string>
     <string name="feedCheck">フィードをチェック</string>

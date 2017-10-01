@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">RSS-o-Tweet</string>
     <string name="rss_url">Feed Quellen</string>
-    <string name="rss_url_desc">Pflege hier die Pfade zu den RSS/Atom Feeds</string>
+    <string name="rss_url_desc">Pflege hier die URLs zu den RSS/Atom Feeds oder je Zeile ein Twitter @username oder #hashtag</string>
     <string name="rss_sec">Synchronisation</string>
     <string name="rss_sec_desc">Check Feed alle &#8230; Minuten</string>
     <string name="feedCheck">Feed Check</string>
