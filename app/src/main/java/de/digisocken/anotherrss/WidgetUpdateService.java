@@ -18,6 +18,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.models.Tweet;
+import com.twitter.sdk.android.tweetui.SearchTimeline;
+import com.twitter.sdk.android.tweetui.TimelineResult;
+import com.twitter.sdk.android.tweetui.UserTimeline;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -101,43 +108,116 @@ public class WidgetUpdateService extends Service {
         manager.updateAppWidget(thisWidget, views);
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(
-                Request.Method.GET, urls[0],
+        String query = urls[0];
 
-                new Response.Listener<String>() {
+        if (!query.equals("")) {
+            if (query.startsWith("#")) {
+
+                query = query.replace("#","");
+                SearchTimeline searchTimeline = new SearchTimeline.Builder()
+                        .query(query)
+                        .maxItemsPerRequest(AnotherRSS.Config.DEFAULT_TWITTER_MAX)
+                        .build();
+                searchTimeline.next(null, new Callback<TimelineResult<Tweet>>(){
+
                     @Override
-                    public void onResponse(String response) {
+                    public void success(Result<TimelineResult<Tweet>> result) {
+                        String lines = "";
                         RemoteViews views = new RemoteViews(getPackageName(), R.layout.main_widget);
-
                         Date dNow = new Date();
                         SimpleDateFormat ft = new SimpleDateFormat("HH:mm");
-                        String timeStr = ft.format(dNow);
-
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            views.setTextViewText(R.id.wFeedtitles, Html.fromHtml(extractTitles(response), Html.FROM_HTML_MODE_COMPACT));
-                        } else {
-                            views.setTextViewText(R.id.wFeedtitles, Html.fromHtml(extractTitles(response)));
+                        views.setTextViewText(R.id.wTime, ft.format(dNow));
+                        for(Tweet tweet : result.data.items) {
+                            lines += tweet.text + "\n";
                         }
-                        views.setTextViewText(R.id.wTime, timeStr);
+                        views.setTextViewText(R.id.wFeedtitles, lines);
 
-                        // Push update for this widget to the home screen
                         ComponentName thisWidget = new ComponentName(WidgetUpdateService.this, MyWidgetProvider.class);
                         AppWidgetManager manager = AppWidgetManager.getInstance(WidgetUpdateService.this);
                         manager.updateAppWidget(thisWidget, views);
                     }
-                },
-                new Response.ErrorListener() {
+
                     @Override
-                    public void onErrorResponse(VolleyError error) {
+                    public void failure(TwitterException exception) {
+                        exception.printStackTrace();
+                    }
+                });
+
+            } else if (query.startsWith("@")) {
+
+                query = query.replace("@","");
+                UserTimeline userTimeline = new UserTimeline.Builder()
+                        .screenName(query)
+                        .maxItemsPerRequest(AnotherRSS.Config.DEFAULT_TWITTER_MAX)
+                        .build();
+                userTimeline.next(null, new Callback<TimelineResult<Tweet>>(){
+
+                    @Override
+                    public void success(Result<TimelineResult<Tweet>> result) {
+                        String lines = "";
                         RemoteViews views = new RemoteViews(getPackageName(), R.layout.main_widget);
-                        views.setTextViewText(R.id.wFeedtitles, error.getMessage());
+                        Date dNow = new Date();
+                        SimpleDateFormat ft = new SimpleDateFormat("HH:mm");
+                        views.setTextViewText(R.id.wTime, ft.format(dNow));
+                        for(Tweet tweet : result.data.items) {
+                            lines += tweet.text + "\n";
+                        }
+                        views.setTextViewText(R.id.wFeedtitles, lines);
+
                         ComponentName thisWidget = new ComponentName(WidgetUpdateService.this, MyWidgetProvider.class);
                         AppWidgetManager manager = AppWidgetManager.getInstance(WidgetUpdateService.this);
                         manager.updateAppWidget(thisWidget, views);
                     }
-                }
-        );
-        queue.add(stringRequest);
+
+                    @Override
+                    public void failure(TwitterException exception) {
+                        exception.printStackTrace();
+                    }
+                });
+
+            } else {
+
+                StringRequest stringRequest = new StringRequest(
+                        Request.Method.GET, query,
+
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                RemoteViews views = new RemoteViews(getPackageName(), R.layout.main_widget);
+
+                                Date dNow = new Date();
+                                SimpleDateFormat ft = new SimpleDateFormat("HH:mm");
+                                views.setTextViewText(R.id.wTime, ft.format(dNow));
+
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                    views.setTextViewText(R.id.wFeedtitles, Html.fromHtml(extractTitles(response), Html.FROM_HTML_MODE_COMPACT));
+                                } else {
+                                    views.setTextViewText(R.id.wFeedtitles, Html.fromHtml(extractTitles(response)));
+                                }
+
+                                // Push update for this widget to the home screen
+                                ComponentName thisWidget = new ComponentName(WidgetUpdateService.this, MyWidgetProvider.class);
+                                AppWidgetManager manager = AppWidgetManager.getInstance(WidgetUpdateService.this);
+                                manager.updateAppWidget(thisWidget, views);
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                RemoteViews views = new RemoteViews(getPackageName(), R.layout.main_widget);
+                                views.setTextViewText(R.id.wFeedtitles, error.getMessage());
+                                ComponentName thisWidget = new ComponentName(WidgetUpdateService.this, MyWidgetProvider.class);
+                                AppWidgetManager manager = AppWidgetManager.getInstance(WidgetUpdateService.this);
+                                manager.updateAppWidget(thisWidget, views);
+                            }
+                        }
+                );
+                queue.add(stringRequest);
+
+            }
+        }
+
+
 
         return START_STICKY;
     }

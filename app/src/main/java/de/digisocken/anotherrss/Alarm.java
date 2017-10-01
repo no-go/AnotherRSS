@@ -39,7 +39,7 @@ public class Alarm extends BroadcastReceiver {
                 Context ctx = (Context) objs[0];
 
                 SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(ctx);
-                final Refresher refresher = Refresher.ME(ctx);
+                Refresher refresher = Refresher.ME(ctx);
 
                 if (refresher.isOnline()) {
                     if (pref.getBoolean("isRetry", false)) {
@@ -67,49 +67,19 @@ public class Alarm extends BroadcastReceiver {
                 for (int urli=0; urli < urls.length; urli++) {
                     if (!urls[urli].equals("")) {
                         if (urls[urli].startsWith("#")) {
-                            final String uQuery =  urls[urli].replace("#","");
+                            urls[urli] = urls[urli].replace("#","");
                             SearchTimeline searchTimeline = new SearchTimeline.Builder()
-                                    .query(uQuery)
+                                    .query(urls[urli])
                                     .maxItemsPerRequest(AnotherRSS.Config.DEFAULT_TWITTER_MAX)
                                     .build();
-                            searchTimeline.next(null, new Callback<TimelineResult<Tweet>>() {
-                                @Override
-                                public void success(Result<TimelineResult<Tweet>> result) {
-                                    for(final Tweet tweet : result.data.items) {
-                                        try {
-                                            refresher.insertTweet(tweet, uQuery, AnotherRSS.Config.DEFAULT_expunge);
-                                        } catch (ParseException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                }
-                                @Override
-                                public void failure(TwitterException e) {
-                                    e.printStackTrace();
-                                }
-                            });
+                            searchTimeline.next(null, new TweetStopfer(refresher, urls[urli], urli));
                         } else if (urls[urli].startsWith("@")) {
-                            final String uQuery =  urls[urli].replace("@","");
+                            urls[urli] = urls[urli].replace("@","");
                             UserTimeline userTimeline = new UserTimeline.Builder()
-                                    .screenName(uQuery)
+                                    .screenName(urls[urli])
                                     .maxItemsPerRequest(AnotherRSS.Config.DEFAULT_TWITTER_MAX)
                                     .build();
-                            userTimeline.next(null, new Callback<TimelineResult<Tweet>>() {
-                                @Override
-                                public void success(Result<TimelineResult<Tweet>> result) {
-                                    for(final Tweet tweet : result.data.items) {
-                                        try {
-                                            refresher.insertTweet(tweet, uQuery, AnotherRSS.Config.DEFAULT_expunge);
-                                        } catch (ParseException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                }
-                                @Override
-                                public void failure(TwitterException e) {
-                                    e.printStackTrace();
-                                }
-                            });
+                            userTimeline.next(null, new TweetStopfer(refresher, urls[urli], urli));
                         } else {
                             Document doc = refresher.getDoc(urls[urli], AnotherRSS.Config.DEFAULT_expunge);
                             refresher.insertToDb(doc, AnotherRSS.Config.DEFAULT_expunge, urli);

@@ -279,7 +279,7 @@ public class Refresher {
         return val;
     }
 
-    public void insertTweet(Tweet tweet, String uQuery, int expunge) throws ParseException {
+    public void insertTweet(Tweet tweet, String uQuery, int expunge, int sourceId) throws ParseException {
         String nextHop = extractRT(tweet.text);
 
         String[] blacklist = getBlacklist();
@@ -324,7 +324,7 @@ public class Refresher {
                                 R.drawable.tw__composer_logo_blue
                         )
                 ));
-                values.put(FeedContract.Feeds.COLUMN_Source, tweet.user.id);
+                values.put(FeedContract.Feeds.COLUMN_Source, sourceId);
                 if (uQuery.equals(tweet.user.screenName)) {
                     values.put(FeedContract.Feeds.COLUMN_Souname, "@" + tweet.user.screenName);
                 } else {
@@ -582,7 +582,7 @@ public class Refresher {
         String title= FeedContract.removeHtml(cv.getAsString(FeedContract.Feeds.COLUMN_Title));
         String link = cv.getAsString(FeedContract.Feeds.COLUMN_Link);
         Bitmap largeIcon = FeedContract.getImage(cv.getAsByteArray(FeedContract.Feeds.COLUMN_Image));
-
+        title = title.replaceAll("(\\(\\d+\\))", "");
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(_ctx);
 
         NotificationCompat.BigTextStyle bigStyle = new NotificationCompat.BigTextStyle();
