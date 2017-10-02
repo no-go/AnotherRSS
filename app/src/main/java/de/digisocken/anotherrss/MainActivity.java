@@ -8,11 +8,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.hardware.Camera;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -28,7 +31,18 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+import com.twitter.sdk.android.tweetcomposer.ComposerActivity;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.Date;
@@ -49,6 +63,12 @@ public class MainActivity extends AppCompatActivity {
     private WebView webView;
     private ProgressBar progressBar;
     private UiModeManager umm;
+
+    TwitterLoginButton loginButton;
+    TwitterSession session = null;
+    String username = "";
+
+    static final int REQUEST_IMAGE_CAPTURE = 1;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -112,6 +132,28 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_flattr:
                 Intent intentFlattr = new Intent(Intent.ACTION_VIEW, Uri.parse(FLATTR_LINK));
                 startActivity(intentFlattr);
+                break;
+            case R.id.action_tweet_pic:
+            case R.id.action_tweet_it:
+                if (username.equals("")) {
+                    loginButton.callOnClick();
+                } else {
+                    int numberOfCameras = Camera.getNumberOfCameras();
+                    PackageManager pm = ctx.getPackageManager();
+                    final boolean deviceHasCameraFlag = pm.hasSystemFeature(PackageManager.FEATURE_CAMERA);
+
+                    if( !deviceHasCameraFlag || numberOfCameras==0 ) {
+                        final Intent intent = new ComposerActivity.Builder(MainActivity.this)
+                                .session(session)
+                                .createIntent();
+                        startActivity(intent);
+                    } else {
+                        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                        }
+                    }
+                }
                 break;
             case R.id.action_project:
                 Intent intentProj= new Intent(Intent.ACTION_VIEW, Uri.parse(PROJECT_LINK));
@@ -189,6 +231,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d(AnotherRSS.TAG, "onCreate");
         ctx = this;
+        loginButton = new TwitterLoginButton(this);
 
         try {
             FLATTR_LINK = "https://flattr.com/submit/auto?fid="+FLATTR_ID+"&url="+
@@ -212,6 +255,25 @@ public class MainActivity extends AppCompatActivity {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        loginButton.setCallback(new Callback<TwitterSession>() {
+            @Override
+            public void success(Result<TwitterSession> result) {
+                session = result.data;
+                username = session.getUserName();
+            }
+
+            @Override
+            public void failure(TwitterException e) {
+                e.printStackTrace();
+                Toast.makeText(MainActivity.this, getString(R.string.youNeedApiKey), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        session = TwitterCore.getInstance().getSessionManager().getActiveSession();
+        if (session != null) {
+            username = session.getUserName();
         }
 
         alarmReceiver = new BroadcastReceiver() {
@@ -300,6 +362,42 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         super.onResume();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            // image preview
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+            byte[] bitmapdata = bos.toByteArray();
+
+            try {
+                File mTmpFile = File.createTempFile("tmp", ".png", getCacheDir());
+                FileOutputStream fos = new FileOutputStream(mTmpFile);
+                fos.write(bitmapdata);
+                fos.flush();
+                fos.close();
+
+                Uri imgUri = Uri.fromFile(mTmpFile);
+
+                // make image tweet
+                final Intent intent = new ComposerActivity.Builder(MainActivity.this)
+                        .session(session)
+                        .image(imgUri)
+                        .createIntent();
+                startActivity(intent);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            loginButton.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     /**

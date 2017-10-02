@@ -10,6 +10,13 @@
         app:showAsAction="ifRoom|collapseActionView" />
 
     <item
+        android:id="@+id/action_tweet_pic"
+        android:icon="@android:drawable/ic_menu_camera"
+        app:showAsAction="ifRoom|collapseActionView"
+        android:title="@string/tweet_it">
+    </item>
+
+    <item
         android:id="@+id/action_delNotifies"
         android:title="@string/delNotifies">
     </item>
@@ -79,6 +86,11 @@
                 android:enabled="false"
                 android:title=" "></item>
         </menu>
+    </item>
+
+    <item
+        android:id="@+id/action_tweet_it"
+        android:title="@string/tweet_it">
     </item>
 
 </menu>

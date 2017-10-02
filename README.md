@@ -15,7 +15,7 @@ Support me: <a href="https://flattr.com/submit/auto?fid=o6wo7q&url=https%3A%2F%2
 - english and german interface
 - it is BLUE
 - everyting in one list
-- images
+- RSS images and twitter avatar
 - landscape mode with web preview
 - search text content
 - night mode
@@ -26,7 +26,16 @@ Support me: <a href="https://flattr.com/submit/auto?fid=o6wo7q&url=https%3A%2F%2
 - widget (only first source)
 - Text and Image is resizeable
 - Tab behavior changeable
+- THE TWITTER STUFF IS AN OPTION !
+- the App does not need a SD-Card or memory access
 - many more ...
+
+- Optional: login to Twitter and tweet a low resuluton (!) picture and some text
+
+## Bugs
+
+- see issue in master branch
+- there is a datetime bug: tweets are in stange order ?!?
 
 ## Get the App
 

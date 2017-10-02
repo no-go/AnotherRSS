@@ -77,7 +77,7 @@ http://www.wetterleitstelle.de/nordrhein-westfalen.xml
         public static final String DEFAULT_regexAll = "";
         public static final String DEFAULT_regexTo = "";
 
-        public static final int DEFAULT_TWITTER_MAX = 10;
+        public static final int DEFAULT_TWITTER_MAX = 40;
 
         /**
          * sollte eine Verbindung nicht zu sande kommen, wird ein neuer

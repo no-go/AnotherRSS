@@ -2,11 +2,14 @@
     android:installLocation="internalOnly"
     package="de.digisocken.anotherrss">
 
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -60,6 +63,7 @@
         </receiver>
 
         <service android:name="de.digisocken.anotherrss.WidgetUpdateService" />
+        <activity android:name="com.twitter.sdk.android.core.identity.OAuthActivity" />
 
     </application>
 

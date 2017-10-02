@@ -160,4 +160,6 @@
     </string-array>
 
     <string name="apihint">erstelle es bei http://apps.twitter.com</string>
+    <string name="tweet_it">Foto schießen &amp; twittern!</string>
+    <string name="youNeedApiKey">Du brauchst auch gültigen API Key + Secret!</string>
 </resources>

@@ -160,4 +160,6 @@
     </string-array>
 
     <string name="apihint">get it on http://apps.twitter.com</string>
+    <string name="tweet_it">take pic and tweet!</string>
+    <string name="youNeedApiKey">You need a valid API Key and Secret, too!</string>
 </resources>

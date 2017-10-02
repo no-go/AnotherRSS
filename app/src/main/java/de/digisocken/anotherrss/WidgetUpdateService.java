@@ -160,6 +160,8 @@ public class WidgetUpdateService extends Service {
                         SimpleDateFormat ft = new SimpleDateFormat("HH:mm");
                         views.setTextViewText(R.id.wTime, ft.format(dNow));
                         for(Tweet tweet : result.data.items) {
+                            // no retweets
+                            if (tweet.text.startsWith("RT @")) continue;
                             lines += tweet.text + "\n";
                         }
                         views.setTextViewText(R.id.wFeedtitles, lines);
