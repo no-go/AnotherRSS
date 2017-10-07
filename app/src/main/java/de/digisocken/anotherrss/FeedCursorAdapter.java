@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.preference.PreferenceManager;
@@ -56,6 +57,8 @@ public class FeedCursorAdapter extends CursorAdapter {
         float fontSize = _pref.getFloat("font_size", AnotherRSS.Config.DEFAULT_FONT_SIZE);
         TextView tt = (TextView) view.findViewById(R.id.feedTitle);
         String title = cursor.getString(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Title));
+        boolean isTweet = false;
+        isTweet = title.startsWith("(");
         title = title.replaceAll("(\\(\\d+\\))", "");
         if (!AnotherRSS.query.equals("")) {
             tt.setText(highlight(AnotherRSS.query, title));
@@ -101,8 +104,13 @@ public class FeedCursorAdapter extends CursorAdapter {
         iv.setImageBitmap(bmp);
         int source = cursor.getInt(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Source));
         if (bmp != null) {
+            if (isTweet) {
+                iv.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+            } else {
+                iv.setBackgroundColor(Color.TRANSPARENT);
+            }
             int width = _pref.getInt("image_width", AnotherRSS.Config.DEFAULT_MAX_IMG_WIDTH);
-            iv.setPadding(20, 30, 10, 0);
+            iv.setPadding(10, 10, 10, 10);
             iv.setMaxWidth(width);
             if (bmp.getWidth() != width) {
                 bmp = FeedContract.scale(bmp, width);

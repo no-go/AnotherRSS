@@ -84,6 +84,7 @@
         <item>1 Stunde</item>
         <item>3 Stunden</item>
         <item>6 Stunden</item>
+        <item>nie</item>
     </string-array>
 
     <string-array name="rss_sec_values">
@@ -91,6 +92,7 @@
         <item>3600</item>
         <item>10800</item>
         <item>21600</item>
+        <item>1</item>
     </string-array>
 
     <string-array name="tap_mode">

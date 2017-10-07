@@ -84,6 +84,7 @@
         <item>1 時間</item>
         <item>3 時間</item>
         <item>6 時間</item>
+        <item>never</item>
     </string-array>
 
     <string-array name="rss_sec_values">
@@ -91,6 +92,7 @@
         <item>3600</item>
         <item>10800</item>
         <item>21600</item>
+        <item>1</item>
     </string-array>
 
     <string-array name="tap_mode">

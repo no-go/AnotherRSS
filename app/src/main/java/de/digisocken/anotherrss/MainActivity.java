@@ -16,6 +16,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -52,7 +54,8 @@ import java.util.TimeZone;
  * Diese Activity stellt die Liste der Feeds dar. Die Liste selbst
  * ist in {@link FeedListFragment} zu finden.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String PROJECT_LINK = "https://no-go.github.io/AnotherRSS/";
     private static final String FLATTR_ID = "o6wo7q";
@@ -79,10 +82,12 @@ public class MainActivity extends AppCompatActivity {
         MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
+        /*
         MenuItem sizeItem = menu.findItem(R.id.size_info);
         File f = this.getDatabasePath(FeedHelper.DATABASE_NAME);
         long dbSize = f.length();
         sizeItem.setTitle(String.valueOf(dbSize/1024) + getString(R.string.kB_used));
+        */
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -123,18 +128,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        DbClear dbClear = new DbClear();
-        int size;
-        float fontSize;
 
-        SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         switch (item.getItemId()) {
-            case R.id.action_flattr:
-                Intent intentFlattr = new Intent(Intent.ACTION_VIEW, Uri.parse(FLATTR_LINK));
-                startActivity(intentFlattr);
-                break;
             case R.id.action_tweet_pic:
-            case R.id.action_tweet_it:
                 if (username.equals("")) {
                     loginButton.callOnClick();
                 } else {
@@ -154,6 +150,121 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
+                break;
+            default:
+                break;
+        }
+
+        return true;
+    }
+
+    /**
+     * Beinhaltet alle Start-Funktionen der App.
+     * Funktionen:
+     * <ul>
+     *     <li>Alarm (neu) Starten</li>
+     *     <li>Datenbank bereinigen (gelöschte Feeds entfernen)</li>
+     *     <li>Ein BroadcastReceiver() wird registriert, um nach neuen Feeds durch den Alarm zu horchen</li>
+     * </ul>
+     * Außerdem wird das Icon in die ActionBar eingefügt.
+     *
+     * @param savedInstanceState
+     */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.d(AnotherRSS.TAG, "onCreate");
+        ctx = this;
+        loginButton = new TwitterLoginButton(this);
+
+        try {
+            FLATTR_LINK = "https://flattr.com/submit/auto?fid="+FLATTR_ID+"&url="+
+                    java.net.URLEncoder.encode(PROJECT_LINK, "ISO-8859-1");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        setContentView(R.layout.together);
+        umm = (UiModeManager) getSystemService(Context.UI_MODE_SERVICE);
+        AnotherRSS.alarm.restart(this);;
+
+        try {
+            ActionBar ab = getSupportActionBar();
+            if (ab != null) {
+                ab.setDisplayShowHomeEnabled(true);
+                ab.setHomeButtonEnabled(true);
+                ab.setDisplayUseLogoEnabled(true);
+                ab.setLogo(R.mipmap.ic_launcher);
+                ab.setTitle(" " + getString(R.string.app_name));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        loginButton.setCallback(new Callback<TwitterSession>() {
+            @Override
+            public void success(Result<TwitterSession> result) {
+                session = result.data;
+                username = session.getUserName();
+            }
+
+            @Override
+            public void failure(TwitterException e) {
+                e.printStackTrace();
+                Toast.makeText(MainActivity.this, getString(R.string.youNeedApiKey), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        session = TwitterCore.getInstance().getSessionManager().getActiveSession();
+        if (session != null) {
+            username = session.getUserName();
+        }
+
+        alarmReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+                if (action.equals(getString(R.string.serviceHasNews))) {
+                    int countNews = intent.getIntExtra("count", 0);
+                    Toast.makeText(
+                            ctx,
+                            getString(R.string.newFeeds) + ": " + countNews,
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+            }
+        };
+        webView = (WebView) findViewById(R.id.webView);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(getString(R.string.serviceHasNews));
+        registerReceiver(alarmReceiver, filter);
+    }
+
+    public boolean setWebView(String url) {
+        if (webView == null) return false;
+        webView.setWebViewClient(new MyWebClient());
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setUseWideViewPort(true);
+        webView.loadUrl(url);
+        return true;
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        DbClear dbClear = new DbClear();
+        int size;
+        float fontSize;
+
+        SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        switch (item.getItemId()) {
+            case R.id.action_flattr:
+                Intent intentFlattr = new Intent(Intent.ACTION_VIEW, Uri.parse(FLATTR_LINK));
+                startActivity(intentFlattr);
                 break;
             case R.id.action_project:
                 Intent intentProj= new Intent(Intent.ACTION_VIEW, Uri.parse(PROJECT_LINK));
@@ -211,99 +322,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        return true;
-    }
-
-    /**
-     * Beinhaltet alle Start-Funktionen der App.
-     * Funktionen:
-     * <ul>
-     *     <li>Alarm (neu) Starten</li>
-     *     <li>Datenbank bereinigen (gelöschte Feeds entfernen)</li>
-     *     <li>Ein BroadcastReceiver() wird registriert, um nach neuen Feeds durch den Alarm zu horchen</li>
-     * </ul>
-     * Außerdem wird das Icon in die ActionBar eingefügt.
-     *
-     * @param savedInstanceState
-     */
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.d(AnotherRSS.TAG, "onCreate");
-        ctx = this;
-        loginButton = new TwitterLoginButton(this);
-
-        try {
-            FLATTR_LINK = "https://flattr.com/submit/auto?fid="+FLATTR_ID+"&url="+
-                    java.net.URLEncoder.encode(PROJECT_LINK, "ISO-8859-1");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        setContentView(R.layout.activity_main);
-        umm = (UiModeManager) getSystemService(Context.UI_MODE_SERVICE);
-        AnotherRSS.alarm.restart(this);;
-
-        try {
-            ActionBar ab = getSupportActionBar();
-            if (ab != null) {
-                ab.setDisplayShowHomeEnabled(true);
-                ab.setHomeButtonEnabled(true);
-                ab.setDisplayUseLogoEnabled(true);
-                ab.setLogo(R.mipmap.ic_launcher);
-                ab.setTitle(" " + getString(R.string.app_name));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        loginButton.setCallback(new Callback<TwitterSession>() {
-            @Override
-            public void success(Result<TwitterSession> result) {
-                session = result.data;
-                username = session.getUserName();
-            }
-
-            @Override
-            public void failure(TwitterException e) {
-                e.printStackTrace();
-                Toast.makeText(MainActivity.this, getString(R.string.youNeedApiKey), Toast.LENGTH_LONG).show();
-            }
-        });
-
-        session = TwitterCore.getInstance().getSessionManager().getActiveSession();
-        if (session != null) {
-            username = session.getUserName();
-        }
-
-        alarmReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                String action = intent.getAction();
-                if (action.equals(getString(R.string.serviceHasNews))) {
-                    int countNews = intent.getIntExtra("count", 0);
-                    Toast.makeText(
-                            ctx,
-                            getString(R.string.newFeeds) + ": " + countNews,
-                            Toast.LENGTH_SHORT
-                    ).show();
-                }
-            }
-        };
-        webView = (WebView) findViewById(R.id.webView);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(getString(R.string.serviceHasNews));
-        registerReceiver(alarmReceiver, filter);
-    }
-
-    public boolean setWebView(String url) {
-        if (webView == null) return false;
-        webView.setWebViewClient(new MyWebClient());
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setUseWideViewPort(true);
-        webView.loadUrl(url);
         return true;
     }
 

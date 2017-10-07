@@ -128,6 +128,9 @@ public class Alarm extends BroadcastReceiver {
                 pref.getString("rss_sec", AnotherRSS.Config.DEFAULT_rsssec)
         ) * 1000L;
 
+        // never
+        if (refreshInterval == 1000) return;
+
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent(context, Alarm.class);
         pref.edit().putBoolean("isRetry", false).apply();

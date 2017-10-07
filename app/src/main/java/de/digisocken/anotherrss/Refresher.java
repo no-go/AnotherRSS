@@ -293,7 +293,7 @@ public class Refresher {
 
         // we do not want retweets !!
         if (nextHop == null) {
-            String title = tweet.user.name + " (" + Long.toString(tweet.id) + ")";
+            String title =  "(" + Long.toString(tweet.id) + ") " + tweet.user.name;
             Date date = FeedContract.tweetFormatDate.parse(tweet.createdAt);
             if (isReallyFresh(date, title, expunge)) {
                 String body = tweet.text;

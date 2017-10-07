@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_delNotifies"
+        android:title="@string/delNotifies">
+    </item>
+
+    <item
+        android:id="@+id/action_readedFeeds"
+        android:title="@string/readedFeeds">
+    </item>
+
+    <item
+        android:id="@+id/action_delFeeds"
+        android:title="@string/delFeeds">
+    </item>
+
+    <item
+        android:id="@+id/action_prefmenu"
+        android:title="@string/preferences">
+        <menu>
+            <item
+                android:id="@+id/action_regex"
+                android:title="@string/regex">
+            </item>
+            <item
+                android:id="@+id/action_feedsources"
+                android:title="@string/rss_url">
+            </item>
+            <item
+                android:id="@+id/action_preferences"
+                android:title="@string/more">
+            </item>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/zoom"
+        android:title="@string/zoom">
+        <menu>
+            <item
+                android:id="@+id/action_biggerText"
+                android:title="@string/bigger"/>
+            <item
+                android:id="@+id/action_smallerText"
+                android:title="@string/smaller"/>
+            <item
+                android:id="@+id/action_biggerImageSize"
+                android:title="@string/biggerImage"/>
+            <item
+                android:id="@+id/action_smallerImageSize"
+                android:title="@string/smallerImage"/>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/Info"
+        android:title="@string/info">
+        <menu>
+            <item
+                android:id="@+id/action_project"
+                android:title="@string/projPage"></item>
+
+            <item
+                android:id="@+id/action_flattr"
+                android:title="@string/flattr_this"></item>
+
+        </menu>
+    </item>
+
+</menu>
