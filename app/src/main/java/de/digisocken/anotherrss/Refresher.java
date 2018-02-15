@@ -494,6 +494,9 @@ public class Refresher {
     }
 
     private void notify(ContentValues cv, PendingIntent pi, Uri sound, boolean isHeadUp) {
+        // 4 = no notification
+        if (_notifyType == 4) return;
+
         String body = FeedContract.removeHtml(cv.getAsString(FeedContract.Feeds.COLUMN_Body));
         String title= FeedContract.removeHtml(cv.getAsString(FeedContract.Feeds.COLUMN_Title));
         String link = cv.getAsString(FeedContract.Feeds.COLUMN_Link);

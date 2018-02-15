@@ -80,17 +80,21 @@
     <string name="regex_to">to:</string>
 
     <string-array name="rss_sec_names">
+        <item>10 minutes</item>
         <item>30 minutes</item>
         <item>1 hours</item>
         <item>3 hours</item>
         <item>6 hours</item>
+        <item>12 hours</item>
     </string-array>
 
     <string-array name="rss_sec_values">
+        <item>600</item>
         <item>1800</item>
         <item>3600</item>
         <item>10800</item>
         <item>21600</item>
+        <item>43200</item>
     </string-array>
 
     <string-array name="tap_mode">
@@ -150,6 +154,7 @@
         <item>static</item>
         <item>slow</item>
         <item>fast</item>
+        <item>NO notification!</item>
     </string-array>
 
     <string-array name="notify_type_values">
@@ -157,5 +162,6 @@
         <item>1</item>
         <item>2</item>
         <item>3</item>
+        <item>4</item>
     </string-array>
 </resources>
