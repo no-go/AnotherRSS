@@ -28,7 +28,7 @@ Website: [https://no-go.github.io/AnotherRSS](https://no-go.github.io/AnotherRSS
 
 ## Get the App
 
-You can get a signed APK from here (Android 4.1+): [APK](https://raw.githubusercontent.com/no-go/AnotherRSS/master/app/app-release.apk)
+You can get a signed APK from here (Android 4.1+): [APK](https://raw.githubusercontent.com/no-go/AnotherRSS/master/app/release/app-release.apk)
 
 <a href="https://f-droid.org/repository/browse/?fdid=de.digisocken.anotherrss" target="_blank">![Get it on F-Droid](img/get-it-on-fdroid.png)</a>
 <a href="https://play.google.com/store/apps/details?id=de.digisocken.anotherrss" target="_blank">
