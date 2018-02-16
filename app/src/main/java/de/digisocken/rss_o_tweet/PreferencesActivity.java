@@ -1,4 +1,4 @@
-package de.digisocken.anotherrss;
+package de.digisocken.rss_o_tweet;
 
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -6,7 +6,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 /**
  * Das ist die Activity, die die Einstellungen zeigt.
@@ -44,15 +43,15 @@ public class PreferencesActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        Log.d(AnotherRSS.TAG, "Pref onPause");
-        AnotherRSS.withGui = false;
+        Log.d(RssOTweet.TAG, "Pref onPause");
+        RssOTweet.withGui = false;
         super.onPause();
     }
 
     @Override
     protected void onResume() {
-        Log.d(AnotherRSS.TAG, "Pref onResume");
-        AnotherRSS.withGui = true;
+        Log.d(RssOTweet.TAG, "Pref onResume");
+        RssOTweet.withGui = true;
         super.onResume();
     }
 

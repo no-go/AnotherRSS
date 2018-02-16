@@ -7,7 +7,7 @@
 
 <fragment
     android:id="@+id/fragment"
-    android:name="de.digisocken.anotherrss.MyPreferenceFragment"
+    android:name="de.digisocken.rss_o_tweet.MyPreferenceFragment"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"/>

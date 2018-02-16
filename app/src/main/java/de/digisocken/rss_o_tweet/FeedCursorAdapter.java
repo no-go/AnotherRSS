@@ -1,4 +1,4 @@
-package de.digisocken.anotherrss;
+package de.digisocken.rss_o_tweet;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -6,8 +6,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.text.Spanned;
@@ -26,12 +26,14 @@ public class FeedCursorAdapter extends CursorAdapter {
     private Bitmap largeIcon;
     private Drawable favoriteIcon;
     private SharedPreferences _pref;
+    private Typeface c64Font;
 
     public FeedCursorAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
+        c64Font = Typeface.createFromAsset(context.getAssets(), "fonts/C64_Pro_Mono-STYLE.ttf");
         largeIcon = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
         favoriteIcon = ContextCompat.getDrawable(context, R.drawable.favorite);
-        _pref = PreferenceManager.getDefaultSharedPreferences(AnotherRSS.getContextOfApplication());
+        _pref = PreferenceManager.getDefaultSharedPreferences(RssOTweet.getContextOfApplication());
     }
 
     @Override
@@ -54,18 +56,19 @@ public class FeedCursorAdapter extends CursorAdapter {
      */
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        float fontSize = _pref.getFloat("font_size", AnotherRSS.Config.DEFAULT_FONT_SIZE);
+        float fontSize = _pref.getFloat("font_size", RssOTweet.Config.DEFAULT_FONT_SIZE);
         TextView tt = (TextView) view.findViewById(R.id.feedTitle);
         String title = cursor.getString(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Title));
         boolean isTweet = false;
         isTweet = title.startsWith("(");
         title = title.replaceAll("(\\(\\d+\\))", "");
-        if (!AnotherRSS.query.equals("")) {
-            tt.setText(highlight(AnotherRSS.query, title));
+        if (!RssOTweet.query.equals("")) {
+            tt.setText(highlight(RssOTweet.query, title));
         } else {
             tt.setText(title);
         }
         tt.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontSize * 1.25f);
+        tt.setTypeface(c64Font);
 
         TextView td = (TextView) view.findViewById(R.id.feedDate);
         td.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontSize * 0.75f);
@@ -76,19 +79,20 @@ public class FeedCursorAdapter extends CursorAdapter {
         TextView tb = (TextView) view.findViewById(R.id.feedBody);
         tb.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontSize);
         String body = FeedContract.removeHtml(cursor.getString(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Body)));
-        if (!AnotherRSS.query.equals("")) {
-            tb.setText(highlight(AnotherRSS.query, body));
+        if (!RssOTweet.query.equals("")) {
+            tb.setText(highlight(RssOTweet.query, body));
         } else {
             tb.setText(body);
         }
+        tb.setTypeface(c64Font);
 
         TextView sn = (TextView) view.findViewById(R.id.sourceName);
         sn.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontSize * 0.75f);
         String sName = FeedContract.removeHtml(
                 cursor.getString(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Souname))
         );
-        if (!AnotherRSS.query.equals("")) {
-            sn.setText(highlight(AnotherRSS.query, sName));
+        if (!RssOTweet.query.equals("")) {
+            sn.setText(highlight(RssOTweet.query, sName));
         } else {
             sn.setText(sName);
         }
@@ -109,7 +113,7 @@ public class FeedCursorAdapter extends CursorAdapter {
             } else {
                 iv.setBackgroundColor(Color.TRANSPARENT);
             }
-            int width = _pref.getInt("image_width", AnotherRSS.Config.DEFAULT_MAX_IMG_WIDTH);
+            int width = _pref.getInt("image_width", RssOTweet.Config.DEFAULT_MAX_IMG_WIDTH);
             iv.setPadding(10, 10, 10, 10);
             iv.setMaxWidth(width);
             if (bmp.getWidth() != width) {
@@ -154,7 +158,7 @@ public class FeedCursorAdapter extends CursorAdapter {
     public Spanned highlight(String key, String msg) {
         msg = msg.replaceAll(
                 "((?i)"+key+")",
-                "<b><font color='"+ AnotherRSS.Config.SEARCH_HINT_COLOR + "'>$1</font></b>"
+                "<b><font color='"+ RssOTweet.Config.SEARCH_HINT_COLOR + "'>$1</font></b>"
         );
         return FeedContract.fromHtml(msg);
     }

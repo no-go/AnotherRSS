@@ -37,7 +37,7 @@
     <string name="responseStrange">URL Respose is strange</string>
     <string name="waitOnNextSync">there are (still) no feeds …</string>
 
-    <string name="serviceHasNews">de.digisocken.anotherrss.ALARM_HAS_NEWS</string>
+    <string name="serviceHasNews">de.digisocken.rss_o_tweet.ALARM_HAS_NEWS</string>
     <string name="nightmode">Nightmode (good on Android &gt; 6)</string>
     <string name="nightmode_summary">between a timespan the App is optimized for a dark environment</string>
     <string name="nightmode_use">dark</string>
@@ -80,6 +80,7 @@
     <string name="regex_to">to:</string>
 
     <string-array name="rss_sec_names">
+        <item>10 minutes</item>
         <item>30 minutes</item>
         <item>1 hours</item>
         <item>3 hours</item>
@@ -88,6 +89,7 @@
     </string-array>
 
     <string-array name="rss_sec_values">
+        <item>600</item>
         <item>1800</item>
         <item>3600</item>
         <item>10800</item>
@@ -152,6 +154,7 @@
         <item>static</item>
         <item>slow</item>
         <item>fast</item>
+        <item>NO notification!</item>
     </string-array>
 
     <string-array name="notify_type_values">
@@ -159,6 +162,7 @@
         <item>1</item>
         <item>2</item>
         <item>3</item>
+        <item>4</item>
     </string-array>
 
     <string name="apihint">get it on http://apps.twitter.com</string>

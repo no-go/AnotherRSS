@@ -1,4 +1,4 @@
-package de.digisocken.anotherrss;
+package de.digisocken.rss_o_tweet;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -13,8 +13,8 @@ public class DeviceBootReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
-            if (AnotherRSS.alarm == null) AnotherRSS.alarm = new Alarm();
-            AnotherRSS.alarm.start(context);
+            if (RssOTweet.alarm == null) RssOTweet.alarm = new Alarm();
+            RssOTweet.alarm.start(context);
         }
     }
 }

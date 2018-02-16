@@ -1,4 +1,4 @@
-package de.digisocken.anotherrss;
+package de.digisocken.rss_o_tweet;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;

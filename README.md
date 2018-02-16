@@ -12,7 +12,8 @@ Support me: <a href="https://flattr.com/submit/auto?fid=o6wo7q&url=https%3A%2F%2
 
 ## Features
 
-- english and german interface
+- english only interface
+- c64 ttf font
 - it is BLUE
 - everyting in one list
 - RSS images and twitter avatar
@@ -35,11 +36,11 @@ Support me: <a href="https://flattr.com/submit/auto?fid=o6wo7q&url=https%3A%2F%2
 ## Bugs
 
 - see issue in master branch
-- there is a datetime bug: tweets are in stange order ?!?
+- there may be a datetime bug: tweets are in stange order ?!?
 
 ## Get the App
 
-You can get a signed APK from here (Android 4.1+): [APK](https://raw.githubusercontent.com/no-go/AnotherRSS/tweeted/app/app-release.apk)
+You can get a signed APK from here (Android 4.1+): [APK](https://raw.githubusercontent.com/no-go/AnotherRSS/tweeted/app/release/app-release.apk)
 
 ## Screenshots
 

@@ -1,4 +1,4 @@
-package de.digisocken.anotherrss;
+package de.digisocken.rss_o_tweet;
 
 import android.app.ListFragment;
 import android.app.LoaderManager;
@@ -19,7 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 /**
@@ -77,7 +76,7 @@ public class FeedListFragment extends ListFragment implements LoaderManager.Load
                 String link = c.getString(c.getColumnIndex(FeedContract.Feeds.COLUMN_Link));
                 ContentValues values = new ContentValues();
 
-                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(AnotherRSS.getContextOfApplication());
+                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(RssOTweet.getContextOfApplication());
                 String tap_mode = pref.getString("tap_mode", "intern");
 
                 if (tap_mode.equals("intern") || tap_mode.equals("extern")) {
@@ -146,17 +145,17 @@ public class FeedListFragment extends ListFragment implements LoaderManager.Load
      */
     @Override
     public Loader<Cursor> onCreateLoader(int LoaderId, Bundle bundle) {
-        if (!AnotherRSS.query.equals("")) {
+        if (!RssOTweet.query.equals("")) {
             return new CursorLoader(
                     getActivity(),
                     FeedContentProvider.CONTENT_URI,
                     FeedContract.projection,
                     FeedContract.SELECTION_SEARCH,
-                    FeedContract.searchArgs(AnotherRSS.query),
+                    FeedContract.searchArgs(RssOTweet.query),
                     FeedContract.DEFAULT_SORTORDER
             );
         }
-        if (AnotherRSS.showAdditionalFeed) {
+        if (RssOTweet.showAdditionalFeed) {
             return new CursorLoader(
                     getActivity(),
                     FeedContentProvider.CONTENT_URI,

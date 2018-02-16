@@ -1,6 +1,5 @@
-package de.digisocken.anotherrss;
+package de.digisocken.rss_o_tweet;
 
-import android.app.AlarmManager;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -83,7 +82,7 @@ public class FeedContract {
      */
     public static final String DATABASE_DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
-    public static SimpleDateFormat tweetFormatDate = new SimpleDateFormat("EEE MMM dd hh:mm:ss z yyyy", Locale.ENGLISH);
+    public static SimpleDateFormat tweetFormatDate = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
 
     /**
      * Das ist das Format, was von Feeds als String im pubDate TAG erwartet wird.
@@ -228,7 +227,7 @@ public class FeedContract {
     public static Date rawToDate(String feedRaw) {
         Date result;
         if (feedRaw == null) {
-            Log.d(AnotherRSS.TAG, "Feed Date is null! use date from now.");
+            Log.d(RssOTweet.TAG, "Feed Date is null! use date from now.");
             return new Date();
         }
         // terrible !?!?!!!!
@@ -244,8 +243,8 @@ public class FeedContract {
                 return result;
             } catch (ParseException e) {
                 if (BuildConfig.DEBUG) {
-                    Log.d(AnotherRSS.TAG, feedRaw + ": EN parse error: " + FEEDRAW_DATETIME_FORMAT[i]);
-                    Log.d(AnotherRSS.TAG, "Error Position: " + Integer.toString(e.getErrorOffset()));
+                    Log.d(RssOTweet.TAG, feedRaw + ": EN parse error: " + FEEDRAW_DATETIME_FORMAT[i]);
+                    Log.d(RssOTweet.TAG, "Error Position: " + Integer.toString(e.getErrorOffset()));
                 }
             }
 
@@ -256,8 +255,8 @@ public class FeedContract {
                 return result;
             } catch (ParseException e) {
                 if (BuildConfig.DEBUG) {
-                    Log.d(AnotherRSS.TAG, feedRaw + ": DE parse error: " + FEEDRAW_DATETIME_FORMAT[i]);
-                    Log.d(AnotherRSS.TAG, "Error Position: " + Integer.toString(e.getErrorOffset()));
+                    Log.d(RssOTweet.TAG, feedRaw + ": DE parse error: " + FEEDRAW_DATETIME_FORMAT[i]);
+                    Log.d(RssOTweet.TAG, "Error Position: " + Integer.toString(e.getErrorOffset()));
                 }
             }
 
@@ -299,11 +298,11 @@ public class FeedContract {
 
         if (moreThanDay) {
             formatOut = new SimpleDateFormat(
-                    AnotherRSS.getContextOfApplication().getString(R.string.dateForm2), Locale.ENGLISH
+                    RssOTweet.getContextOfApplication().getString(R.string.dateForm2), Locale.ENGLISH
             );
         } else {
             formatOut = new SimpleDateFormat(
-                    AnotherRSS.getContextOfApplication().getString(R.string.dateForm), Locale.ENGLISH
+                    RssOTweet.getContextOfApplication().getString(R.string.dateForm), Locale.ENGLISH
             );
 
         }
@@ -400,7 +399,7 @@ public class FeedContract {
         paint.setAntiAlias(true);
         paint.setShader(shader);
         rect = new RectF(0.0f, 0.0f, b.getWidth(), b.getHeight());
-        canvas.drawRoundRect(rect, AnotherRSS.Config.IMG_ROUND, AnotherRSS.Config.IMG_ROUND, paint);
+        canvas.drawRoundRect(rect, RssOTweet.Config.IMG_ROUND, RssOTweet.Config.IMG_ROUND, paint);
 
         return output;
     }
@@ -442,23 +441,23 @@ public class FeedContract {
         boolean well = false;
 
         if (well == false && q != null) {
-            Log.d(AnotherRSS.TAG, "img   " + path);
+            Log.d(RssOTweet.TAG, "img   " + path);
             well = true;
             path = q;
         }
         if (well == false && t != null) {
             path = t;
-            Log.d(AnotherRSS.TAG, "media:thumbnail " + path);
+            Log.d(RssOTweet.TAG, "media:thumbnail " + path);
             well = true;
         }
         if (well == false && u != null) {
             path = u;
-            Log.d(AnotherRSS.TAG, "media:content " + path);
+            Log.d(RssOTweet.TAG, "media:content " + path);
             well = true;
         }
         if (well == false && e != null) {
             path = e;
-            Log.d(AnotherRSS.TAG, "enclosure " + path);
+            Log.d(RssOTweet.TAG, "enclosure " + path);
             well = true;
         }
         if (b != null) b = b.replace("&lt;", "<").replace("&gt;", ">").replace("&quot;","\"");
@@ -491,7 +490,7 @@ public class FeedContract {
             }
             if (start > 0 && stopp > 0) {
                 b = b.substring(start + 6, stopp + stoppPl);
-                Log.d(AnotherRSS.TAG, "description  " + b);
+                Log.d(RssOTweet.TAG, "description  " + b);
                 well = true;
                 path = b;
             }
@@ -526,7 +525,7 @@ public class FeedContract {
             }
             if (start > 0 && stopp > 0) {
                 c = c.substring(start + 6, stopp + stoppPl);
-                Log.d(AnotherRSS.TAG, "content:encoded  " + c);
+                Log.d(RssOTweet.TAG, "content:encoded  " + c);
                 well = true;
                 path = c;
             }
@@ -540,15 +539,15 @@ public class FeedContract {
     public static Bitmap getImageFromUrl(String path) {
         Bitmap result = null;
         InputStream is = null;
-        Log.d(AnotherRSS.TAG, "get Image from " + path);
+        Log.d(RssOTweet.TAG, "get Image from " + path);
 
         try {
             is = new URL(path).openStream();
             result = BitmapFactory.decodeStream(is);
             is.close();
             if (result.getWidth() < 16 || result.getHeight() < 16) return null;
-            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(AnotherRSS.getContextOfApplication());
-            int width = pref.getInt("image_width", AnotherRSS.Config.DEFAULT_MAX_IMG_WIDTH);
+            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(RssOTweet.getContextOfApplication());
+            int width = pref.getInt("image_width", RssOTweet.Config.DEFAULT_MAX_IMG_WIDTH);
             result = FeedContract.scale(result, width);
         } catch (IOException ex) {
             ex.printStackTrace();

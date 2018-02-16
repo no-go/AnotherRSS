@@ -68,6 +68,8 @@
                 android:id="@+id/action_flattr"
                 android:title="@string/flattr_this"></item>
 
+            <item android:id="@+id/action_project2"
+                android:title="c64 ttfonts" />
         </menu>
     </item>
 

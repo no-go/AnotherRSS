@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     android:installLocation="internalOnly"
-    package="de.digisocken.anotherrss">
+    package="de.digisocken.rss_o_tweet">
 
     <uses-feature android:name="android.hardware.camera" android:required="false" />
 
@@ -16,33 +16,33 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:name=".AnotherRSS"
+        android:name="de.digisocken.rss_o_tweet.RssOTweet"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name="de.digisocken.rss_o_tweet.MainActivity">
             <intent-filter>
-                <action android:name="de.digisocken.anotherrss.ALARM_HAS_NEWS" />
+                <action android:name="de.digisocken.rss_o_tweet.ALARM_HAS_NEWS" />
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity
-            android:name=".PreferencesActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name="de.digisocken.rss_o_tweet.PreferencesActivity"
+            android:parentActivityName="de.digisocken.rss_o_tweet.MainActivity" />
 
         <activity
-            android:name=".FeedSourcesActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name="de.digisocken.rss_o_tweet.FeedSourcesActivity"
+            android:parentActivityName="de.digisocken.rss_o_tweet.MainActivity" />
 
         <activity
-            android:name=".PrefRegexActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name="de.digisocken.rss_o_tweet.PrefRegexActivity"
+            android:parentActivityName="de.digisocken.rss_o_tweet.MainActivity" />
 
-        <receiver android:name=".Alarm" />
+        <receiver android:name="de.digisocken.rss_o_tweet.Alarm" />
 
         <!-- exported: receive messages from sources outside its application -->
         <receiver
-            android:name="de.digisocken.anotherrss.DeviceBootReceiver"
+            android:name="de.digisocken.rss_o_tweet.DeviceBootReceiver"
             android:exported="true"
             android:enabled="true">
             <intent-filter>
@@ -51,18 +51,18 @@
         </receiver>
 
         <provider
-            android:name=".FeedContentProvider"
-            android:authorities="de.digisocken.anotherrss.contentprovider" >
+            android:name="de.digisocken.rss_o_tweet.FeedContentProvider"
+            android:authorities="de.digisocken.rss_o_tweet.contentprovider" >
         </provider>
 
-        <receiver android:name="de.digisocken.anotherrss.MyWidgetProvider">
+        <receiver android:name="de.digisocken.rss_o_tweet.MyWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/mywidget" />
         </receiver>
 
-        <service android:name="de.digisocken.anotherrss.WidgetUpdateService" />
+        <service android:name="de.digisocken.rss_o_tweet.WidgetUpdateService" />
         <activity android:name="com.twitter.sdk.android.core.identity.OAuthActivity" />
 
     </application>

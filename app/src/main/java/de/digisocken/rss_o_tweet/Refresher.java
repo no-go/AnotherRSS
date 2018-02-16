@@ -1,4 +1,4 @@
-package de.digisocken.anotherrss;
+package de.digisocken.rss_o_tweet;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -19,11 +19,8 @@ import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.twitter.sdk.android.core.models.Tweet;
-import com.twitter.sdk.android.tweetui.TweetView;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -75,8 +72,8 @@ public class Refresher {
 
     /**
      * Refresher ist als Singelton ausgelegt.
-     * Der Context wird übergeben, da {@link AnotherRSS#getContextOfApplication()}
-     * nicht tat. Scheinbar hat Alarm bzw der frühere Service nicht auf AnotherRSS
+     * Der Context wird übergeben, da {@link RssOTweet#getContextOfApplication()}
+     * nicht tat. Scheinbar hat Alarm bzw der frühere Service nicht auf RssOTweet
      * zugreifen konnte.
      *
      * @param ctx Der Kontext der Application.
@@ -93,12 +90,12 @@ public class Refresher {
 
         _ctx = ctx;
         _newFeeds = new ArrayList<>();
-        _pref = PreferenceManager.getDefaultSharedPreferences(AnotherRSS.getContextOfApplication());
+        _pref = PreferenceManager.getDefaultSharedPreferences(RssOTweet.getContextOfApplication());
         _notifyColor = Color.parseColor(
-                _pref.getString("notify_color", AnotherRSS.Config.DEFAULT_notifyColor)
+                _pref.getString("notify_color", RssOTweet.Config.DEFAULT_notifyColor)
         );
         _notifyType = Integer.parseInt(
-                _pref.getString("notify_type", AnotherRSS.Config.DEFAULT_notifyType)
+                _pref.getString("notify_type", RssOTweet.Config.DEFAULT_notifyType)
         );
     }
 
@@ -109,7 +106,7 @@ public class Refresher {
      * neu erkannt werden. Im zweiten Schritt wird lediglich der Titel in der
      * Datenbank gesucht. Existiert dieser nicht, so wird true zurückgegeben.
      *
-     * @see AnotherRSS.Config
+     * @see RssOTweet.Config
      *
      * @param date  the date
      * @param title the title
@@ -160,19 +157,19 @@ public class Refresher {
             if(networkInfo != null) {
                 switch (networkInfo.getType()) {
                     case ConnectivityManager.TYPE_WIFI:
-                        Log.d(AnotherRSS.TAG, "using Wifi connection");
+                        Log.d(RssOTweet.TAG, "using Wifi connection");
                         break;
                     case ConnectivityManager.TYPE_MOBILE:
-                        Log.d(AnotherRSS.TAG, "using mobile connection");
+                        Log.d(RssOTweet.TAG, "using mobile connection");
                         break;
                     default:
-                        Log.d(AnotherRSS.TAG, "Unknown connection type");
+                        Log.d(RssOTweet.TAG, "Unknown connection type");
                         break;
                 }
             }
         }
         result = (networkInfo != null && networkInfo.isConnected());
-        Log.d(AnotherRSS.TAG, "Connection state: " + String.valueOf(result));
+        Log.d(RssOTweet.TAG, "Connection state: " + String.valueOf(result));
 
         return result;
     }
@@ -217,8 +214,8 @@ public class Refresher {
     public boolean newStuff(URL url, int expunge) throws Exception {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         String now = ifModifiedSinceDate(url.toString(), expunge);
-        Log.d(AnotherRSS.TAG, "url: " + url.toString());
-        Log.d(AnotherRSS.TAG, "If-Modified-Since: " + now);
+        Log.d(RssOTweet.TAG, "url: " + url.toString());
+        Log.d(RssOTweet.TAG, "If-Modified-Since: " + now);
         conn.setRequestProperty("If-Modified-Since", now);
         int responseCode = conn.getResponseCode();
         /*
@@ -229,7 +226,7 @@ public class Refresher {
          */
         conn.getInputStream().close();
 
-        Log.d(AnotherRSS.TAG, "Response Code: " + Integer.toString(responseCode));
+        Log.d(RssOTweet.TAG, "Response Code: " + Integer.toString(responseCode));
         if (responseCode == HttpURLConnection.HTTP_NOT_MODIFIED) {
             return false;
         }
@@ -238,7 +235,7 @@ public class Refresher {
                 error(Integer.toString(responseCode), "if modified since " + now);
             }
             error(url.toString(), _ctx.getString(R.string.responseStrange));
-            Log.e(AnotherRSS.TAG, _ctx.getString(R.string.responseStrange));
+            Log.e(RssOTweet.TAG, _ctx.getString(R.string.responseStrange));
             return false;
         }
         return true;
@@ -270,10 +267,10 @@ public class Refresher {
         } catch (MalformedURLException e) {
             e.printStackTrace();
             error(rssurl, _ctx.getString(R.string.rssUrlWrong));
-            Log.e(AnotherRSS.TAG, _ctx.getString(R.string.rssUrlWrong));
+            Log.e(RssOTweet.TAG, _ctx.getString(R.string.rssUrlWrong));
         } catch (Exception e) {
             error(rssurl, _ctx.getString(R.string.noConnection));
-            Log.e(AnotherRSS.TAG, _ctx.getString(R.string.noConnection));
+            Log.e(RssOTweet.TAG, _ctx.getString(R.string.noConnection));
         }
         return null;
     }
@@ -288,15 +285,30 @@ public class Refresher {
 
         String[] blacklist = getBlacklist();
 
-        _regexAll = _pref.getString("regexAll", AnotherRSS.Config.DEFAULT_regexAll);
-        _regexTo = _pref.getString("regexTo", AnotherRSS.Config.DEFAULT_regexTo);
+        _regexAll = _pref.getString("regexAll", RssOTweet.Config.DEFAULT_regexAll);
+        _regexTo = _pref.getString("regexTo", RssOTweet.Config.DEFAULT_regexTo);
 
         // we do not want retweets !!
         if (nextHop == null) {
             String title =  "(" + Long.toString(tweet.id) + ") " + tweet.user.name;
+            title = title.replace("Ä", "Ae");
+            title = title.replace("Ü", "Ue");
+            title = title.replace("Ö", "Oe");
+            title = title.replace("ä", "ae");
+            title = title.replace("ü", "ue");
+            title = title.replace("ö", "oe");
+            title = title.replace("ß", "ss");
+
             Date date = FeedContract.tweetFormatDate.parse(tweet.createdAt);
             if (isReallyFresh(date, title, expunge)) {
                 String body = tweet.text;
+                body = body.replace("Ä", "Ae");
+                body = body.replace("Ü", "Ue");
+                body = body.replace("Ö", "Oe");
+                body = body.replace("ä", "ae");
+                body = body.replace("ü", "ue");
+                body = body.replace("ö", "oe");
+                body = body.replace("ß", "ss");
 
                 if ((_regexAll.isEmpty() && _regexTo.isEmpty()) == false) {
                     title = doRegex(title);
@@ -304,13 +316,13 @@ public class Refresher {
                 }
 
                 for (String bl: blacklist) {
-                    Log.v(AnotherRSS.TAG, "Check Blacklist: " + bl);
+                    Log.v(RssOTweet.TAG, "Check Blacklist: " + bl);
                     if (body.contains(bl)) {
-                        Log.v(AnotherRSS.TAG, "in body");
+                        Log.v(RssOTweet.TAG, "in body");
                         return;
                     }
                     if (title.contains(bl)) {
-                        Log.v(AnotherRSS.TAG, "in title");
+                        Log.v(RssOTweet.TAG, "in title");
                         return;
                     }
                 }
@@ -367,15 +379,15 @@ public class Refresher {
      */
     public void insertToDb(Document doc, int expunge, int sourceId) {
         if (doc == null) {
-            Log.d(AnotherRSS.TAG, "doc is null - no insertToDb()");
+            Log.d(RssOTweet.TAG, "doc is null - no insertToDb()");
             return;
         }
 
         String[] blacklist = getBlacklist();
         boolean isRdf = true;
 
-        _regexAll = _pref.getString("regexAll", AnotherRSS.Config.DEFAULT_regexAll);
-        _regexTo = _pref.getString("regexTo", AnotherRSS.Config.DEFAULT_regexTo);
+        _regexAll = _pref.getString("regexAll", RssOTweet.Config.DEFAULT_regexAll);
+        _regexTo = _pref.getString("regexTo", RssOTweet.Config.DEFAULT_regexTo);
 
         String feedName = null;
         NodeList nodeList = doc.getElementsByTagName("title");
@@ -387,8 +399,8 @@ public class Refresher {
         feedName += " #no" + Integer.toString(sourceId+1);
 
         if (BuildConfig.DEBUG) {
-            Log.d(AnotherRSS.TAG, "Feed title: " + feedName);
-            Log.d(AnotherRSS.TAG, "Feed id: " + Integer.toString(sourceId));
+            Log.d(RssOTweet.TAG, "Feed title: " + feedName);
+            Log.d(RssOTweet.TAG, "Feed id: " + Integer.toString(sourceId));
         }
 
         nodeList = doc.getElementsByTagName("item");
@@ -415,25 +427,41 @@ public class Refresher {
                 }
                 Date date = FeedContract.rawToDate(dateStr);
 
+                title = title.replace("Ä", "Ae");
+                title = title.replace("Ü", "Ue");
+                title = title.replace("Ö", "Oe");
+                title = title.replace("ä", "ae");
+                title = title.replace("ü", "ue");
+                title = title.replace("ö", "oe");
+                title = title.replace("ß", "ss");
+
                 if ((_regexAll.isEmpty() && _regexTo.isEmpty()) == false) {
                     title = doRegex(title);
                     body = doRegex(body);
                 }
 
+                body = body.replace("Ä", "Ae");
+                body = body.replace("Ü", "Ue");
+                body = body.replace("Ö", "Oe");
+                body = body.replace("ä", "ae");
+                body = body.replace("ü", "ue");
+                body = body.replace("ö", "oe");
+                body = body.replace("ß", "ss");
+
                 for (String bl: blacklist) {
-                    Log.v(AnotherRSS.TAG, "Check Blacklist: " + bl);
+                    Log.v(RssOTweet.TAG, "Check Blacklist: " + bl);
                     if (body.contains(bl)) {
-                        Log.v(AnotherRSS.TAG, "in body");
+                        Log.v(RssOTweet.TAG, "in body");
                         continue feediter;
                     }
                     if (title.contains(bl)) {
-                        Log.v(AnotherRSS.TAG, "in title");
+                        Log.v(RssOTweet.TAG, "in title");
                         continue feediter;
                     }
                 }
-                Log.v(AnotherRSS.TAG, "is realy fresh?");
+                Log.v(RssOTweet.TAG, "is realy fresh?");
                 if (isReallyFresh(date, title, expunge)) {
-                    Log.v(AnotherRSS.TAG, "  yes");
+                    Log.v(RssOTweet.TAG, "  yes");
                     ContentValues values = new ContentValues();
                     values.put(FeedContract.Feeds.COLUMN_Title, title);
                     values.put(FeedContract.Feeds.COLUMN_Date, FeedContract.dbFriendlyDate(date));
@@ -459,7 +487,7 @@ public class Refresher {
                         _newFeeds.add(values);
                     }
                 } else {
-                    Log.v(AnotherRSS.TAG, "  no");
+                    Log.v(RssOTweet.TAG, "  no");
                 }
             }
 
@@ -495,7 +523,7 @@ public class Refresher {
      * @param pi Der PendingIntent, wenn man auf die Notification klickt
      */
     public void makeNotify(PendingIntent pi) {
-        int noteSnd = Integer.parseInt(_pref.getString("notify_sound", AnotherRSS.Config.DEFAULT_notifySound));
+        int noteSnd = Integer.parseInt(_pref.getString("notify_sound", RssOTweet.Config.DEFAULT_notifySound));
         int src = 0;
         Uri sound = null;
         switch (noteSnd) {
@@ -516,7 +544,7 @@ public class Refresher {
         }
 
         if (noteSnd > 0) {
-            sound = Uri.parse("android.resource://" + AnotherRSS.getContextOfApplication().getPackageName() + "/" + src);
+            sound = Uri.parse("android.resource://" + RssOTweet.getContextOfApplication().getPackageName() + "/" + src);
         }
         notify(_newFeeds.get(_newFeeds.size()-1), pi, sound, true);
     }
@@ -528,7 +556,7 @@ public class Refresher {
      * @param pi Der PendingIntent, wenn man auf die Notification klickt
      */
     public void makeNotifies(PendingIntent pi) {
-        int noteSnd = Integer.parseInt(_pref.getString("notify_sound", AnotherRSS.Config.DEFAULT_notifySound));
+        int noteSnd = Integer.parseInt(_pref.getString("notify_sound", RssOTweet.Config.DEFAULT_notifySound));
         int src = 0;
         Uri sound = null;
         switch (noteSnd) {
@@ -549,7 +577,7 @@ public class Refresher {
         }
 
         if (noteSnd > 0) {
-            sound = Uri.parse("android.resource://" + AnotherRSS.getContextOfApplication().getPackageName() + "/" + src);
+            sound = Uri.parse("android.resource://" + RssOTweet.getContextOfApplication().getPackageName() + "/" + src);
         }
 
         for (ContentValues cv : _newFeeds) {
@@ -577,6 +605,8 @@ public class Refresher {
     }
 
     private void notify(ContentValues cv, PendingIntent pi, Uri sound, boolean isHeadUp) {
+        if (_notifyType == 4) return;
+
         String body = FeedContract.removeHtml(cv.getAsString(FeedContract.Feeds.COLUMN_Body));
         String title= FeedContract.removeHtml(cv.getAsString(FeedContract.Feeds.COLUMN_Title));
         String link = cv.getAsString(FeedContract.Feeds.COLUMN_Link);
@@ -601,11 +631,11 @@ public class Refresher {
         if (! isHeadUp) {
             Intent linkIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
             PendingIntent linkpi = PendingIntent.getActivity(
-                    AnotherRSS.getContextOfApplication(), 0, linkIntent, 0
+                    RssOTweet.getContextOfApplication(), 0, linkIntent, 0
             );
             mBuilder.addAction(
                     android.R.drawable.ic_menu_view,
-                    AnotherRSS.getContextOfApplication().getString(R.string.open),
+                    RssOTweet.getContextOfApplication().getString(R.string.open),
                     linkpi
             );
         } else {
@@ -615,7 +645,7 @@ public class Refresher {
         if (sound != null) {
             mBuilder.setSound(sound);
         } else {
-            if (_pref.getString("notify_sound", AnotherRSS.Config.DEFAULT_notifySound).equals("1")) {
+            if (_pref.getString("notify_sound", RssOTweet.Config.DEFAULT_notifySound).equals("1")) {
                 // default Handy sound
                 sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                 mBuilder.setSound(sound);

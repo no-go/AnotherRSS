@@ -1,13 +1,9 @@
-package de.digisocken.anotherrss;
+package de.digisocken.rss_o_tweet;
 
 import android.app.Application;
-import android.app.UiModeManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
-import android.os.StrictMode;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 
 import com.twitter.sdk.android.core.DefaultLogger;
@@ -24,7 +20,7 @@ import java.util.Calendar;
  *
  * @author Jochen Peters
  */
-public class AnotherRSS extends Application {
+public class RssOTweet extends Application {
     public static boolean showAdditionalFeed = true;
     public static String query = "";
 
@@ -46,23 +42,23 @@ http://www.wetterleitstelle.de/nordrhein-westfalen.xml
 
      */
     public static final String urls =
-            "http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml " +
+            "http://www.wz.de/cmlink/wz-rss-uebersicht-1.516698 " +
                     "http://www.comicsrss.com/rss/dilbert-classics.rss " +
-                    "http://feeds.arstechnica.com/arstechnica/index/ " +
+                    "http://www.tagesschau.de/xml/rss2 " +
                     "http://www.taz.de/!p4608;rss/ " +
-                    "https://www.heise.de/security/news/news-atom.xml " +
+                    "http://www.deutschlandfunk.de/die-nachrichten.353.de.rss " +
                     "http://digisocken.de/_p/wdrWetter/?rss=true " +
-                    "@BBC " +
-                    "@amnesty " +
-                    "#weekend";
+                    "@MicrochipMakers " +
+                    "#youhaveonejob " +
+                    "@adafruit";
 
     public static class Config {
         /**
          * really delete old database entries (marked as deleted)
          * older than Config.DEFAULT_expunge days
          */
-        public static final int DEFAULT_autodelete = 14;
-        public static final int DEFAULT_expunge = 5;
+        public static final int DEFAULT_autodelete = 6;
+        public static final int DEFAULT_expunge = 3;
         public static final String DEFAULT_rsssec = "10800";
         public static final String DEFAULT_notifySound = "2";
         public static final String DEFAULT_notifyColor = "#FF00FFFF";
@@ -70,14 +66,14 @@ http://www.wetterleitstelle.de/nordrhein-westfalen.xml
         public static final int DEFAULT_NIGHT_START = 18;
         public static final int DEFAULT_NIGHT_STOP = 6;
         public static final String SEARCH_HINT_COLOR = "#FFAA00";
-        public static final float DEFAULT_FONT_SIZE = 14.0f;
+        public static final float DEFAULT_FONT_SIZE = 12.0f;
         public static final int DEFAULT_MAX_IMG_WIDTH = 120;
-        public static final float IMG_ROUND = 15f;
+        public static final float IMG_ROUND = 28f;
 
         public static final String DEFAULT_regexAll = "";
         public static final String DEFAULT_regexTo = "";
 
-        public static final int DEFAULT_TWITTER_MAX = 40;
+        public static final int DEFAULT_TWITTER_MAX = 10;
 
         /**
          * sollte eine Verbindung nicht zu sande kommen, wird ein neuer
@@ -94,7 +90,7 @@ http://www.wetterleitstelle.de/nordrhein-westfalen.xml
      * An dieser Stelle wird klar, dass der Alarm <i>doch</i> auf this zugreifen kann (?)
      */
     public static boolean withGui = false;
-    public static final String TAG = AnotherRSS.class.getSimpleName();
+    public static final String TAG = RssOTweet.class.getSimpleName();
     private static Context contextOfApplication;
 
     @Override
@@ -104,7 +100,7 @@ http://www.wetterleitstelle.de/nordrhein-westfalen.xml
 
         SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if (!mPreferences.contains("rss_url")) {
-            mPreferences.edit().putString("rss_url", AnotherRSS.urls).commit();
+            mPreferences.edit().putString("rss_url", RssOTweet.urls).commit();
         }
         if (!mPreferences.contains("regexAll")) {
             mPreferences.edit().putString("regexAll", Config.DEFAULT_regexAll).commit();

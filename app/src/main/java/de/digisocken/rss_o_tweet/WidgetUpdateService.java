@@ -1,4 +1,4 @@
-package de.digisocken.anotherrss;
+package de.digisocken.rss_o_tweet;
 
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
@@ -74,7 +74,7 @@ public class WidgetUpdateService extends Service {
 
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d(AnotherRSS.TAG, "widget parse error");
+            Log.d(RssOTweet.TAG, "widget parse error");
         }
 
         return back;
@@ -89,9 +89,9 @@ public class WidgetUpdateService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        urls = mPreferences.getString("rss_url", AnotherRSS.urls).split(" ");
-        _regexAll = mPreferences.getString("regexAll", AnotherRSS.Config.DEFAULT_regexAll);
-        _regexTo = mPreferences.getString("regexTo", AnotherRSS.Config.DEFAULT_regexTo);
+        urls = mPreferences.getString("rss_url", RssOTweet.urls).split(" ");
+        _regexAll = mPreferences.getString("regexAll", RssOTweet.Config.DEFAULT_regexAll);
+        _regexTo = mPreferences.getString("regexTo", RssOTweet.Config.DEFAULT_regexTo);
         blacklist = new String[]{};
         String nos = mPreferences.getString("blacklist", "");
         if (!nos.equals("")) blacklist = nos.split(",");
@@ -116,7 +116,7 @@ public class WidgetUpdateService extends Service {
                 query = query.replace("#","");
                 SearchTimeline searchTimeline = new SearchTimeline.Builder()
                         .query(query)
-                        .maxItemsPerRequest(AnotherRSS.Config.DEFAULT_TWITTER_MAX)
+                        .maxItemsPerRequest(RssOTweet.Config.DEFAULT_TWITTER_MAX)
                         .build();
                 searchTimeline.next(null, new Callback<TimelineResult<Tweet>>(){
 
@@ -148,7 +148,7 @@ public class WidgetUpdateService extends Service {
                 query = query.replace("@","");
                 UserTimeline userTimeline = new UserTimeline.Builder()
                         .screenName(query)
-                        .maxItemsPerRequest(AnotherRSS.Config.DEFAULT_TWITTER_MAX)
+                        .maxItemsPerRequest(RssOTweet.Config.DEFAULT_TWITTER_MAX)
                         .build();
                 userTimeline.next(null, new Callback<TimelineResult<Tweet>>(){
 

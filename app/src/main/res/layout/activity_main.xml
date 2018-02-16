@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="de.digisocken.anotherrss.MainActivity"
+    tools:context="de.digisocken.rss_o_tweet.MainActivity"
     android:background="@color/colorBackground"
     android:weightSum="1">
 
     <fragment
         android:id="@+id/feedlist"
-        android:name="de.digisocken.anotherrss.FeedListFragment"
+        android:name="de.digisocken.rss_o_tweet.FeedListFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"></fragment>

@@ -1,4 +1,4 @@
-package de.digisocken.anotherrss;
+package de.digisocken.rss_o_tweet;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -7,27 +7,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.twitter.sdk.android.core.Callback;
-import com.twitter.sdk.android.core.Result;
-import com.twitter.sdk.android.core.TwitterException;
-import com.twitter.sdk.android.core.models.Tweet;
 import com.twitter.sdk.android.tweetui.SearchTimeline;
-import com.twitter.sdk.android.tweetui.TimelineResult;
 import com.twitter.sdk.android.tweetui.UserTimeline;
 
 import org.w3c.dom.Document;
 
-import java.text.ParseException;
 import java.util.Random;
-import java.util.StringTokenizer;
 
 public class Alarm extends BroadcastReceiver {
 
@@ -47,23 +37,23 @@ public class Alarm extends BroadcastReceiver {
                         if (BuildConfig.DEBUG) {
                             refresher.error("Online again!", "repeating alarm set");
                         }
-                        Log.d(AnotherRSS.TAG, "last retry!");
+                        Log.d(RssOTweet.TAG, "last retry!");
                         start(ctx);
                     }
                 } else {
                     if (BuildConfig.DEBUG) {
                         refresher.error(
                                 "not Online",
-                                "Retry alarm in seconds: " + AnotherRSS.Config.RETRYSEC_AFTER_OFFLINE
+                                "Retry alarm in seconds: " + RssOTweet.Config.RETRYSEC_AFTER_OFFLINE
                         );
                     }
-                    Log.w(AnotherRSS.TAG, "Retry alarm in seconds: " + AnotherRSS.Config.RETRYSEC_AFTER_OFFLINE);
-                    AnotherRSS.alarm.retry(ctx, AnotherRSS.Config.RETRYSEC_AFTER_OFFLINE);
+                    Log.w(RssOTweet.TAG, "Retry alarm in seconds: " + RssOTweet.Config.RETRYSEC_AFTER_OFFLINE);
+                    RssOTweet.alarm.retry(ctx, RssOTweet.Config.RETRYSEC_AFTER_OFFLINE);
                     return null;
                 }
 
                 refresher._newFeeds.clear();
-                String[] urls = pref.getString("rss_url", AnotherRSS.urls).split(" ");
+                String[] urls = pref.getString("rss_url", RssOTweet.urls).split(" ");
 
                 for (int urli=0; urli < urls.length; urli++) {
                     if (!urls[urli].equals("")) {
@@ -71,19 +61,19 @@ public class Alarm extends BroadcastReceiver {
                             urls[urli] = urls[urli].replace("#","");
                             SearchTimeline searchTimeline = new SearchTimeline.Builder()
                                     .query(urls[urli])
-                                    .maxItemsPerRequest(AnotherRSS.Config.DEFAULT_TWITTER_MAX)
+                                    .maxItemsPerRequest(RssOTweet.Config.DEFAULT_TWITTER_MAX)
                                     .build();
                             searchTimeline.next(null, new TweetStopfer(refresher, urls[urli], urli));
                         } else if (urls[urli].startsWith("@")) {
                             urls[urli] = urls[urli].replace("@","");
                             UserTimeline userTimeline = new UserTimeline.Builder()
                                     .screenName(urls[urli])
-                                    .maxItemsPerRequest(AnotherRSS.Config.DEFAULT_TWITTER_MAX)
+                                    .maxItemsPerRequest(RssOTweet.Config.DEFAULT_TWITTER_MAX)
                                     .build();
                             userTimeline.next(null, new TweetStopfer(refresher, urls[urli], urli));
                         } else {
-                            Document doc = refresher.getDoc(urls[urli], AnotherRSS.Config.DEFAULT_expunge);
-                            refresher.insertToDb(doc, AnotherRSS.Config.DEFAULT_expunge, urli);
+                            Document doc = refresher.getDoc(urls[urli], RssOTweet.Config.DEFAULT_expunge);
+                            refresher.insertToDb(doc, RssOTweet.Config.DEFAULT_expunge, urli);
                         }
                     }
                 }
@@ -97,7 +87,7 @@ public class Alarm extends BroadcastReceiver {
                     );
                     PendingIntent pi = PendingIntent.getActivity(ctx, 0, notificationIntent, 0);
 
-                    if (AnotherRSS.withGui) {
+                    if (RssOTweet.withGui) {
                         refresher.makeNotify(pi);
                     } else {
                         refresher.makeNotifies(pi);
@@ -125,7 +115,7 @@ public class Alarm extends BroadcastReceiver {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
 
         long refreshInterval = Long.parseLong(
-                pref.getString("rss_sec", AnotherRSS.Config.DEFAULT_rsssec)
+                pref.getString("rss_sec", RssOTweet.Config.DEFAULT_rsssec)
         ) * 1000L;
 
         // never
@@ -147,7 +137,7 @@ public class Alarm extends BroadcastReceiver {
                 refreshInterval + mod,
                 pi
         );
-        Log.d(AnotherRSS.TAG, "Alarm started.");
+        Log.d(RssOTweet.TAG, "Alarm started.");
     }
 
     /**
@@ -160,7 +150,7 @@ public class Alarm extends BroadcastReceiver {
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         am.cancel(pi);
-        Log.d(AnotherRSS.TAG, "Alarm stopped.");
+        Log.d(RssOTweet.TAG, "Alarm stopped.");
     }
 
     /**

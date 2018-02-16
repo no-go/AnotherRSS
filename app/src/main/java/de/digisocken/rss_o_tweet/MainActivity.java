@@ -1,4 +1,4 @@
-package de.digisocken.anotherrss;
+package de.digisocken.rss_o_tweet;
 
 import android.app.NotificationManager;
 import android.app.UiModeManager;
@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
@@ -28,6 +29,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
@@ -57,7 +59,8 @@ import java.util.TimeZone;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String PROJECT_LINK = "https://no-go.github.io/AnotherRSS/";
+    private static final String PROJECT_LINK = "https://no-go.github.io/RssOTweet/";
+    private static final String PROJECT2_LINK = "http://style64.org/c64-truetype";
     private static final String FLATTR_ID = "o6wo7q";
     private String FLATTR_LINK;
 
@@ -70,6 +73,8 @@ public class MainActivity extends AppCompatActivity
     TwitterLoginButton loginButton;
     TwitterSession session = null;
     String username = "";
+
+    boolean fulls = false;
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
@@ -93,7 +98,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public boolean onQueryTextSubmit(String query) {
                 String msg = getString(R.string.searching) + " " + query;
-                AnotherRSS.query = query;
+                RssOTweet.query = query;
                 FeedListFragment fr = (FeedListFragment) getFragmentManager().findFragmentById(R.id.feedlist);
                 fr.getLoaderManager().restartLoader(0, null, fr);
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
@@ -109,7 +114,7 @@ public class MainActivity extends AppCompatActivity
         MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
-                AnotherRSS.query = "";
+                RssOTweet.query = "";
                 FeedListFragment fr = (FeedListFragment) getFragmentManager().findFragmentById(R.id.feedlist);
                 fr.getLoaderManager().restartLoader(0, null, fr);
                 Toast.makeText(getApplicationContext(), R.string.close_search, Toast.LENGTH_SHORT).show();
@@ -173,7 +178,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(AnotherRSS.TAG, "onCreate");
+        Log.d(RssOTweet.TAG, "onCreate");
         ctx = this;
         loginButton = new TwitterLoginButton(this);
 
@@ -186,7 +191,8 @@ public class MainActivity extends AppCompatActivity
 
         setContentView(R.layout.together);
         umm = (UiModeManager) getSystemService(Context.UI_MODE_SERVICE);
-        AnotherRSS.alarm.restart(this);;
+        RssOTweet.alarm.restart(this);
+        toFullscreen();
 
         try {
             ActionBar ab = getSupportActionBar();
@@ -270,6 +276,10 @@ public class MainActivity extends AppCompatActivity
                 Intent intentProj= new Intent(Intent.ACTION_VIEW, Uri.parse(PROJECT_LINK));
                 startActivity(intentProj);
                 break;
+            case R.id.action_project2:
+                Intent intentProj2 = new Intent(Intent.ACTION_VIEW, Uri.parse(PROJECT2_LINK));
+                startActivity(intentProj2);
+                break;
             case R.id.action_feedsources:
                 Intent intentfs = new Intent(MainActivity.this, FeedSourcesActivity.class);
                 intentfs.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -297,23 +307,23 @@ public class MainActivity extends AppCompatActivity
                 dbClear.execute(R.id.action_delFeeds);
                 break;
             case R.id.action_biggerText:
-                fontSize = mPreferences.getFloat("font_size", AnotherRSS.Config.DEFAULT_FONT_SIZE);
+                fontSize = mPreferences.getFloat("font_size", RssOTweet.Config.DEFAULT_FONT_SIZE);
                 fontSize = fontSize * 1.1f;
                 mPreferences.edit().putFloat("font_size", fontSize).apply();
                 break;
             case R.id.action_smallerText:
-                fontSize = mPreferences.getFloat("font_size", AnotherRSS.Config.DEFAULT_FONT_SIZE);
+                fontSize = mPreferences.getFloat("font_size", RssOTweet.Config.DEFAULT_FONT_SIZE);
                 fontSize = fontSize * 0.9f;
                 if (fontSize < 3.0f) fontSize = 3.0f;
                 mPreferences.edit().putFloat("font_size", fontSize).apply();
                 break;
             case R.id.action_biggerImageSize:
-                size = mPreferences.getInt("image_width", AnotherRSS.Config.DEFAULT_MAX_IMG_WIDTH);
+                size = mPreferences.getInt("image_width", RssOTweet.Config.DEFAULT_MAX_IMG_WIDTH);
                 size = size + 20;
                 mPreferences.edit().putInt("image_width", size).apply();
                 break;
             case R.id.action_smallerImageSize:
-                size = mPreferences.getInt("image_width", AnotherRSS.Config.DEFAULT_MAX_IMG_WIDTH);
+                size = mPreferences.getInt("image_width", RssOTweet.Config.DEFAULT_MAX_IMG_WIDTH);
                 size = size - 10;
                 if (size < 0) size = 0;
                 mPreferences.edit().putInt("image_width", size).apply();
@@ -349,27 +359,29 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onPause() {
-        Log.d(AnotherRSS.TAG, "onPause");
-        AnotherRSS.withGui = false;
+        Log.d(RssOTweet.TAG, "onPause");
+        RssOTweet.withGui = false;
+        fulls = false;
         super.onPause();
     }
 
     @Override
     protected void onResume() {
-        Log.d(AnotherRSS.TAG, "onResume");
-        AnotherRSS.withGui = true;
+        Log.d(RssOTweet.TAG, "onResume");
+        RssOTweet.withGui = true;
+        toFullscreen();
         new DbExpunge().execute();
 
         SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         boolean night = mPreferences.getBoolean("nightmode_use", false);
         if (night) {
-            int startH = mPreferences.getInt("nightmode_use_start", AnotherRSS.Config.DEFAULT_NIGHT_START);
-            int stopH = mPreferences.getInt("nightmode_use_stop", AnotherRSS.Config.DEFAULT_NIGHT_STOP);
-            if (AnotherRSS.inTimeSpan(startH, stopH) && umm.getNightMode() != UiModeManager.MODE_NIGHT_YES) {
+            int startH = mPreferences.getInt("nightmode_use_start", RssOTweet.Config.DEFAULT_NIGHT_START);
+            int stopH = mPreferences.getInt("nightmode_use_stop", RssOTweet.Config.DEFAULT_NIGHT_STOP);
+            if (RssOTweet.inTimeSpan(startH, stopH) && umm.getNightMode() != UiModeManager.MODE_NIGHT_YES) {
                 umm.setNightMode(UiModeManager.MODE_NIGHT_YES);
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             }
-            if (!AnotherRSS.inTimeSpan(startH, stopH) && umm.getNightMode() != UiModeManager.MODE_NIGHT_NO) {
+            if (!RssOTweet.inTimeSpan(startH, stopH) && umm.getNightMode() != UiModeManager.MODE_NIGHT_NO) {
                 umm.setNightMode(UiModeManager.MODE_NIGHT_NO);
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
@@ -455,12 +467,12 @@ public class MainActivity extends AppCompatActivity
             Calendar c = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 
             SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            String[] urls = mPreferences.getString("rss_url", AnotherRSS.urls).split(" ");
+            String[] urls = mPreferences.getString("rss_url", RssOTweet.urls).split(" ");
 
             for (int urli=0; urli < urls.length; urli++) {
                 Date date = new Date();
                 c.setTime(date);
-                c.add(Calendar.DAY_OF_MONTH, -1 * AnotherRSS.Config.DEFAULT_expunge);
+                c.add(Calendar.DAY_OF_MONTH, -1 * RssOTweet.Config.DEFAULT_expunge);
                 date = c.getTime();
                 String dateStr = FeedContract.dbFriendlyDate(date);
 
@@ -472,7 +484,7 @@ public class MainActivity extends AppCompatActivity
                         where,
                         new String[]{
                                 dateStr, Integer.toString(FeedContract.Flag.DELETED),
-                                // Integer.toString(AnotherRSS.Source1.id)
+                                // Integer.toString(RssOTweet.Source1.id)
                                 Integer.toString(urli)
                         }
                 );
@@ -493,7 +505,7 @@ public class MainActivity extends AppCompatActivity
         protected Void doInBackground(Void... voids) {
             Calendar c = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
             SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            int autodeleteDays = mPreferences.getInt("autodelete", AnotherRSS.Config.DEFAULT_autodelete);
+            int autodeleteDays = mPreferences.getInt("autodelete", RssOTweet.Config.DEFAULT_autodelete);
             if (autodeleteDays < 1) return null;
 
             Date date = new Date();
@@ -516,6 +528,15 @@ public class MainActivity extends AppCompatActivity
             );
 
             return null;
+        }
+    }
+
+    public void toFullscreen() {
+        if (!fulls) {
+            getWindow().setFlags(
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            fulls = true;
         }
     }
 }

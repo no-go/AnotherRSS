@@ -1,4 +1,4 @@
-package de.digisocken.anotherrss;
+package de.digisocken.rss_o_tweet;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -41,21 +41,21 @@ public class FeedSourcesActivity extends AppCompatActivity {
             ab.setDisplayHomeAsUpEnabled(true);
             ab.setTitle(getString(R.string.rss_url));
         }
-        _pref = PreferenceManager.getDefaultSharedPreferences(AnotherRSS.getContextOfApplication());
+        _pref = PreferenceManager.getDefaultSharedPreferences(RssOTweet.getContextOfApplication());
         loadUrls();
     }
 
     @Override
     protected void onPause() {
-        Log.d(AnotherRSS.TAG, "FeedSources Pref onPause");
-        AnotherRSS.withGui = false;
+        Log.d(RssOTweet.TAG, "FeedSources Pref onPause");
+        RssOTweet.withGui = false;
         super.onPause();
     }
 
     @Override
     protected void onResume() {
-        Log.d(AnotherRSS.TAG, "FeedSources Pref onResume");
-        AnotherRSS.withGui = true;
+        Log.d(RssOTweet.TAG, "FeedSources Pref onResume");
+        RssOTweet.withGui = true;
         super.onResume();
     }
 
@@ -68,7 +68,7 @@ public class FeedSourcesActivity extends AppCompatActivity {
     private void loadUrls() {
         _linearLayout = (LinearLayout) findViewById(R.id.feedsourceList);
         _linearLayout.removeAllViews();
-        String urls[] = _pref.getString("rss_url", AnotherRSS.urls).split(" ");
+        String urls[] = _pref.getString("rss_url", RssOTweet.urls).split(" ");
         _urlEdit = new ArrayList<>();
 
         for (int i=0; i < urls.length + 5; i++) {

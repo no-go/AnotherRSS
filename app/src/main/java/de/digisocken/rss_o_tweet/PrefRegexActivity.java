@@ -1,4 +1,4 @@
-package de.digisocken.anotherrss;
+package de.digisocken.rss_o_tweet;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -6,13 +6,8 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-
-import java.util.ArrayList;
 
 public class PrefRegexActivity extends AppCompatActivity {
     private SharedPreferences _pref;
@@ -43,25 +38,25 @@ public class PrefRegexActivity extends AppCompatActivity {
             ab.setDisplayHomeAsUpEnabled(true);
             ab.setTitle(getString(R.string.regex));
         }
-        _pref = PreferenceManager.getDefaultSharedPreferences(AnotherRSS.getContextOfApplication());
+        _pref = PreferenceManager.getDefaultSharedPreferences(RssOTweet.getContextOfApplication());
         loadPref();
     }
 
     @Override
     protected void onPause() {
-        AnotherRSS.withGui = false;
+        RssOTweet.withGui = false;
         super.onPause();
     }
 
     @Override
     protected void onResume() {
-        AnotherRSS.withGui = true;
+        RssOTweet.withGui = true;
         super.onResume();
     }
 
     private void loadPref() {
-        _edAll.setText(_pref.getString("regexAll", AnotherRSS.Config.DEFAULT_regexAll));
-        _edTo.setText(_pref.getString("regexTo", AnotherRSS.Config.DEFAULT_regexTo));
+        _edAll.setText(_pref.getString("regexAll", RssOTweet.Config.DEFAULT_regexAll));
+        _edTo.setText(_pref.getString("regexTo", RssOTweet.Config.DEFAULT_regexTo));
     }
 
     private void storePref() {

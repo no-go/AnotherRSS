@@ -44,7 +44,7 @@
     <PreferenceCategory
         android:title="@string/cleanup" >
 
-        <de.digisocken.anotherrss.IntEditPreference
+        <de.digisocken.rss_o_tweet.IntEditPreference
             android:key="autodelete"
             android:title="@string/removeNonFav"
             android:summary="@string/removeNonFav_summary"
@@ -85,13 +85,13 @@
             android:summary="@string/nightmode_summary"
             android:title="@string/nightmode_use" />
 
-        <de.digisocken.anotherrss.HourEditPreference
+        <de.digisocken.rss_o_tweet.HourEditPreference
             android:key="nightmode_use_start"
             android:title="@string/nightmode_use_start"
             android:numeric="integer"
             android:maxLength="2" />
 
-        <de.digisocken.anotherrss.HourEditPreference
+        <de.digisocken.rss_o_tweet.HourEditPreference
             android:key="nightmode_use_stop"
             android:title="@string/nightmode_use_stop"
             android:numeric="integer"

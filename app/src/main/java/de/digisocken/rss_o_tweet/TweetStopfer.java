@@ -1,4 +1,4 @@
-package de.digisocken.anotherrss;
+package de.digisocken.rss_o_tweet;
 
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -39,7 +39,7 @@ public class TweetStopfer extends Callback<TimelineResult<Tweet>> {
 
         public void run() {
             try  {
-                _refresher.insertTweet(tweet, _query, AnotherRSS.Config.DEFAULT_expunge, _sourceId);
+                _refresher.insertTweet(tweet, _query, RssOTweet.Config.DEFAULT_expunge, _sourceId);
             } catch (Exception e) {
                 e.printStackTrace();
             }

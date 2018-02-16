@@ -1,4 +1,4 @@
-package de.digisocken.anotherrss;
+package de.digisocken.rss_o_tweet;
 
 import android.content.ContentProvider;
 import android.content.ContentResolver;
@@ -24,7 +24,7 @@ import android.text.TextUtils;
  */
 public class FeedContentProvider extends ContentProvider {
 
-    public static final String AUTHORITY = "de.digisocken.anotherrss.contentprovider";
+    public static final String AUTHORITY = "de.digisocken.rss_o_tweet.contentprovider";
     public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/feeds";
     public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/feed";
 
