@@ -1,0 +1,38 @@
+Another-RSS ist ein RSS Feed Reader, der viele Bildformate erkennt und als Thumbnail zur Nachricht zwischenspeichert. Es ist möglich, viele Atom Feed oder RSS Feed Quellen zu hinterlegen, deren Inhalte alle in einer (!) durchsuchbaren Liste abgelegt werden. Another-RSS
+ähnelt einer anderen App von mir, aber ist ohne dem "branding" ohne Einschränkung auf nur eine URL.
+
+"Funktionen"
+
+* Feed Links können direkt aus der Benachrichtigung heraus im Browser geöffnet werden.
+* In allen abgerufenen Feed Nachrichten kann Text gesucht werden.
+* Es gibt ein Nachtmodus-Thema, das die Augen minimal blendet.
+* Der Inhalt der Feeds kann mit Regulären Ausdrücken verändert werden.
+* Mit einer Blacklist können Nachrichten unterdrückt werden. Als Beispiel sind ein paar Begriffe des Sports hinterlegt.
+* Ein langer Klick auf einen Feed in der Liste zaubert ein Menu hervor:
+
+* Link in Browser öffnen
+* Teilen mit ...
+* gelöscht, gelesen oder als "Mag ich!" markieren
+
+* Die als "Mag ich!" (Favourit) markierten Nachrichten Feeds werden beim Menupunkt "Feedsammlung leeren" nicht gelöscht.
+* Im Querformat kann durch einen kurzen Klick der Link zum Feed in einem kleinen Browser-Fenster dargestellt werden.
+* Das abrufen nach neuen Feeds/Nachrichten kann auf 30 Minuten, 1, 3 oder 6 Stunden eingestellt werden.
+* Das Interface der App ist in Deutsch, Japanisch (?!) und Englisch vorhanden.
+* In den Einstellungen lassen sich nun das Verhalten eines "Antippens" (statt dem Kontext-Menu beim "Lange drücken") einstellen. So kann mit einem Klick z.B. der Link zum Feed geöffnet, gelesen und favorisiert werden.
+* Als Test existiert nun ein kleines Widget, welches die Title der News der ersten Feedquelle anzeigt.
+
+Besonderheit: jede einzelne neue Nachricht ist eine eigene Benachrichtigung. Auf diese Weise lassen sich viele Feeds ohne aufruf der App und ggf. mit einer Smartwatch lesen. Eine eigene App + Smartwatch habe ich zumindest selbst gebaut :-D
+
+Um den Transfer zu minimieren, versucht Another-RSS mit einer speziellen Standard-Anfragen an den Feed-Server zu erfragen, ob es seit dem letzten Abruf eine Änderung gab.
+
+Sollte das Internet mal weg sein, prüft die App alle 75 Sekunden, ob es wieder da ist. So soll verhindert werden, dass man eine neue Nachricht erst beim nächsten Versuch in z.B. 3h erhält.
+
+Keine Sorge! Nach dem ersten Starten der App werden kurze Zeit später über hundert Benachrichtigungen angezeigt. Die App hat im Optionsmenu eine Funktion, um alle Benachrichtigungen zu entfernen. Ich habe ein paar Feed Quellen als Beispiel hinterlegt.
+
+"Aufräumen und Ignorieren"
+
+Um die zwischengespeicherten Cache Infos zu minimieren, werden einzelne Feeds die älter als 5 Tage alt sind, ignoriert. Wenn News gelöscht werden, werden diese auch nach 5 Tagen aus dem Cache entfernt. Für die Menschen, denen die Löschen Funktion zu lästig ist, befindet sich in den Einstellungen die Möglichkeit, nicht als "Mag ich!" markierte News nach einer bestimmten Anzahl an Tagen automatisch zu löschen.
+
+"Hinweis"
+
+Auch wenn es sich bei RSS Feed und Atom um Standards handelt, gibt es immer wieder enorme Abweichungen. Bitte sei nicht enttäuscht, wenn das holen der Feeds sowie das automatische Update unter alle 6h nicht geht. Oft ist es ein Problem der Uhrzeit, Zeitzone oder der Zeitangabe, die von der Quelle fehlerhaft ausgeliefert wird.

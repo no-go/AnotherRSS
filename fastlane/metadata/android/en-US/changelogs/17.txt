@@ -1,0 +1,1 @@
+I add different short tap behaviours as an option to the settings. long-press context menu still exists.

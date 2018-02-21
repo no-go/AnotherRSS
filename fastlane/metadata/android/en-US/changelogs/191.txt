@@ -1,0 +1,1 @@
+Feed source number added to feed source title. You can search in feed title, now. I want to set target SDK to 22 (Android 5+) to avoid from permission problems and deprecated stuff, but google play does not want that downgrade :-/

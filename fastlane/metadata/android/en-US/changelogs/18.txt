@@ -1,0 +1,1 @@
+You can change the image size and font size. New images will be cached in the new size . The old images are scaled and this make scrolling a bit non-smooth.

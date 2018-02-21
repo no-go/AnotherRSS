@@ -1,0 +1,1 @@
+Die Bild und Textgröße ist nun einstellbar. Neue Feed-Bilder werden in der neuen Größe als Vorschaubild abgelegt; alte Bilder werden nur skaliert - das macht leider das Skrollen etwas unflüssig.
