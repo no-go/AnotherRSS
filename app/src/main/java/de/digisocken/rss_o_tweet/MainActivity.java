@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity
                 ab.setHomeButtonEnabled(true);
                 ab.setDisplayUseLogoEnabled(true);
                 ab.setLogo(R.drawable.ic_launcher);
-                ab.setElevation(2);
+                ab.setElevation(0);
                 ab.setTitle(" " + getString(R.string.app_name));
             }
         } catch (Exception e) {

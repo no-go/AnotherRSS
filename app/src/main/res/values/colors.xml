@@ -4,11 +4,11 @@
     <color name="colorOldText">#f0f0f0</color>
 
     <color name="colorTitle">#000000</color>
-    <color name="colorDate">#f0f0f0</color>
+    <color name="colorDate">#6666ff</color>
     <color name="colorBody">#0a0a0a</color>
     <color name="colorBackground">#ffffff</color>
 
-    <color name="colorPrimary">#f0f0f0</color>
+    <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#d0d0d0</color>
     <color name="colorAccent">#200070</color>
 </resources>

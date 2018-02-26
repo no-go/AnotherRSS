@@ -295,24 +295,10 @@ public class Refresher {
         // we do not want retweets !!
         if (nextHop == null) {
             String title =  "(" + Long.toString(tweet.id) + ") " + tweet.user.name;
-            title = title.replace("Ä", "Ae");
-            title = title.replace("Ü", "Ue");
-            title = title.replace("Ö", "Oe");
-            title = title.replace("ä", "ae");
-            title = title.replace("ü", "ue");
-            title = title.replace("ö", "oe");
-            title = title.replace("ß", "ss");
 
             Date date = FeedContract.tweetFormatDate.parse(tweet.createdAt);
             if (isReallyFresh(date, title, expunge)) {
                 String body = tweet.text;
-                body = body.replace("Ä", "Ae");
-                body = body.replace("Ü", "Ue");
-                body = body.replace("Ö", "Oe");
-                body = body.replace("ä", "ae");
-                body = body.replace("ü", "ue");
-                body = body.replace("ö", "oe");
-                body = body.replace("ß", "ss");
 
                 if ((_regexAll.isEmpty() && _regexTo.isEmpty()) == false) {
                     title = doRegex(title);
@@ -431,26 +417,10 @@ public class Refresher {
                 }
                 Date date = FeedContract.rawToDate(dateStr);
 
-                title = title.replace("Ä", "Ae");
-                title = title.replace("Ü", "Ue");
-                title = title.replace("Ö", "Oe");
-                title = title.replace("ä", "ae");
-                title = title.replace("ü", "ue");
-                title = title.replace("ö", "oe");
-                title = title.replace("ß", "ss");
-
                 if ((_regexAll.isEmpty() && _regexTo.isEmpty()) == false) {
                     title = doRegex(title);
                     body = doRegex(body);
                 }
-
-                body = body.replace("Ä", "Ae");
-                body = body.replace("Ü", "Ue");
-                body = body.replace("Ö", "Oe");
-                body = body.replace("ä", "ae");
-                body = body.replace("ü", "ue");
-                body = body.replace("ö", "oe");
-                body = body.replace("ß", "ss");
 
                 for (String bl: blacklist) {
                     Log.v(RssOTweet.TAG, "Check Blacklist: " + bl);

@@ -20,7 +20,7 @@ public class LogoActivity extends Activity {
             public void run() {
                 finish();
             }
-        }, 1500);
+        }, 1000);
     }
 
     @Override

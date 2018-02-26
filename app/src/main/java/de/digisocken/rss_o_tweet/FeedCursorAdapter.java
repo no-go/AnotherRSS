@@ -28,6 +28,7 @@ public class FeedCursorAdapter extends CursorAdapter {
     private Drawable favoriteIcon;
     private SharedPreferences _pref;
     private Typeface myFont;
+    private boolean isNight;
 
     public FeedCursorAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
@@ -37,11 +38,13 @@ public class FeedCursorAdapter extends CursorAdapter {
         switch (nightModeFlags) {
             case Configuration.UI_MODE_NIGHT_YES:
                 myFont = Typeface.createFromAsset(context.getAssets(), "fonts/C64_Pro_Mono-STYLE.ttf");
+                isNight=true;
                 break;
             case Configuration.UI_MODE_NIGHT_NO:
             case Configuration.UI_MODE_NIGHT_UNDEFINED:
             default:
                 myFont = Typeface.SERIF;
+                isNight = false;
         }
 
         largeIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher);
@@ -75,6 +78,16 @@ public class FeedCursorAdapter extends CursorAdapter {
         boolean isTweet = false;
         isTweet = title.startsWith("(");
         title = title.replaceAll("(\\(\\d+\\))", "");
+        if (isNight) {
+            // the c64 font has not this chars
+            title = title.replace("Ä", "Ae");
+            title = title.replace("Ü", "Ue");
+            title = title.replace("Ö", "Oe");
+            title = title.replace("ä", "ae");
+            title = title.replace("ü", "ue");
+            title = title.replace("ö", "oe");
+            title = title.replace("ß", "ss");
+        }
         if (!RssOTweet.query.equals("")) {
             tt.setText(highlight(RssOTweet.query, title));
         } else {
@@ -92,6 +105,17 @@ public class FeedCursorAdapter extends CursorAdapter {
         TextView tb = (TextView) view.findViewById(R.id.feedBody);
         tb.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontSize);
         String body = FeedContract.removeHtml(cursor.getString(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Body)));
+
+        if (isNight) {
+            // the c64 font has not this chars
+            body = body.replace("Ä", "Ae");
+            body = body.replace("Ü", "Ue");
+            body = body.replace("Ö", "Oe");
+            body = body.replace("ä", "ae");
+            body = body.replace("ü", "ue");
+            body = body.replace("ö", "oe");
+            body = body.replace("ß", "ss");
+        }
         if (!RssOTweet.query.equals("")) {
             tb.setText(highlight(RssOTweet.query, body));
         } else {
@@ -122,7 +146,7 @@ public class FeedCursorAdapter extends CursorAdapter {
         int source = cursor.getInt(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Source));
         if (bmp != null) {
             if (isTweet) {
-                iv.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+                //iv.setBackgroundColor(ContextCompat.getColor(context, R.color.colorDate));
             } else {
                 iv.setBackgroundColor(Color.TRANSPARENT);
             }
