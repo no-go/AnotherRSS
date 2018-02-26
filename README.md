@@ -47,21 +47,19 @@ You can get a signed APK from here (Android 4.1+): [APK](https://raw.githubuserc
 
 ## Screenshots
 
-### Read Twitter stuff
+![day mode](img/00.jpg)
 
-![nightmode Twitter](img/Screenshot_7.png)
+![nightmode and optionsmenu](img/01.jpg)
 
-### Landscape mode
-![Landscape mode](img/Screenshot_1.png)
+![functions](img/02.jpg)
 
-### Search
-![Search content and mark them](img/Screenshot_2.png)
+![RSS and Twitter sources](img/03.jpg)
 
-### Blacklist
-![blacklist to filter the news and hide them](img/Screenshot_3.png)
+![preferences](img/04.jpg)
 
-### Search to select special feed source
-![Search to select special feed source](img/Screenshot_5.png)
+![landscape preview website](img/05.jpg)
+
+![landscape preview twitter](img/06.jpg)
 
 ## License
 
