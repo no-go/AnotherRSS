@@ -89,9 +89,9 @@ public class FeedCursorAdapter extends CursorAdapter {
             title = title.replace("ß", "ss");
         }
         if (!RssOTweet.query.equals("")) {
-            tt.setText(highlight(RssOTweet.query, title));
+            tt.setText(highlight(RssOTweet.query, title.trim()));
         } else {
-            tt.setText(title);
+            tt.setText(title.trim());
         }
         tt.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontSize * 1.25f);
         tt.setTypeface(myFont);

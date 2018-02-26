@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.view.WindowManager;
 
 
 public class LogoActivity extends Activity {
@@ -13,6 +14,7 @@ public class LogoActivity extends Activity {
         super.onCreate(savedInstanceState);
         overridePendingTransition(0, R.anim.fadeout);
         setContentView(R.layout.logo);
+        toFullscreen();
 
         Handler handler = new Handler();
 
@@ -31,5 +33,11 @@ public class LogoActivity extends Activity {
 
     public void hideNow(View view) {
         finish();
+    }
+
+    public void toFullscreen() {
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 }

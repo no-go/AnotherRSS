@@ -42,15 +42,14 @@ http://www.wetterleitstelle.de/nordrhein-westfalen.xml
 
      */
     public static final String urls =
-            "http://www.wz.de/cmlink/wz-rss-uebersicht-1.516698 " +
-                    "http://www.comicsrss.com/rss/dilbert-classics.rss " +
-                    "http://www.tagesschau.de/xml/rss2 " +
+            "http://www.tagesschau.de/xml/rss2 " +
                     "http://www.taz.de/!p4608;rss/ " +
                     "http://www.deutschlandfunk.de/die-nachrichten.353.de.rss " +
                     "http://digisocken.de/_p/wdrWetter/?rss=true " +
-                    "@MicrochipMakers " +
-                    "#youhaveonejob " +
-                    "@adafruit";
+                    "@faznet " +
+                    "@MartinSonneborn " +
+                    "#attiny85 " +
+                    "@evalodde";
 
     public static class Config {
         /**

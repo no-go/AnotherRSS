@@ -9,6 +9,6 @@
     <color name="colorBackground">#040470</color>
 
     <color name="colorPrimary">#6666ff</color>
-    <color name="colorPrimaryDark">#3333bb</color>
+    <color name="colorPrimaryDark">#040470</color>
     <color name="colorAccent">#6666ff</color>
 </resources>

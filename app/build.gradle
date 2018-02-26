@@ -6,8 +6,8 @@ android {
         applicationId "de.digisocken.rss_o_tweet"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 803
-        versionName "8.03"
+        versionCode 810
+        versionName "8.10"
     }
     buildTypes {
         release {

@@ -52,10 +52,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-/**
- * Diese Activity stellt die Liste der Feeds dar. Die Liste selbst
- * ist in {@link FeedListFragment} zu finden.
- */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
