@@ -27,17 +27,17 @@
 
 
     <TextView
+        android:id="@+id/feedTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="title"
-        android:id="@+id/feedTitle"
-        android:enabled="false"
-        android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_alignTop="@+id/image"
-        android:layout_toRightOf="@+id/image"
         android:layout_toEndOf="@+id/image"
         android:layout_toLeftOf="@+id/feedDate"
-        android:layout_toStartOf="@+id/feedDate" />
+        android:layout_toRightOf="@+id/image"
+        android:layout_toStartOf="@+id/feedDate"
+        android:enabled="false"
+        android:text="title"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 
     <TextView

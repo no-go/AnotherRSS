@@ -14,13 +14,15 @@ Support me: <a href="https://flattr.com/submit/auto?fid=o6wo7q&url=https%3A%2F%2
 
 - english only interface
 - c64 ttf font
-- it is BLUE
+- it is BLUE in night
+- newspaper style
 - everyting in one list
 - RSS images and twitter avatar
 - landscape mode with web preview
 - search text content
 - night mode
 - every news is a notification
+- ignore mode
 - mark feeds as deleted, readed, favourite
 - blacklist
 - regex
@@ -36,7 +38,8 @@ Support me: <a href="https://flattr.com/submit/auto?fid=o6wo7q&url=https%3A%2F%2
 ## Bugs
 
 - see issue in master branch
-- there may be a datetime bug: tweets are in stange order ?!?
+- to test: tweets only update at first time (add api key+secret)
+- not very power saving (maybe ignore mode is bad?)
 
 ## Get the App
 

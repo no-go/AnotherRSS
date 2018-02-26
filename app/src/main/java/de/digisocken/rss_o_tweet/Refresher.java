@@ -118,6 +118,10 @@ public class Refresher {
         Date now = new Date();
         try {
             long diff = now.getTime() - date.getTime();
+            if (diff < -3600000) {
+                // more than 1 h in the future?!
+                return false;
+            }
             long days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
             if (days > expunge) {
                 back = false;
@@ -333,7 +337,7 @@ public class Refresher {
                 values.put(FeedContract.Feeds.COLUMN_Link, "http://twitter.com/"+tweet.user.screenName+"/status/" + Long.toString(tweet.id));
                 values.put(FeedContract.Feeds.COLUMN_Body, body);
                 values.put(FeedContract.Feeds.COLUMN_Image, FeedContract.getBytes(
-                        FeedContract.getImageFromUrl(tweet.user.profileImageUrl)
+                        FeedContract.getImageFromUrl(tweet.user.profileImageUrl, RssOTweet.Config.TWEET_IMG_ROUND)
                 ));
                 values.put(FeedContract.Feeds.COLUMN_Source, sourceId);
                 if (uQuery.equals(tweet.user.screenName)) {
@@ -589,7 +593,7 @@ public class Refresher {
 
     public void error(String title, String msg) {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(_ctx);
-        Bitmap largeIcon = BitmapFactory.decodeResource(_ctx.getResources(), R.mipmap.errorhint);
+        Bitmap largeIcon = BitmapFactory.decodeResource(_ctx.getResources(), android.R.drawable.ic_delete);
         mBuilder.setContentTitle(title)
                 .setContentText(msg)
                 .setTicker(msg)
@@ -618,7 +622,7 @@ public class Refresher {
         bigStyle.bigText(body);
 
         if (largeIcon == null)
-            largeIcon = BitmapFactory.decodeResource(_ctx.getResources(), R.mipmap.ic_launcher);
+            largeIcon = BitmapFactory.decodeResource(_ctx.getResources(), R.drawable.ic_launcher);
 
         mBuilder.setContentTitle(title)
                 .setContentText(body)

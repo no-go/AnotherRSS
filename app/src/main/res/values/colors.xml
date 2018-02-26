@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorOld">#dddddd</color>
-    <color name="colorOldText">#bbbbbb</color>
+    <color name="colorOld">#ffffff</color>
+    <color name="colorOldText">#f0f0f0</color>
 
-    <color name="colorTitle">#323232</color>
-    <color name="colorDate">#c5c7c7</color>
-    <color name="colorBody">#808080</color>
+    <color name="colorTitle">#000000</color>
+    <color name="colorDate">#f0f0f0</color>
+    <color name="colorBody">#0a0a0a</color>
     <color name="colorBackground">#ffffff</color>
 
-    <color name="colorPrimary">#6666ff</color>
-    <color name="colorPrimaryDark">#3333bb</color>
-    <color name="colorAccent">#050588</color>
+    <color name="colorPrimary">#f0f0f0</color>
+    <color name="colorPrimaryDark">#d0d0d0</color>
+    <color name="colorAccent">#200070</color>
 </resources>

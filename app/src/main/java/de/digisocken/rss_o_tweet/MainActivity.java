@@ -182,6 +182,9 @@ public class MainActivity extends AppCompatActivity
         ctx = this;
         loginButton = new TwitterLoginButton(this);
 
+        Intent intent = new Intent(MainActivity.this, LogoActivity.class);
+        startActivity(intent);
+
         try {
             FLATTR_LINK = "https://flattr.com/submit/auto?fid="+FLATTR_ID+"&url="+
                     java.net.URLEncoder.encode(PROJECT_LINK, "ISO-8859-1");
@@ -200,7 +203,8 @@ public class MainActivity extends AppCompatActivity
                 ab.setDisplayShowHomeEnabled(true);
                 ab.setHomeButtonEnabled(true);
                 ab.setDisplayUseLogoEnabled(true);
-                ab.setLogo(R.mipmap.ic_launcher);
+                ab.setLogo(R.drawable.ic_launcher);
+                ab.setElevation(2);
                 ab.setTitle(" " + getString(R.string.app_name));
             }
         } catch (Exception e) {

@@ -293,7 +293,7 @@ public class FeedContract {
      */
     public static String getDate(Date date) {
 
-        boolean moreThanDay = Math.abs(date.getTime() - new Date().getTime()) > MILLIS_PER_DAY;
+        boolean moreThanDay = (new Date().getTime() - date.getTime()) > MILLIS_PER_DAY;
         SimpleDateFormat formatOut;
 
         if (moreThanDay) {
@@ -378,7 +378,7 @@ public class FeedContract {
      * @param width gewünschte Breite
      * @return output
      */
-    public static Bitmap scale(Bitmap b, int width) {
+    public static Bitmap scale(Bitmap b, int width, float round) {
         float ration = (float) b.getHeight() / b.getWidth();
         int newHeight = (int) (ration * width);
         byte[] imageAsBytes = FeedContract.getBytes(b);
@@ -399,7 +399,7 @@ public class FeedContract {
         paint.setAntiAlias(true);
         paint.setShader(shader);
         rect = new RectF(0.0f, 0.0f, b.getWidth(), b.getHeight());
-        canvas.drawRoundRect(rect, RssOTweet.Config.IMG_ROUND, RssOTweet.Config.IMG_ROUND, paint);
+        canvas.drawRoundRect(rect, round, round, paint);
 
         return output;
     }
@@ -531,12 +531,12 @@ public class FeedContract {
             }
         }
 
-        if (well) result = getImageFromUrl(path);
+        if (well) result = getImageFromUrl(path, RssOTweet.Config.IMG_ROUND);
 
         return result;
     }
 
-    public static Bitmap getImageFromUrl(String path) {
+    public static Bitmap getImageFromUrl(String path, float round) {
         Bitmap result = null;
         InputStream is = null;
         Log.d(RssOTweet.TAG, "get Image from " + path);
@@ -548,7 +548,7 @@ public class FeedContract {
             if (result.getWidth() < 16 || result.getHeight() < 16) return null;
             SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(RssOTweet.getContextOfApplication());
             int width = pref.getInt("image_width", RssOTweet.Config.DEFAULT_MAX_IMG_WIDTH);
-            result = FeedContract.scale(result, width);
+            result = FeedContract.scale(result, width, round);
         } catch (IOException ex) {
             ex.printStackTrace();
         }

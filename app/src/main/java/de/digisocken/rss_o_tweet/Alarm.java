@@ -1,5 +1,6 @@
 package de.digisocken.rss_o_tweet;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -20,11 +21,12 @@ import org.w3c.dom.Document;
 import java.util.Random;
 
 public class Alarm extends BroadcastReceiver {
-
+    static AsyncTask<Object, Void, Void> asyncTask;
+    @SuppressLint("StaticFieldLeak")
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        AsyncTask<Object, Void, Void> asyncTask = new AsyncTask<Object, Void, Void>() {
+        asyncTask = new AsyncTask<Object, Void, Void>() {
             @Override
             protected Void doInBackground(Object... objs) {
                 Context ctx = (Context) objs[0];

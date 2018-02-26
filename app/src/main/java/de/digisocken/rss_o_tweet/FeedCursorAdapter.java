@@ -2,6 +2,7 @@ package de.digisocken.rss_o_tweet;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -26,12 +27,24 @@ public class FeedCursorAdapter extends CursorAdapter {
     private Bitmap largeIcon;
     private Drawable favoriteIcon;
     private SharedPreferences _pref;
-    private Typeface c64Font;
+    private Typeface myFont;
 
     public FeedCursorAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
-        c64Font = Typeface.createFromAsset(context.getAssets(), "fonts/C64_Pro_Mono-STYLE.ttf");
-        largeIcon = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
+        int nightModeFlags =
+                context.getResources().getConfiguration().uiMode &
+                        Configuration.UI_MODE_NIGHT_MASK;
+        switch (nightModeFlags) {
+            case Configuration.UI_MODE_NIGHT_YES:
+                myFont = Typeface.createFromAsset(context.getAssets(), "fonts/C64_Pro_Mono-STYLE.ttf");
+                break;
+            case Configuration.UI_MODE_NIGHT_NO:
+            case Configuration.UI_MODE_NIGHT_UNDEFINED:
+            default:
+                myFont = Typeface.SERIF;
+        }
+
+        largeIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher);
         favoriteIcon = ContextCompat.getDrawable(context, R.drawable.favorite);
         _pref = PreferenceManager.getDefaultSharedPreferences(RssOTweet.getContextOfApplication());
     }
@@ -68,7 +81,7 @@ public class FeedCursorAdapter extends CursorAdapter {
             tt.setText(title);
         }
         tt.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontSize * 1.25f);
-        tt.setTypeface(c64Font);
+        tt.setTypeface(myFont);
 
         TextView td = (TextView) view.findViewById(R.id.feedDate);
         td.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontSize * 0.75f);
@@ -84,7 +97,7 @@ public class FeedCursorAdapter extends CursorAdapter {
         } else {
             tb.setText(body);
         }
-        tb.setTypeface(c64Font);
+        tb.setTypeface(myFont);
 
         TextView sn = (TextView) view.findViewById(R.id.sourceName);
         sn.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontSize * 0.75f);
@@ -97,9 +110,9 @@ public class FeedCursorAdapter extends CursorAdapter {
             sn.setText(sName);
         }
 
-        tt.setPadding(10, 20,  5, 0);
-        tb.setPadding(10,  0, 10, 0);
-        sn.setPadding(10,  0, 10, 0);
+        tt.setPadding(10, 3,  5, 10);
+        tb.setPadding(10, 0, 10, 0);
+        sn.setPadding(10, 0, 10, 0);
 
         Bitmap bmp = FeedContract.getImage(
                 cursor.getBlob(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Image))
@@ -117,14 +130,18 @@ public class FeedCursorAdapter extends CursorAdapter {
             iv.setPadding(10, 10, 10, 10);
             iv.setMaxWidth(width);
             if (bmp.getWidth() != width) {
-                bmp = FeedContract.scale(bmp, width);
+                if (isTweet) {
+                    bmp = FeedContract.scale(bmp, width, RssOTweet.Config.TWEET_IMG_ROUND);
+                } else {
+                    bmp = FeedContract.scale(bmp, width, RssOTweet.Config.IMG_ROUND);
+                }
                 iv.setImageBitmap(bmp);
             }
         } else {
             iv.setPadding( 0, 0, 0, 0);
-            tt.setPadding(20, 10,  5, 0);
-            tb.setPadding(20,  0, 10, 0);
-            sn.setPadding(20,  0, 10, 0);
+            tt.setPadding(20, 3, 5, 10);
+            tb.setPadding(20, 0, 10, 0);
+            sn.setPadding(20, 0, 10, 0);
         }
         int hasFlag = cursor.getInt(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Flag));
         if (hasFlag == FeedContract.Flag.READED) {

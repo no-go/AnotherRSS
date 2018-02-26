@@ -68,7 +68,8 @@ http://www.wetterleitstelle.de/nordrhein-westfalen.xml
         public static final String SEARCH_HINT_COLOR = "#FFAA00";
         public static final float DEFAULT_FONT_SIZE = 12.0f;
         public static final int DEFAULT_MAX_IMG_WIDTH = 120;
-        public static final float IMG_ROUND = 28f;
+        public static final float IMG_ROUND = 14f;
+        public static final float TWEET_IMG_ROUND = 56f;
 
         public static final String DEFAULT_regexAll = "";
         public static final String DEFAULT_regexTo = "";

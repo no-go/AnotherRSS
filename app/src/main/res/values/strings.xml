@@ -18,7 +18,7 @@
     <string name="delDb">destroy all feeds (DEBUG)</string>
     <string name="noData">No Data</string>
     <string name="dateForm">HH:mm</string>
-    <string name="dateForm2">MM/dd</string>
+    <string name="dateForm2">yyyy-MM-dd</string>
 
     <string name="notify_sound_title">sound</string>
     <string name="notify_sound_desc">Change the sound</string>
@@ -38,7 +38,7 @@
     <string name="waitOnNextSync">there are (still) no feeds …</string>
 
     <string name="serviceHasNews">de.digisocken.rss_o_tweet.ALARM_HAS_NEWS</string>
-    <string name="nightmode">Nightmode (good on Android &gt; 6)</string>
+    <string name="nightmode">c64 Nightmode</string>
     <string name="nightmode_summary">between a timespan the App is optimized for a dark environment</string>
     <string name="nightmode_use">dark</string>
     <string name="nightmode_use_start">from …:00 o\'clock</string>
