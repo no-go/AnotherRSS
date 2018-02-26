@@ -59,7 +59,7 @@ import java.util.TimeZone;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String PROJECT_LINK = "https://no-go.github.io/RssOTweet/";
+    private static final String PROJECT_LINK = "https://github.com/no-go/AnotherRSS/blob/tweeted/README.md";
     private static final String PROJECT2_LINK = "http://style64.org/c64-truetype";
     private static final String FLATTR_ID = "o6wo7q";
     private String FLATTR_LINK;

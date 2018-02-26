@@ -2,13 +2,15 @@
 
 This Branch: Get a Twitter API Key and this version get additional Timelines of users and hashtags.
 
-![feature collection](img/Screenshot_8.png)
-
 ![logo](img/Icon.png)
 
 This is a Atom RSS Feed Reader and and Twitter Timeline and Hashtag Reader. It very similar to [ViboraFeed](https://github.com/no-go/ViboraFeed). You can add many RSS-Urls, Hashtags or Usernames (timelines).
 
 Support me: <a href="https://flattr.com/submit/auto?fid=o6wo7q&url=https%3A%2F%2Fgithub.com%2Fno-go%2FAnotherRSS" target="_blank">![Flattr This](img/flattr-badge-large.png)</a>
+
+## Get the App
+
+You can get a signed APK from here (Android 4.1+): [APK](https://raw.githubusercontent.com/no-go/AnotherRSS/tweeted/app/release/app-release.apk)
 
 ## Features
 
@@ -40,10 +42,6 @@ Support me: <a href="https://flattr.com/submit/auto?fid=o6wo7q&url=https%3A%2F%2
 - see issue in master branch
 - to test: tweets only update at first time (add api key+secret)
 - not very power saving (maybe ignore mode is bad?)
-
-## Get the App
-
-You can get a signed APK from here (Android 4.1+): [APK](https://raw.githubusercontent.com/no-go/AnotherRSS/tweeted/app/release/app-release.apk)
 
 ## Screenshots
 
