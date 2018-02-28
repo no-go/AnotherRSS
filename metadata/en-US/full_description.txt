@@ -1,6 +1,6 @@
 Another-RSS is an RSS and Atom feed reader. You can add many RSS feed urls. 
 
-"Features"
+'''Features'''
 
 * open feed link in your favourite browser
 * Search words in the feeds
@@ -23,7 +23,7 @@ Another-RSS is an RSS and Atom feed reader. You can add many RSS feed urls.
 * widget for the first Feed (testing)
 Do not be afraid! The first refresh generates about 150 notifications, but the RSS feed reader has an options menu has a feature to remove all of them.
 
-"Expunge and Ignore"
+'''Expunge and Ignore'''
 
 To reduce the cached informations, single feed news older than 5 days will be
 ignored. If you delete single feed news, then they will be destroyed in the

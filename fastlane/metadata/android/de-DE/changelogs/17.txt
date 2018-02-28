@@ -1,1 +1,0 @@
-In den Einstellungen lassen sich nun das Verhalten eines "Antippens" (statt dem Kontext-Menu beim "Lange drücken") einstellen. So kann mit einem Klick z.B. der Link zum Feed geöffnet, gelesen und favourisiert werden.

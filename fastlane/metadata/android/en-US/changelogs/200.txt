@@ -1,1 +1,0 @@
-desktop widget added (testing) for the first feed url. Regex as new feature.

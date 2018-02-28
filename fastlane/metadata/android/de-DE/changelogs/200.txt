@@ -1,1 +1,0 @@
-Ein Widget für die Feeds des ersten Feed-Eintrags existert (eine Testversion). Es können nun auch RegEx vor der Blacklist benutzt werden.
