@@ -9,7 +9,9 @@ import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
+import android.util.Xml;
 import android.widget.RemoteViews;
 
 import com.android.volley.Request;
@@ -31,6 +33,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,12 +48,26 @@ public class WidgetUpdateService extends Service {
     static String _regexAll;
     static String _regexTo;
 
+    public static String fixUml(String inp) {
+        // windows2152 instead of utf8?!
+        inp = inp.replace("\303\237", "ß");
+        inp = inp.replace("\303\244", "ä");
+        inp = inp.replace("\303\266", "ö");
+        inp = inp.replace("\303\274", "ü");
+        inp = inp.replace("\303\204", "Ä");
+        inp = inp.replace("\303\226", "Ö");
+        inp = inp.replace("\303\234", "Ü");
+        return inp;
+    }
+
     public static String extractTitles(String resp) {
         String back = "";
+        resp = fixUml(resp);
+
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder db = dbf.newDocumentBuilder();
-            InputSource is = new InputSource(new StringReader(resp));
+            ByteArrayInputStream is = new ByteArrayInputStream(resp.getBytes("UTF-8"));
             Document doc = db.parse(is);
             doc.getDocumentElement().normalize();
 
@@ -190,12 +207,15 @@ public class WidgetUpdateService extends Service {
                                 Date dNow = new Date();
                                 SimpleDateFormat ft = new SimpleDateFormat("HH:mm");
                                 views.setTextViewText(R.id.wTime, ft.format(dNow));
+                                Spanned sp;
 
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                    views.setTextViewText(R.id.wFeedtitles, Html.fromHtml(extractTitles(response), Html.FROM_HTML_MODE_COMPACT));
+                                    sp = Html.fromHtml(extractTitles(response), Html.FROM_HTML_MODE_COMPACT);
                                 } else {
-                                    views.setTextViewText(R.id.wFeedtitles, Html.fromHtml(extractTitles(response)));
+                                    sp = Html.fromHtml(extractTitles(response));
                                 }
+
+                                views.setTextViewText(R.id.wFeedtitles, sp);
 
                                 // Push update for this widget to the home screen
                                 ComponentName thisWidget = new ComponentName(WidgetUpdateService.this, MyWidgetProvider.class);
