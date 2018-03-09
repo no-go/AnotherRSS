@@ -293,7 +293,12 @@ public class Refresher {
         _regexTo = _pref.getString("regexTo", RssOTweet.Config.DEFAULT_regexTo);
 
         // we do not want retweets !!
-        if (nextHop == null) {
+        if (
+                // it is a RT and we did not ignore them OR
+                (nextHop != null && (!_pref.getBoolean("ignoreRT", true))) ||
+                // it is not a RT
+                nextHop == null
+        ) {
             String title =  "(" + Long.toString(tweet.id) + ") " + tweet.user.name;
 
             Date date = FeedContract.tweetFormatDate.parse(tweet.createdAt);
@@ -322,9 +327,21 @@ public class Refresher {
                 values.put(FeedContract.Feeds.COLUMN_Date, FeedContract.dbFriendlyDate(date));
                 values.put(FeedContract.Feeds.COLUMN_Link, "http://twitter.com/"+tweet.user.screenName+"/status/" + Long.toString(tweet.id));
                 values.put(FeedContract.Feeds.COLUMN_Body, body);
-                values.put(FeedContract.Feeds.COLUMN_Image, FeedContract.getBytes(
-                        FeedContract.getImageFromUrl(tweet.user.profileImageUrl, RssOTweet.Config.TWEET_IMG_ROUND)
-                ));
+                if (_pref.getBoolean("tweetUsersImgOrg", false)) {
+                    values.put(FeedContract.Feeds.COLUMN_Image, FeedContract.getBytes(
+                            FeedContract.getImageFromUrl(
+                                    tweet.user.profileImageUrl.replace("_normal", ""),
+                                    RssOTweet.Config.TWEET_IMG_ROUND
+                            )
+                    ));
+                } else {
+                    values.put(FeedContract.Feeds.COLUMN_Image, FeedContract.getBytes(
+                            FeedContract.getImageFromUrl(
+                                    tweet.user.profileImageUrl.replace("_normal", "_bigger"),
+                                    RssOTweet.Config.TWEET_IMG_ROUND
+                            )
+                    ));
+                }
                 values.put(FeedContract.Feeds.COLUMN_Source, sourceId);
                 if (uQuery.equals(tweet.user.screenName)) {
                     values.put(FeedContract.Feeds.COLUMN_Souname, "@" + tweet.user.screenName);
@@ -433,7 +450,7 @@ public class Refresher {
                         continue feediter;
                     }
                 }
-                Log.v(RssOTweet.TAG, "is realy fresh?");
+                Log.v(RssOTweet.TAG, "is really fresh?");
                 if (isReallyFresh(date, title, expunge)) {
                     Log.v(RssOTweet.TAG, "  yes");
                     ContentValues values = new ContentValues();

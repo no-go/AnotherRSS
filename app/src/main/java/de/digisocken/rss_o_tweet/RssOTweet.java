@@ -65,10 +65,12 @@ http://www.wetterleitstelle.de/nordrhein-westfalen.xml
         public static final int DEFAULT_NIGHT_START = 18;
         public static final int DEFAULT_NIGHT_STOP = 6;
         public static final String SEARCH_HINT_COLOR = "#FFAA00";
-        public static final float DEFAULT_FONT_SIZE = 12.0f;
-        public static final int DEFAULT_MAX_IMG_WIDTH = 120;
-        public static final float IMG_ROUND = 14f;
-        public static final float TWEET_IMG_ROUND = 59f;
+        public static final float DEFAULT_FONT_SIZE = 14.0f;
+        public static final int DEFAULT_MAX_IMG_WIDTH = 160;
+        public static final float IMG_ROUND = 5f;
+        public static final float TWEET_IMG_ROUND = 40f;
+        public static final boolean DEFAULT_ignoreRT = true;
+        public static final boolean DEFAULT_tweetUsersImgOrg = false;
 
         public static final String DEFAULT_regexAll = "";
         public static final String DEFAULT_regexTo = "";
@@ -99,6 +101,12 @@ http://www.wetterleitstelle.de/nordrhein-westfalen.xml
         contextOfApplication = getApplicationContext();
 
         SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        if (!mPreferences.contains("ignoreRT")) {
+            mPreferences.edit().putBoolean("ignoreRT", Config.DEFAULT_ignoreRT).commit();
+        }
+        if (!mPreferences.contains("tweetUsersImgOrg")) {
+            mPreferences.edit().putBoolean("tweetUsersImgOrg", Config.DEFAULT_tweetUsersImgOrg).commit();
+        }
         if (!mPreferences.contains("rss_url")) {
             mPreferences.edit().putString("rss_url", RssOTweet.urls).commit();
         }

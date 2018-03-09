@@ -32,6 +32,7 @@ You can get a signed APK from here (Android 4.1+): [APK](https://raw.githubuserc
 - Text and Image is resizeable
 - Tab behavior changeable
 - THE TWITTER STUFF IS AN OPTION !
+- ignore retweets as an option
 - the App does not need a SD-Card or memory access
 - many more ...
 

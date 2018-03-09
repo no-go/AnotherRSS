@@ -74,6 +74,15 @@
             android:key="CONSUMER_SECRET"
             android:title="Consumer API SECRET" />
 
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="ignoreRT"
+            android:title="@string/ignore_RT" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="tweetUsersImgOrg"
+            android:title="@string/big_user_img" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
