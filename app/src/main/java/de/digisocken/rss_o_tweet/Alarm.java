@@ -56,8 +56,10 @@ public class Alarm extends BroadcastReceiver {
 
                 refresher._newFeeds.clear();
                 String[] urls = pref.getString("rss_url", RssOTweet.urls).split(" ");
+                boolean active[] = PreferencesActivity.loadArray("rss_url_act", ctx);
 
                 for (int urli=0; urli < urls.length; urli++) {
+                    if (!active[urli]) continue;
                     if (!urls[urli].equals("")) {
                         if (urls[urli].startsWith("#")) {
                             urls[urli] = urls[urli].replace("#","");

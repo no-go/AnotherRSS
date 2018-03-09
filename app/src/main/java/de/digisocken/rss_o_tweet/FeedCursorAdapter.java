@@ -136,7 +136,7 @@ public class FeedCursorAdapter extends CursorAdapter {
 
         tt.setPadding(10, 3,  5, 10);
         tb.setPadding(10, 0, 10, 0);
-        sn.setPadding(10, 0, 10, 0);
+        sn.setPadding(10, 0, 10, 5);
 
         Bitmap bmp = FeedContract.getImage(
                 cursor.getBlob(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Image))
@@ -165,7 +165,7 @@ public class FeedCursorAdapter extends CursorAdapter {
             iv.setPadding( 0, 0, 0, 0);
             tt.setPadding(20, 3, 5, 10);
             tb.setPadding(20, 0, 10, 0);
-            sn.setPadding(20, 0, 10, 0);
+            sn.setPadding(20, 0, 10, 5);
         }
         int hasFlag = cursor.getInt(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Flag));
         if (hasFlag == FeedContract.Flag.READED) {

@@ -1,11 +1,13 @@
 package de.digisocken.rss_o_tweet;
 
 import android.content.SharedPreferences;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Layout;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -69,8 +71,13 @@ public class FeedSourcesActivity extends AppCompatActivity {
         _active[id] = false;
         _urlCheck.add(id, new CheckBox(this));
         _urlEdit.add(id, new EditText(this));
-        _linearLayout.addView(_urlCheck.get(id), id);
-        _linearLayout.addView(_urlEdit.get(id), id+1);
+
+        LinearLayout dummy = new LinearLayout(RssOTweet.getContextOfApplication());
+        dummy.setOrientation(LinearLayout.HORIZONTAL);
+        dummy.addView(_urlCheck.get(id), 0);
+        dummy.addView(_urlEdit.get(id), 1);
+        _urlEdit.get(id).setMinWidth(RssOTweet.Config.DEFAULT_MAX_IMG_WIDTH);
+        _linearLayout.addView(dummy, id);
     }
 
     private void loadUrls() {
@@ -93,8 +100,12 @@ public class FeedSourcesActivity extends AppCompatActivity {
                 _active = Arrays.copyOf(_active, _active.length +1);
                 _active[i] = false;
             }
-            _linearLayout.addView(_urlCheck.get(i), i);
-            _linearLayout.addView(_urlEdit.get(i), i+1);
+            LinearLayout dummy = new LinearLayout(RssOTweet.getContextOfApplication());
+            dummy.setOrientation(LinearLayout.HORIZONTAL);
+            dummy.addView(_urlCheck.get(i), 0);
+            dummy.addView(_urlEdit.get(i), 1);
+            _urlEdit.get(i).setMinWidth(RssOTweet.Config.DEFAULT_MAX_IMG_WIDTH);
+            _linearLayout.addView(dummy, i);
         }
     }
 
