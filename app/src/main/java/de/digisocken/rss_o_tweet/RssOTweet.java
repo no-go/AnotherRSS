@@ -46,10 +46,21 @@ http://www.wetterleitstelle.de/nordrhein-westfalen.xml
                     "http://www.taz.de/!p4608;rss/ " +
                     "http://www.deutschlandfunk.de/die-nachrichten.353.de.rss " +
                     "http://digisocken.de/_p/wdrWetter/?rss=true " +
-                    "@faznet " +
-                    "@MartinSonneborn " +
-                    "#attiny85 " +
-                    "@evalodde";
+                     "@faznet " +
+                     "@MartinSonneborn " +
+                     "#attiny85 " +
+                     "@evalodde";
+
+    public static final boolean feedActive[] = {
+            true,
+                    true,
+                    true,
+                    true,
+                     false,
+                     true,
+                     true,
+                     true
+    };
 
     public static class Config {
         /**
@@ -109,6 +120,11 @@ http://www.wetterleitstelle.de/nordrhein-westfalen.xml
         }
         if (!mPreferences.contains("rss_url")) {
             mPreferences.edit().putString("rss_url", RssOTweet.urls).commit();
+            PreferencesActivity.storeArray(feedActive, "rss_url_act", getApplicationContext());
+        } else {
+            if (!mPreferences.contains("rss_url_act")) {
+                PreferencesActivity.storeArray(feedActive, "rss_url_act", getApplicationContext());
+            }
         }
         if (!mPreferences.contains("regexAll")) {
             mPreferences.edit().putString("regexAll", Config.DEFAULT_regexAll).commit();

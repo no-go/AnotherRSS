@@ -1,6 +1,9 @@
 package de.digisocken.rss_o_tweet;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -55,5 +58,22 @@ public class PreferencesActivity extends AppCompatActivity {
         super.onResume();
     }
 
+    static public boolean storeArray(boolean[] array, String arrayName, Context mContext) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(arrayName +"_size", array.length);
+        for(int i=0;i<array.length;i++)
+            editor.putBoolean(arrayName + "_" + i, array[i]);
+        return editor.commit();
+    }
+
+    static public boolean[] loadArray(String arrayName, Context mContext) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        int size = prefs.getInt(arrayName + "_size", 0);
+        boolean array[] = new boolean[size];
+        for(int i=0;i<size;i++)
+            array[i] = prefs.getBoolean(arrayName + "_" + i, false);
+        return array;
+    }
 }
 
