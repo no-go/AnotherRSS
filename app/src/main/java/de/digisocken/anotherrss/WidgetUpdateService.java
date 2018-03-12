@@ -24,6 +24,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,12 +39,26 @@ public class WidgetUpdateService extends Service {
     static String _regexAll;
     static String _regexTo;
 
+    public static String fixUml(String inp) {
+        // windows2152 instead of utf8?!
+        inp = inp.replace("\303\237", "ß");
+        inp = inp.replace("\303\244", "ä");
+        inp = inp.replace("\303\266", "ö");
+        inp = inp.replace("\303\274", "ü");
+        inp = inp.replace("\303\204", "Ä");
+        inp = inp.replace("\303\226", "Ö");
+        inp = inp.replace("\303\234", "Ü");
+        return inp;
+    }
+
     public static String extractTitles(String resp) {
         String back = "";
+        resp = fixUml(resp);
+
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder db = dbf.newDocumentBuilder();
-            InputSource is = new InputSource(new StringReader(resp));
+            ByteArrayInputStream is = new ByteArrayInputStream(resp.getBytes("UTF-8"));
             Document doc = db.parse(is);
             doc.getDocumentElement().normalize();
 

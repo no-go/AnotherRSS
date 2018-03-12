@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatDelegate;
 
+import java.util.Arrays;
 import java.util.Calendar;
 
 /**
@@ -21,32 +22,38 @@ public class AnotherRSS extends Application {
     public static boolean showAdditionalFeed = true;
     public static String query = "";
 
-    /*
-http://feeds.bbci.co.uk/news/world/europe/rss.xml
-http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml
-http://feeds.t-online.de/rss/nachrichten
-http://www.wz.de/cmlink/wz-rss-uebersicht-1.516698
-http://www.deutschlandfunk.de/die-nachrichten.353.de.rss
-http://www.tagesschau.de/xml/rss2
-http://www.taz.de/!p4608;rss/
-https://www.heise.de/security/news/news-atom.xml
-https://www.amnesty.de/rss/news
-http://digisocken.de/_p/wdrWetter/?rss=true
-https://www.umwelt.nrw.de/rss.xml
-http://feeds.reuters.com/Reuters/UKWorldNews
-http://feeds.reuters.com/reuters/scienceNews?format=xml
-http://www.wetterleitstelle.de/nordrhein-westfalen.xml
-
-     */
     public static final String urls =
-            "http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml " +
-                    "http://www.comicsrss.com/rss/dilbert-classics.rss " +
-                    "http://feeds.arstechnica.com/arstechnica/index/ " +
+            "http://www.tagesschau.de/xml/rss2 " +
                     "http://www.taz.de/!p4608;rss/ " +
-                    "https://www.heise.de/security/news/news-atom.xml " +
+                    "http://www.deutschlandfunk.de/die-nachrichten.353.de.rss " +
                     "http://digisocken.de/_p/wdrWetter/?rss=true " +
                     "http://feeds.bbci.co.uk/news/world/europe/rss.xml " +
-                    "https://www.amnesty.de/rss/news";
+                    "http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml " +
+                    "http://feeds.t-online.de/rss/nachrichten " +
+                    "http://www.wz.de/cmlink/wz-rss-uebersicht-1.516698 " +
+                    "https://www.heise.de/security/news/news-atom.xml " +
+                    "https://www.amnesty.de/rss/news " +
+                    "https://www.umwelt.nrw.de/rss.xml " +
+                    "http://feeds.reuters.com/Reuters/UKWorldNews " +
+                    "http://feeds.reuters.com/reuters/scienceNews?format=xml " +
+                    "http://www.wetterleitstelle.de/nordrhein-westfalen.xml";
+
+    public static final boolean feedActive[] = {
+            true,
+            true,
+            false,
+            true,
+            false,
+            true,
+            false,
+            false,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false
+    };
 
     public static class Config {
         /**
@@ -95,6 +102,14 @@ http://www.wetterleitstelle.de/nordrhein-westfalen.xml
         SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if (!mPreferences.contains("rss_url")) {
             mPreferences.edit().putString("rss_url", AnotherRSS.urls).commit();
+            PreferencesActivity.storeArray(feedActive, "rss_url_act", getApplicationContext());
+        } else {
+            if (!mPreferences.contains("rss_url_act_0")) {
+                String[] urls = mPreferences.getString("rss_url", AnotherRSS.urls).split(" ");
+                boolean act[] = new boolean[urls.length];
+                Arrays.fill(act, true);
+                PreferencesActivity.storeArray(act, "rss_url_act", getApplicationContext());
+            }
         }
         if (!mPreferences.contains("regexAll")) {
             mPreferences.edit().putString("regexAll", Config.DEFAULT_regexAll).commit();

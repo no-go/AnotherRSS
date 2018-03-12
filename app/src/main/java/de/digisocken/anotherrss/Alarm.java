@@ -53,8 +53,10 @@ public class Alarm extends BroadcastReceiver {
 
                 refresher._newFeeds.clear();
                 String[] urls = pref.getString("rss_url", AnotherRSS.urls).split(" ");
+                boolean active[] = PreferencesActivity.loadArray("rss_url_act", ctx);
 
                 for (int urli=0; urli < urls.length; urli++) {
+                    if (!active[urli]) continue;
                     if (!urls[urli].equals("")) {
                         Document doc = refresher.getDoc(urls[urli], AnotherRSS.Config.DEFAULT_expunge);
                         refresher.insertToDb(doc, AnotherRSS.Config.DEFAULT_expunge, urli);

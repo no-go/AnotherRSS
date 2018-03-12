@@ -25,6 +25,7 @@ Website: [https://no-go.github.io/AnotherRSS](https://no-go.github.io/AnotherRSS
 - blacklist
 - regex
 - widget
+- possibility to activate and inactivate feed sources
 - Text and Image is resizeable
 - Tab behavior changeable
 - many more ...

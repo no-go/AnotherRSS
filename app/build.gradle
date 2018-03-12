@@ -6,8 +6,8 @@ android {
         applicationId "de.digisocken.anotherrss"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 203
-        versionName "2.03"
+        versionCode 210
+        versionName "2.10"
     }
     buildTypes {
         release {
