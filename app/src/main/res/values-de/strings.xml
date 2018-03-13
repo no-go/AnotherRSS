@@ -73,6 +73,9 @@
     <string name="biggerImage">+ Bild</string>
     <string name="smallerImage">- Bild</string>
 
+    <string name="offline_hint">Offline Hinweis</string>
+    <string name="offline_hint_summary">Zeigt eine Benachrichtigung, dass das Holen der Feed News z.Z. nicht geht sowie andere Hinweise beim Synchronisieren.</string>
+
     <string name="more">Mehr …</string>
     <string name="regex">Regular Expressions</string>
     <string name="regex_desc">Das ist nur etwas für Experten. Fehler werden (hauptsächlich) unterdrückt. Der REGEX wird auf Titel und Inhalt angewand bevor Blacklist zuschlägt.</string>

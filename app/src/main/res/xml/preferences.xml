@@ -26,7 +26,7 @@
             android:title="@string/notify_color_title" />
 
     <ListPreference
-        android:defaultValue="2"
+        android:defaultValue="0"
         android:entries="@array/notify_sound"
         android:entryValues="@array/notify_sound_values"
         android:key="notify_sound"
@@ -40,6 +40,12 @@
         android:key="tap_mode"
         android:summary="@string/tap_behaviour_desc"
         android:title="@string/tap_behaviour" />
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="offline_hint"
+        android:title="@string/offline_hint"
+        android:summary="@string/offline_hint_summary" />
 
     <PreferenceCategory
         android:title="@string/cleanup" >

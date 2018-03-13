@@ -220,7 +220,7 @@ public class Refresher {
         conn.getInputStream().close();
 
         Log.d(AnotherRSS.TAG, "Response Code: " + Integer.toString(responseCode));
-        if (BuildConfig.DEBUG) {
+        if (_pref.getBoolean("offline_hint", false)) {
             error(Integer.toString(responseCode), "if modified since " + now);
         }
         if (responseCode == HttpURLConnection.HTTP_NOT_MODIFIED) {
@@ -507,8 +507,9 @@ public class Refresher {
         NotificationCompat.BigTextStyle bigStyle = new NotificationCompat.BigTextStyle();
         bigStyle.bigText(body);
 
-        if (largeIcon == null)
-            largeIcon = BitmapFactory.decodeResource(_ctx.getResources(), R.mipmap.ic_launcher);
+        if (largeIcon == null) {
+            largeIcon = BitmapFactory.decodeResource(_ctx.getResources(), R.drawable.ic_launcher);
+        }
 
         mBuilder.setContentTitle(title)
                 .setContentText(body)

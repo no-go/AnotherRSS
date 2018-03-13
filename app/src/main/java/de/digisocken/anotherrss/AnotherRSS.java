@@ -63,7 +63,7 @@ public class AnotherRSS extends Application {
         public static final int DEFAULT_autodelete = 14;
         public static final int DEFAULT_expunge = 5;
         public static final String DEFAULT_rsssec = "10800";
-        public static final String DEFAULT_notifySound = "2";
+        public static final String DEFAULT_notifySound = "0";
         public static final String DEFAULT_notifyColor = "#FF00FFFF";
         public static final String DEFAULT_notifyType = "2";
         public static final int DEFAULT_NIGHT_START = 18;
@@ -75,6 +75,7 @@ public class AnotherRSS extends Application {
 
         public static final String DEFAULT_regexAll = "";
         public static final String DEFAULT_regexTo = "";
+        public static final boolean DEFAULT_OFFLINEHINT = false;
 
         /**
          * sollte eine Verbindung nicht zu sande kommen, wird ein neuer
@@ -122,6 +123,9 @@ public class AnotherRSS extends Application {
         }
         if (!mPreferences.contains("nightmode_use_stop")) {
             mPreferences.edit().putInt("nightmode_use_stop", Config.DEFAULT_NIGHT_STOP).commit();
+        }
+        if (!mPreferences.contains("offline_hint")) {
+            mPreferences.edit().putBoolean("offline_hint", Config.DEFAULT_OFFLINEHINT).commit();
         }
         if (!mPreferences.contains("autodelete")) {
             mPreferences.edit().putInt("autodelete", Config.DEFAULT_autodelete).commit();

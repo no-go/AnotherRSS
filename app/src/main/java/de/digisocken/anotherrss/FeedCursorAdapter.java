@@ -28,7 +28,7 @@ public class FeedCursorAdapter extends CursorAdapter {
 
     public FeedCursorAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
-        largeIcon = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
+        largeIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher);
         favoriteIcon = ContextCompat.getDrawable(context, R.drawable.favorite);
         _pref = PreferenceManager.getDefaultSharedPreferences(AnotherRSS.getContextOfApplication());
     }

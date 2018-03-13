@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
@@ -16,7 +15,6 @@ import android.util.Log;
 import org.w3c.dom.Document;
 
 import java.util.Random;
-import java.util.StringTokenizer;
 
 public class Alarm extends BroadcastReceiver {
 
@@ -33,14 +31,14 @@ public class Alarm extends BroadcastReceiver {
 
                 if (refresher.isOnline()) {
                     if (pref.getBoolean("isRetry", false)) {
-                        if (BuildConfig.DEBUG) {
+                        if (pref.getBoolean("offline_hint", false)) {
                             refresher.error("Online again!", "repeating alarm set");
                         }
                         Log.d(AnotherRSS.TAG, "last retry!");
                         start(ctx);
                     }
                 } else {
-                    if (BuildConfig.DEBUG) {
+                    if (pref.getBoolean("offline_hint", false)) {
                         refresher.error(
                                 "not Online",
                                 "Retry alarm in seconds: " + AnotherRSS.Config.RETRYSEC_AFTER_OFFLINE
