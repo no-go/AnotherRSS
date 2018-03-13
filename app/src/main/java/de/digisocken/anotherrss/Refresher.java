@@ -227,7 +227,7 @@ public class Refresher {
             return false;
         }
         if (responseCode != HttpURLConnection.HTTP_OK) {
-            error(url.toString(), _ctx.getString(R.string.responseStrange));
+            if (_pref.getBoolean("offline_hint", false)) error(url.toString(), _ctx.getString(R.string.responseStrange));
             Log.e(AnotherRSS.TAG, _ctx.getString(R.string.responseStrange));
             return false;
         }
@@ -259,10 +259,10 @@ public class Refresher {
             e.printStackTrace();
         } catch (MalformedURLException e) {
             e.printStackTrace();
-            error(rssurl, _ctx.getString(R.string.rssUrlWrong));
+            if (_pref.getBoolean("offline_hint", false)) error(rssurl, _ctx.getString(R.string.rssUrlWrong));
             Log.e(AnotherRSS.TAG, _ctx.getString(R.string.rssUrlWrong));
         } catch (Exception e) {
-            error(rssurl, _ctx.getString(R.string.noConnection));
+            if (_pref.getBoolean("offline_hint", false)) error(rssurl, _ctx.getString(R.string.noConnection));
             Log.e(AnotherRSS.TAG, _ctx.getString(R.string.noConnection));
         }
         return null;
@@ -485,12 +485,12 @@ public class Refresher {
                 .setSmallIcon(R.drawable.logo_sw)
                 .setLargeIcon(largeIcon)
                 .setVibrate(new long[]{2000})
-                .setPriority(Notification.PRIORITY_HIGH);
+                .setPriority(Notification.PRIORITY_LOW);
         Notification noti = mBuilder.build();
         noti.flags |= Notification.FLAG_AUTO_CANCEL;
         NotificationManager mNotifyMgr =
                 (NotificationManager) _ctx.getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotifyMgr.notify(42, noti);
+        mNotifyMgr.notify((int)System.currentTimeMillis(), noti);
     }
 
     private void notify(ContentValues cv, PendingIntent pi, Uri sound, boolean isHeadUp) {
