@@ -579,6 +579,7 @@ public class Refresher {
     }
 
     public void error(String title, String msg) {
+        /*
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(_ctx);
         Bitmap largeIcon = BitmapFactory.decodeResource(_ctx.getResources(), android.R.drawable.ic_delete);
         mBuilder.setContentTitle(title)
@@ -593,6 +594,7 @@ public class Refresher {
         NotificationManager mNotifyMgr =
                 (NotificationManager) _ctx.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotifyMgr.notify(42, noti);
+        */
     }
 
     private void notify(ContentValues cv, PendingIntent pi, Uri sound, boolean isHeadUp) {

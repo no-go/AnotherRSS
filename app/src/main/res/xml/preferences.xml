@@ -52,7 +52,7 @@
             android:maxLength="2" />
 
         <EditTextPreference
-            android:defaultValue="Trump,Putin,Merkel,pielfeld,DfB,ockey,Rennfahr,edallie,Borussia,Fortuna,Basket,Tennis,Boxer,rainer,VfC,Fußball,sport,Sport,FC ,Spieltag,Bundesliga,ennbahn"
+            android:defaultValue="Trump,Putin,Merkel,uropacup,Abstiegskampf,HSV,lympia,eltcup,liga,Tabellen,DEG,pielfeld,DfB,ockey,Rennfahr,edallie,Borussia,Fortuna,Basket,Tennis,Boxer,rainer,VfC,Fußball,sport,Sport,FC ,Spieltag,Bundesliga,ennbahn"
             android:key="blacklist"
             android:summary="@string/blacklist_desc"
             android:title="@string/blacklist" />

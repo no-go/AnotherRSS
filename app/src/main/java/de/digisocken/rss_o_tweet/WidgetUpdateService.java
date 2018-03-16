@@ -227,7 +227,7 @@ public class WidgetUpdateService extends Service {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 RemoteViews views = new RemoteViews(getPackageName(), R.layout.main_widget);
-                                views.setTextViewText(R.id.wFeedtitles, error.getMessage());
+                                views.setTextViewText(R.id.wFeedtitles, getString(R.string.noConnection));
                                 ComponentName thisWidget = new ComponentName(WidgetUpdateService.this, MyWidgetProvider.class);
                                 AppWidgetManager manager = AppWidgetManager.getInstance(WidgetUpdateService.this);
                                 manager.updateAppWidget(thisWidget, views);

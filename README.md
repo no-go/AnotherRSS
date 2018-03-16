@@ -26,9 +26,12 @@ You can get a signed APK from here (Android 4.1+): [APK](https://raw.githubuserc
 - every news is a notification
 - ignore mode
 - mark feeds as deleted, readed, favourite
-- blacklist
+- good blacklist (german sports, only on first open it in prefenences it gets active)
+- improvement to open xml and rss ending links in Rss-o-Tweet as new source
 - regex
-- widget (only first source)
+- widget (only first source) with preview and without exception
+- icon alternative (72x72)
+- no error notifications about "ups no internet"
 - Text and Image is resizeable
 - Tab behavior changeable
 - THE TWITTER STUFF IS AN OPTION !

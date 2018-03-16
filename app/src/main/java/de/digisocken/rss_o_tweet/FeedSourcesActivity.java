@@ -1,7 +1,9 @@
 package de.digisocken.rss_o_tweet;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
@@ -49,6 +51,28 @@ public class FeedSourcesActivity extends AppCompatActivity {
         }
         _pref = PreferenceManager.getDefaultSharedPreferences(RssOTweet.getContextOfApplication());
         loadUrls();
+        Intent intent = getIntent();
+        Uri data = intent.getData();
+        if (data != null) {
+            int id = _urlEdit.size();
+            _active = Arrays.copyOf(_active, _active.length +1);
+            _active[id] = true;
+            CheckBox checkBox = new CheckBox(this);
+            EditText editText = new EditText(this);
+            checkBox.setChecked(true);
+            editText.setText(data.toString());
+            _urlCheck.add(id, checkBox);
+            _urlEdit.add(id, editText);
+
+            LinearLayout dummy = new LinearLayout(RssOTweet.getContextOfApplication());
+            dummy.setOrientation(LinearLayout.HORIZONTAL);
+            dummy.addView(checkBox, 0);
+            dummy.addView(editText, 1);
+            editText.setMinWidth(RssOTweet.Config.DEFAULT_MAX_IMG_WIDTH);
+            _linearLayout.addView(dummy, id);
+            storeUrls();
+            editText.requestFocus();
+        }
     }
 
     @Override

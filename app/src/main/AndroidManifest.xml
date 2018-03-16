@@ -34,7 +34,54 @@
 
         <activity
             android:name="de.digisocken.rss_o_tweet.FeedSourcesActivity"
-            android:parentActivityName="de.digisocken.rss_o_tweet.MainActivity" />
+            android:parentActivityName="de.digisocken.rss_o_tweet.MainActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="http" />
+                <data android:host="*" />
+                <data android:pathPattern=".*xml/" />
+                <data android:pathPattern=".*xml" />
+                <data android:pathPattern=".*rss/" />
+                <data android:pathPattern=".*rss" />
+                <data android:pathPattern=".*rss2" />
+                <data android:pathPattern=".*rdf" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" />
+                <data android:host="*" />
+                <data android:pathPattern=".*xml/" />
+                <data android:pathPattern=".*xml" />
+                <data android:pathPattern=".*rss/" />
+                <data android:pathPattern=".*rss" />
+                <data android:pathPattern=".*rss2" />
+                <data android:pathPattern=".*rdf" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="http"/>
+                <data android:mimeType="text/xml"/>
+                <data android:mimeType="application/rss+xml"/>
+                <data android:mimeType="application/atom+xml"/>
+                <data android:mimeType="application/xml"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="https"/>
+                <data android:mimeType="text/xml"/>
+                <data android:mimeType="application/rss+xml"/>
+                <data android:mimeType="application/atom+xml"/>
+                <data android:mimeType="application/xml"/>
+            </intent-filter>
+        </activity>
 
         <activity
             android:name="de.digisocken.rss_o_tweet.PrefRegexActivity"
