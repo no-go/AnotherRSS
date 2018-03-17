@@ -24,6 +24,7 @@ Website: [https://no-go.github.io/AnotherRSS](https://no-go.github.io/AnotherRSS
 - mark feeds as deleted, readed, favourite
 - blacklist
 - regex
+- open xml links in AnotherRSS
 - widget
 - possibility to activate and inactivate feed sources
 - Text and Image is resizeable
