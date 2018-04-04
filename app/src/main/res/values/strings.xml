@@ -4,64 +4,64 @@
     <string name="rss_url_desc">Edit the path to the rss/atom feeds</string>
     <string name="rss_sec">Timer</string>
     <string name="rss_sec_desc">Check feed every &#8230; minutes</string>
-    <string name="feedCheck">try feed check</string>
-    <string name="preferences">PREFERENCES</string>
+    <string name="feedCheck">Try to check feeds</string>
+    <string name="preferences">Preferences</string>
     <string name="notify_type_title">Notify LED</string>
     <string name="notify_type_desc">Control the LED behavior</string>
     <string name="notify_color_title">color</string>
     <string name="notify_color_desc">Change the LED color</string>
     <string name="tap_behaviour">Tap behaviour</string>
-    <string name="tap_behaviour_desc">Change the short press behaviour. "open" is a alternate mode.</string>
-    <string name="delNotifies">delete notifications</string>
-    <string name="readedFeeds">mark all feeds as readed</string>
-    <string name="delFeeds">delete all feeds</string>
-    <string name="delDb">destroy all feeds (DEBUG)</string>
+    <string name="tap_behaviour_desc">Change the short press behaviour. "open" is an alternate mode.</string>
+    <string name="delNotifies">Delete notifications</string>
+    <string name="readedFeeds">Mark all feeds as read</string>
+    <string name="delFeeds">Delete all feeds</string>
+    <string name="delDb">Destroy all feeds (DEBUG)</string>
     <string name="noData">No Data</string>
     <string name="dateForm">HH:mm</string>
     <string name="dateForm2">MM/dd</string>
 
-    <string name="notify_sound_title">sound</string>
+    <string name="notify_sound_title">Sound</string>
     <string name="notify_sound_desc">Change the sound</string>
 
-    <string name="open">open with browser</string>
-    <string name="delete">delete</string>
-    <string name="destroy">destroy (DEBUG)</string>
+    <string name="open">Open with browser</string>
+    <string name="delete">Delete</string>
+    <string name="destroy">Destroy (DEBUG)</string>
 
-    <string name="no_readed">(un)readed</string>
+    <string name="no_readed">(un)read</string>
     <string name="deleted">deleted</string>
     <string name="destroyed">destroyed</string>
 
-    <string name="rssUrlWrong">Your feed has a wrong URL</string>
-    <string name="noConnection">no connection to site or internet</string>
+    <string name="rssUrlWrong">Your feed has an incorrect URL</string>
+    <string name="noConnection">Unable to connect to site or internet</string>
     <string name="newFeeds">New feeds</string>
-    <string name="responseStrange">URL Respose is strange</string>
-    <string name="waitOnNextSync">there are (still) no feeds …</string>
+    <string name="responseStrange">URL respose is strange</string>
+    <string name="waitOnNextSync">There are (still) no new items...</string>
 
     <string name="serviceHasNews">de.digisocken.anotherrss.ALARM_HAS_NEWS</string>
     <string name="nightmode">Nightmode (good on Android &gt; 6)</string>
-    <string name="nightmode_summary">between a timespan the App is optimized for a dark environment</string>
-    <string name="nightmode_use">dark</string>
-    <string name="nightmode_use_start">from …:00 o\'clock</string>
-    <string name="nightmode_use_stop">to …:59 o\'clock</string>
+    <string name="nightmode_summary">Optimize theme for dark environments such as at night</string>
+    <string name="nightmode_use">Enable Nightmode</string>
+    <string name="nightmode_use_start">Start hour (24 hour time, hour only)</string>
+    <string name="nightmode_use_stop">End hour (24 hour time, hour only)</string>
 
-    <string name="blacklist">Blacklist (comma sperated)</string>
-    <string name="blacklist_desc">new feeds will be ignored, if them consist these chars</string>
+    <string name="blacklist">Blacklist (comma seperated)</string>
+    <string name="blacklist_desc">New entries will be ignored if they contain these characters</string>
 
-    <string name="searching">searching</string>
+    <string name="searching">Searching for</string>
     <string name="action_search">search</string>
-    <string name="start_search">please enter keyword</string>
+    <string name="start_search">Please enter keyword</string>
     <string name="close_search">search function closed</string>
 
-    <string name="favorite">favorite</string>
-    <string name="nofavorite">not my favorite anymore</string>
+    <string name="favorite">Mark as favourite</string>
+    <string name="nofavorite">Unmark as favourite</string>
 
     <string name="cleanup">Clean Up</string>
     <string name="removeNonFav">Automatic Delete</string>
-    <string name="removeNonFav_summary">non favorite feeds will be deleted after … days</string>
+    <string name="removeNonFav_summary">Non favorite feeds will be deleted after _ days</string>
 
-    <string name="share">share with …</string>
+    <string name="share">Share with …</string>
 
-    <string name="flattr_this">Micro-Donate !</string>
+    <string name="flattr_this">Micro-Donate!</string>
     <string name="projPage">Project Page</string>
 
     <string name="kB_used">kB used</string>
@@ -101,10 +101,10 @@
     </string-array>
 
     <string-array name="tap_mode">
-        <item>open right-hand (landscape)</item>
-        <item>open in Browser</item>
-        <item>(un)read</item>
-        <item>(un)favourite</item>
+        <item>Open in right-hand frame (landscape)</item>
+        <item>Open in Browser</item>
+        <item>Mark (un)read</item>
+        <item>Mark (un)favourite</item>
     </string-array>
 
     <string-array name="tap_mode_values">
