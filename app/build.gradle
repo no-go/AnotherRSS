@@ -5,9 +5,10 @@ android {
     defaultConfig {
         applicationId "de.digisocken.anotherrss"
         minSdkVersion 16
+        // we need 23 here for google :-/
         targetSdkVersion 22
-        versionCode 213
-        versionName "2.13"
+        versionCode 214
+        versionName "2.14"
     }
     buildTypes {
         release {

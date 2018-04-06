@@ -171,6 +171,7 @@ public class FeedContract {
      * @param str html Code
      * @return spanned
      */
+    @SuppressWarnings("deprecation")
     static public Spanned fromHtml(String str) {
         Spanned sp;
 
@@ -189,6 +190,7 @@ public class FeedContract {
      * @return result without html code
      */
     public static String removeHtml(String html) {
+        if (html == null) return ":-(";
         FeedContract fc = new FeedContract();
         return fc.removeHtml(html, true);
     }
@@ -203,6 +205,7 @@ public class FeedContract {
      * @return result without html code
      */
     public String removeHtml(String html, boolean ignoreEntities) {
+        if (html == null) return ":-(";
         html = html.replaceAll("<(.*?)\\>"," ");
         html = html.replaceAll("<(.*?)\\\n"," ");
         html = html.replaceFirst("(.*?)\\>", " ");
