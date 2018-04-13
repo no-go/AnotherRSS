@@ -7,8 +7,8 @@ android {
         minSdkVersion 16
         // we need 23 here for google :-/
         targetSdkVersion 22
-        versionCode 214
-        versionName "2.14"
+        versionCode 215
+        versionName "2.15"
     }
     buildTypes {
         release {
