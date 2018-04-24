@@ -42,6 +42,12 @@ You can get a signed APK from here (Android 4.1+): [APK](https://raw.githubuserc
 
 - Optional: login to Twitter and tweet a low resuluton (!) picture and some text
 
+## Podcast improvement
+
+If a feed url ends with .podcast and the links ends with .mp3 the App does
+not open Browser. It plays the mp3 from the internet (it does not download
+and cache it!!).
+
 ## Bugs
 
 - see issue in master branch

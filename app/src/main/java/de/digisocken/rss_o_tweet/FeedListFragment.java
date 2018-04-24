@@ -11,6 +11,7 @@ import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,6 +26,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import java.io.IOException;
 
 /**
  * Dieser "ListView" nutzt einen {@link FeedCursorAdapter} zur Darstellung der Feeds und
@@ -211,8 +214,27 @@ public class FeedListFragment extends ListFragment implements LoaderManager.Load
             switch (item.getItemId()) {
                 case R.id.action_openFeed:
                     link = c.getString(c.getColumnIndex(FeedContract.Feeds.COLUMN_Link));
-                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
-                    startActivity(i);
+                    /**
+                     * play mp3 urls improvement
+                     */
+                    if (link.endsWith(".mp3")) {
+                        if (RssOTweet.mediaPlayer.isPlaying()) {
+                            RssOTweet.mediaPlayer.pause();
+                            RssOTweet.mediaPlayer.reset();
+                            RssOTweet.mediaPlayer.stop();
+                        } else {
+                            try {
+                                RssOTweet.mediaPlayer.setDataSource(link);
+                                RssOTweet.mediaPlayer.prepare();
+                                RssOTweet.mediaPlayer.start();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    } else {
+                        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                        startActivity(i);
+                    }
                     return null;
 
                 case R.id.action_readedFeed:

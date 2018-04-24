@@ -77,7 +77,14 @@ public class Alarm extends BroadcastReceiver {
                             userTimeline.next(null, new TweetStopfer(refresher, urls[urli], urli));
                         } else {
                             Document doc = refresher.getDoc(urls[urli], RssOTweet.Config.DEFAULT_expunge);
-                            refresher.insertToDb(doc, RssOTweet.Config.DEFAULT_expunge, urli);
+                            /**
+                             * @todo ugly: ignore ".podcast" urls because tey are mostly old
+                             */
+                            if (urls[urli].toString().endsWith(".podcast")) {
+                                refresher.insertToDb(doc, RssOTweet.Config.DEFAULT_autodelete, urli);
+                            } else {
+                                refresher.insertToDb(doc, RssOTweet.Config.DEFAULT_expunge, urli);
+                            }
                         }
                     }
                 }

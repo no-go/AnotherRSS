@@ -3,6 +3,7 @@ package de.digisocken.rss_o_tweet;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -24,9 +25,11 @@ import java.util.Calendar;
 public class RssOTweet extends Application {
     public static boolean showAdditionalFeed = true;
     public static String query = "";
+    public static MediaPlayer mediaPlayer;
 
     public static final String urls =
             "http://www.tagesschau.de/xml/rss2 " +
+                    "https://www1.wdr.de/mediathek/audio/wdr5/wdr5-alles-in-butter/alles-in-butter106.podcast " +
                     "http://www.taz.de/!p4608;rss/ " +
                     "http://www.deutschlandfunk.de/die-nachrichten.353.de.rss " +
                     "http://digisocken.de/_p/wdrWetter/?rss=true " +
@@ -46,14 +49,15 @@ public class RssOTweet extends Application {
             "http://feeds.reuters.com/reuters/scienceNews?format=xml " +
             "http://www.wetterleitstelle.de/nordrhein-westfalen.xml";
     public static final boolean feedActive[] = {
-            true,
+            false,
                     true,
-                    true,
+                    false,
+                    false,
                     true,
                      false,
                      true,
-                     true,
-                     true,
+                     false,
+                     false,
             false,
             false,
             false,
@@ -71,7 +75,7 @@ public class RssOTweet extends Application {
          * really delete old database entries (marked as deleted)
          * older than Config.DEFAULT_expunge days
          */
-        public static final int DEFAULT_autodelete = 6;
+        public static final int DEFAULT_autodelete = 21;
         public static final int DEFAULT_expunge = 3;
         public static final String DEFAULT_rsssec = "10800";
         public static final String DEFAULT_notifySound = "2";
@@ -114,6 +118,7 @@ public class RssOTweet extends Application {
     public void onCreate() {
         super.onCreate();
         contextOfApplication = getApplicationContext();
+        mediaPlayer = new MediaPlayer();
 
         SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if (!mPreferences.contains("ignoreRT")) {

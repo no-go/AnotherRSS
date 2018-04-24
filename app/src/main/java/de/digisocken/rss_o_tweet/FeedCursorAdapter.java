@@ -145,9 +145,7 @@ public class FeedCursorAdapter extends CursorAdapter {
         iv.setImageBitmap(bmp);
         int source = cursor.getInt(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Source));
         if (bmp != null) {
-            if (isTweet) {
-                //iv.setBackgroundColor(ContextCompat.getColor(context, R.color.colorDate));
-            } else {
+            if (!isTweet) {
                 iv.setBackgroundColor(Color.TRANSPARENT);
             }
             int width = _pref.getInt("image_width", RssOTweet.Config.DEFAULT_MAX_IMG_WIDTH);
@@ -162,10 +160,23 @@ public class FeedCursorAdapter extends CursorAdapter {
                 iv.setImageBitmap(bmp);
             }
         } else {
-            iv.setPadding( 0, 0, 0, 0);
-            tt.setPadding(20, 3, 5, 10);
-            tb.setPadding(20, 0, 10, 0);
-            sn.setPadding(20, 0, 10, 5);
+            String link = cursor.getString(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Link));
+            if (link.endsWith(".mp3")) {
+                bmp = BitmapFactory.decodeResource(
+                        RssOTweet.getContextOfApplication().getResources(),
+                        android.R.drawable.ic_media_play
+                );
+                iv.setBackgroundColor(Color.TRANSPARENT);
+                int width = _pref.getInt("image_width", RssOTweet.Config.DEFAULT_MAX_IMG_WIDTH);
+                iv.setPadding(10, 10, 10, 10);
+                iv.setMaxWidth(width);
+                iv.setImageBitmap(bmp);
+            } else {
+                iv.setPadding(0, 0, 0, 0);
+                tt.setPadding(20, 3, 5, 10);
+                tb.setPadding(20, 0, 10, 0);
+                sn.setPadding(20, 0, 10, 5);
+            }
         }
         int hasFlag = cursor.getInt(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Flag));
         if (hasFlag == FeedContract.Flag.READED) {

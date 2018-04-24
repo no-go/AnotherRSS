@@ -232,6 +232,10 @@ public class Refresher {
 
         Log.d(RssOTweet.TAG, "Response Code: " + Integer.toString(responseCode));
         if (responseCode == HttpURLConnection.HTTP_NOT_MODIFIED) {
+            /**
+             * @todo ugly: ignore ".podcast" urls because tey are mostly old
+             */
+            if (url.toString().endsWith(".podcast")) return true;
             return false;
         }
         if (responseCode != HttpURLConnection.HTTP_OK) {
