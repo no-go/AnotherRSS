@@ -6,13 +6,29 @@
     android:orientation="vertical"
     tools:context="de.digisocken.rss_o_tweet.MainActivity"
     android:background="@color/colorBackground"
-    android:weightSum="1">
+    android:weightSum="4">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp">
+
+        <VideoView
+            android:id="@+id/videoView"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
+    </RelativeLayout>
 
     <fragment
         android:id="@+id/feedlist"
         android:name="de.digisocken.rss_o_tweet.FeedListFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"></fragment>
+        android:layout_weight="3"></fragment>
 
 </LinearLayout>

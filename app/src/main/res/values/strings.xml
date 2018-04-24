@@ -23,7 +23,7 @@
     <string name="notify_sound_title">sound</string>
     <string name="notify_sound_desc">Change the sound</string>
 
-    <string name="open">open, play, pause</string>
+    <string name="open">open in browser</string>
     <string name="delete">delete</string>
     <string name="destroy">destroy (DEBUG)</string>
 

@@ -232,10 +232,6 @@ public class Refresher {
 
         Log.d(RssOTweet.TAG, "Response Code: " + Integer.toString(responseCode));
         if (responseCode == HttpURLConnection.HTTP_NOT_MODIFIED) {
-            /**
-             * @todo ugly: ignore ".podcast" urls because tey are mostly old
-             */
-            if (url.toString().endsWith(".podcast")) return true;
             return false;
         }
         if (responseCode != HttpURLConnection.HTTP_OK) {
@@ -460,11 +456,17 @@ public class Refresher {
                     ContentValues values = new ContentValues();
                     values.put(FeedContract.Feeds.COLUMN_Title, title);
                     values.put(FeedContract.Feeds.COLUMN_Date, FeedContract.dbFriendlyDate(date));
-                    if (isRdf) {
-                        values.put(FeedContract.Feeds.COLUMN_Link, FeedContract.extract(n, "link"));
-                    } else {
-                        values.put(FeedContract.Feeds.COLUMN_Link, FeedContract.extract(n, "link", "href"));
+                    String thelink = FeedContract.extract(n, "enclosure", "url");
+                    if (!(
+                            thelink != null && (thelink.endsWith(".ogg") || thelink.endsWith(".mp3") || thelink.endsWith(".mp4"))
+                    )) {
+                        if (isRdf) {
+                            thelink = FeedContract.extract(n, "link");
+                        } else {
+                            thelink = FeedContract.extract(n, "link", "href");
+                        }
                     }
+                    values.put(FeedContract.Feeds.COLUMN_Link, thelink);
                     values.put(FeedContract.Feeds.COLUMN_Body, body);
                     values.put(FeedContract.Feeds.COLUMN_Image, FeedContract.getBytes(
                             FeedContract.getImage(n)

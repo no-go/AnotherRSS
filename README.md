@@ -44,9 +44,8 @@ You can get a signed APK from here (Android 4.1+): [APK](https://raw.githubuserc
 
 ## Podcast improvement
 
-If a feed url ends with .podcast and the links ends with .mp3 the App does
-not open Browser. It plays the mp3 from the internet (it does not download
-and cache it!!).
+If a feed url links ends with .mp3, .ogg or .mp4 the App adds a play-icon.
+It plays the sound and video from the internet (it does not download and cache it!!).
 
 ## Bugs
 
@@ -69,6 +68,8 @@ and cache it!!).
 ![landscape preview website](img/05.jpg)
 
 ![landscape preview twitter](img/06.jpg)
+
+![video podcast window improvement](img/07.jpg)
 
 ## License
 

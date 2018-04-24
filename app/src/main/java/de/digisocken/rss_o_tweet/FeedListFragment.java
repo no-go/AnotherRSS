@@ -214,27 +214,9 @@ public class FeedListFragment extends ListFragment implements LoaderManager.Load
             switch (item.getItemId()) {
                 case R.id.action_openFeed:
                     link = c.getString(c.getColumnIndex(FeedContract.Feeds.COLUMN_Link));
-                    /**
-                     * play mp3 urls improvement
-                     */
-                    if (link.endsWith(".mp3")) {
-                        if (RssOTweet.mediaPlayer.isPlaying()) {
-                            RssOTweet.mediaPlayer.pause();
-                            RssOTweet.mediaPlayer.reset();
-                            RssOTweet.mediaPlayer.stop();
-                        } else {
-                            try {
-                                RssOTweet.mediaPlayer.setDataSource(link);
-                                RssOTweet.mediaPlayer.prepare();
-                                RssOTweet.mediaPlayer.start();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    } else {
-                        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
-                        startActivity(i);
-                    }
+                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                    startActivity(i);
+
                     return null;
 
                 case R.id.action_readedFeed:

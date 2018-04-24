@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.MediaController;
 
 import com.twitter.sdk.android.core.DefaultLogger;
 import com.twitter.sdk.android.core.Twitter;
@@ -26,6 +27,7 @@ public class RssOTweet extends Application {
     public static boolean showAdditionalFeed = true;
     public static String query = "";
     public static MediaPlayer mediaPlayer;
+    public static MediaController mediaController;
 
     public static final String urls =
             "http://www.tagesschau.de/xml/rss2 " +
@@ -39,6 +41,8 @@ public class RssOTweet extends Application {
                      "@evalodde " +
 
             "https://www1.wdr.de/mediathek/audio/wdr5/polit-wg/polit-wg-104.podcast " +
+            "https://www.tagesschau.de/export/video-podcast/webm/tagesschau-in-100-sekunden_https " +
+            "https://thebugcast.org/feed/ogg " +
             "http://feeds.bbci.co.uk/news/world/europe/rss.xml " +
             "http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml " +
             "http://feeds.t-online.de/rss/nachrichten " +
@@ -48,7 +52,8 @@ public class RssOTweet extends Application {
             "https://www.umwelt.nrw.de/rss.xml " +
             "http://feeds.reuters.com/Reuters/UKWorldNews " +
             "http://feeds.reuters.com/reuters/scienceNews?format=xml " +
-            "http://www.wetterleitstelle.de/nordrhein-westfalen.xml";
+            "http://www.wetterleitstelle.de/nordrhein-westfalen.xml " +
+            "http://feeds.feedburner.com/daily_tech_news_show?format=xml";
     public static final boolean feedActive[] = {
             false,
                     true,
@@ -60,6 +65,8 @@ public class RssOTweet extends Application {
                      false,
                      false,
             true,
+            true,
+            true,
             false,
             false,
             false,
@@ -69,7 +76,8 @@ public class RssOTweet extends Application {
             false,
             false,
             false,
-            false
+            false,
+            true
     };
 
     public static class Config {
@@ -78,7 +86,7 @@ public class RssOTweet extends Application {
          * older than Config.DEFAULT_expunge days
          */
         public static final int DEFAULT_autodelete = 21;
-        public static final int DEFAULT_expunge = 3;
+        public static final int DEFAULT_expunge = 14;
         public static final String DEFAULT_rsssec = "10800";
         public static final String DEFAULT_notifySound = "2";
         public static final String DEFAULT_notifyColor = "#FF00FFFF";

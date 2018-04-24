@@ -34,6 +34,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity
     private String FLATTR_LINK;
 
     public Context ctx;
+    public static VideoView videoView;
     private BroadcastReceiver alarmReceiver;
     private WebView webView;
     private ProgressBar progressBar;
@@ -240,6 +242,7 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         };
+        videoView = (VideoView) findViewById(R.id.videoView);
         webView = (WebView) findViewById(R.id.webView);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 

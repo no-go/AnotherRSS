@@ -9,16 +9,23 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.text.Spanned;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.VideoView;
+
+import java.io.IOException;
 
 /**
  * Der FeedCursorAdapter verknüpft den Daten(Bank)Cursor mit den Feldern eines Views.
@@ -76,6 +83,8 @@ public class FeedCursorAdapter extends CursorAdapter {
         TextView tt = (TextView) view.findViewById(R.id.feedTitle);
         String title = cursor.getString(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Title));
         boolean isTweet = false;
+        RssOTweet.mediaController = new MediaController(context);
+
         isTweet = title.startsWith("(");
         title = title.replaceAll("(\\(\\d+\\))", "");
         if (isNight) {
@@ -160,17 +169,63 @@ public class FeedCursorAdapter extends CursorAdapter {
                 iv.setImageBitmap(bmp);
             }
         } else {
-            String link = cursor.getString(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Link));
-            if (link.endsWith(".mp3")) {
-                bmp = BitmapFactory.decodeResource(
-                        RssOTweet.getContextOfApplication().getResources(),
-                        android.R.drawable.ic_media_play
-                );
+            final String link = cursor.getString(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Link));
+            if (link.endsWith(".mp3") || link.endsWith(".mp4") || link.endsWith(".ogg")) {
+                if (RssOTweet.mediaPlayer.isPlaying()) {
+                    bmp = BitmapFactory.decodeResource(
+                            RssOTweet.getContextOfApplication().getResources(),
+                            android.R.drawable.ic_media_pause
+                    );
+                } else {
+                    bmp = BitmapFactory.decodeResource(
+                            RssOTweet.getContextOfApplication().getResources(),
+                            android.R.drawable.ic_media_play
+                    );
+                }
                 iv.setBackgroundColor(Color.TRANSPARENT);
                 int width = _pref.getInt("image_width", RssOTweet.Config.DEFAULT_MAX_IMG_WIDTH);
                 iv.setPadding(10, 10, 10, 10);
                 iv.setMaxWidth(width);
                 iv.setImageBitmap(bmp);
+                iv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View viewimg) {
+
+                        if (link.endsWith(".mp4")) {
+                            Log.d(RssOTweet.TAG, "on click do " + link);
+                            Uri uri = Uri.parse(link);
+                            MainActivity.videoView.setMediaController(RssOTweet.mediaController);
+                            MainActivity.videoView.setVideoURI(uri);
+                            MainActivity.videoView.requestFocus();
+                            MainActivity.videoView.start();
+
+                        } else {
+                            if (RssOTweet.mediaPlayer.isPlaying()) {
+                                RssOTweet.mediaPlayer.pause();
+                                RssOTweet.mediaPlayer.reset();
+                                RssOTweet.mediaPlayer.stop();
+                                Bitmap bmp = BitmapFactory.decodeResource(
+                                        RssOTweet.getContextOfApplication().getResources(),
+                                        android.R.drawable.ic_media_play
+                                );
+                                ((ImageView) viewimg).setImageBitmap(bmp);
+                            } else {
+                                try {
+                                    RssOTweet.mediaPlayer.setDataSource(link);
+                                    RssOTweet.mediaPlayer.prepare();
+                                    RssOTweet.mediaPlayer.start();
+                                    Bitmap bmp = BitmapFactory.decodeResource(
+                                            RssOTweet.getContextOfApplication().getResources(),
+                                            android.R.drawable.ic_media_pause
+                                    );
+                                    ((ImageView) viewimg).setImageBitmap(bmp);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+                });
             } else {
                 iv.setPadding(0, 0, 0, 0);
                 tt.setPadding(20, 3, 5, 10);
