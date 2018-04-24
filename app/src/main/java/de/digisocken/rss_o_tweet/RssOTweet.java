@@ -38,6 +38,7 @@ public class RssOTweet extends Application {
                      "#attiny85 " +
                      "@evalodde " +
 
+            "https://www1.wdr.de/mediathek/audio/wdr5/polit-wg/polit-wg-104.podcast " +
             "http://feeds.bbci.co.uk/news/world/europe/rss.xml " +
             "http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml " +
             "http://feeds.t-online.de/rss/nachrichten " +
@@ -51,13 +52,14 @@ public class RssOTweet extends Application {
     public static final boolean feedActive[] = {
             false,
                     true,
-                    false,
+                    true,
                     false,
                     true,
                      false,
                      true,
                      false,
                      false,
+            true,
             false,
             false,
             false,
