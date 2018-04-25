@@ -27,4 +27,5 @@ dependencies {
     implementation 'com.twitter.sdk.android:tweet-ui:3.1.1'
     implementation 'com.twitter.sdk.android:tweet-composer:3.1.1'
     implementation 'com.android.support:recyclerview-v7:25.3.1'
+    implementation 'com.mobidevelop.spl:split-pane-layout:1.0.0'
 }

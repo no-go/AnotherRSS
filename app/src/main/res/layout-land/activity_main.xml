@@ -31,10 +31,29 @@
             android:indeterminateOnly="false"
             android:visibility="gone" />
 
-        <WebView
-            android:layout_height="wrap_content"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:id="@+id/webView" />
+            android:layout_weight="1"
+            android:layout_height="0dp">
+
+            <VideoView
+                android:id="@+id/videoView"
+                android:visibility="visible"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+
+            <WebView
+                android:id="@+id/webView"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent" />
+
+        </RelativeLayout>
+
     </LinearLayout>
 
 

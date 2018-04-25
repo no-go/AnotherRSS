@@ -78,7 +78,7 @@ public class FeedCursorAdapter extends CursorAdapter {
      * @param cursor
      */
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public void bindView(View view, final Context context, Cursor cursor) {
         float fontSize = _pref.getFloat("font_size", RssOTweet.Config.DEFAULT_FONT_SIZE);
         TextView tt = (TextView) view.findViewById(R.id.feedTitle);
         String title = cursor.getString(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Title));
@@ -193,11 +193,7 @@ public class FeedCursorAdapter extends CursorAdapter {
 
                         if (link.endsWith(".mp4")) {
                             Log.d(RssOTweet.TAG, "on click do " + link);
-                            Uri uri = Uri.parse(link);
-                            MainActivity.videoView.setMediaController(RssOTweet.mediaController);
-                            MainActivity.videoView.setVideoURI(uri);
-                            MainActivity.videoView.requestFocus();
-                            MainActivity.videoView.start();
+                            ((MainActivity) context).setMediaView(link);
 
                         } else {
                             if (RssOTweet.mediaPlayer.isPlaying()) {

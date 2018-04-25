@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity
     private String FLATTR_LINK;
 
     public Context ctx;
-    public static VideoView videoView;
+    private VideoView videoView;
     private BroadcastReceiver alarmReceiver;
     private WebView webView;
     private ProgressBar progressBar;
@@ -254,12 +254,28 @@ public class MainActivity extends AppCompatActivity
         registerReceiver(alarmReceiver, filter);
     }
 
-    public boolean setWebView(String url) {
+    public boolean setMediaView(String url) {
         if (webView == null) return false;
-        webView.setWebViewClient(new MyWebClient());
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setUseWideViewPort(true);
-        webView.loadUrl(url);
+        if (videoView == null) return false;
+        if (url.endsWith(".mp4")) {
+            webView.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
+            videoView.setVisibility(View.VISIBLE);
+            Uri uri = Uri.parse(url);
+            videoView.setMediaController(RssOTweet.mediaController);
+            videoView.setVideoURI(uri);
+            videoView.requestFocus();
+            videoView.start();
+        } else {
+            webView.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
+            videoView.setVisibility(View.GONE);
+            webView.setWebViewClient(new MyWebClient());
+            webView.getSettings().setJavaScriptEnabled(true);
+            webView.getSettings().setLoadWithOverviewMode(true);
+            webView.getSettings().setUseWideViewPort(true);
+            webView.loadUrl(url);
+        }
         return true;
     }
 

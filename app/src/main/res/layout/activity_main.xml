@@ -8,21 +8,50 @@
     android:background="@color/colorBackground"
     android:weightSum="4">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_weight="1"
-        android:layout_height="0dp">
+        android:layout_height="0dp"
+        android:layout_width="match_parent" >
 
-        <VideoView
-            android:id="@+id/videoView"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:indeterminate="false"
+            android:max="100"
+            android:indeterminateOnly="false"
+            android:visibility="gone" />
 
-    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="0dp">
+
+            <VideoView
+                android:id="@+id/videoView"
+                android:visibility="visible"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+
+            <WebView
+                android:id="@+id/webView"
+                android:visibility="gone"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
     <fragment
         android:id="@+id/feedlist"
