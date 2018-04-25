@@ -68,11 +68,16 @@
     <string name="info">Info</string>
     <string name="zoom">Zoom and scale</string>
 
+    <string name="pbigger">+ Preview</string>
+    <string name="psmaller">- Preview</string>
+
     <string name="bigger">+ Text</string>
     <string name="smaller">- Text</string>
+
     <string name="biggerImage">+ Image</string>
     <string name="smallerImage">- Image</string>
 
+    <string name="preview">Preview:</string>
     <string name="more">More …</string>
     <string name="regex">Regular Expressions</string>
     <string name="regex_desc">This is for experts only. Fails are (mostly) hidden. The REGEX is used on title and body before the blacklist runs.</string>

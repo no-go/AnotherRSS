@@ -1,5 +1,7 @@
 package de.digisocken.rss_o_tweet;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.NotificationManager;
 import android.app.UiModeManager;
 import android.content.BroadcastReceiver;
@@ -29,10 +31,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -324,6 +329,30 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.action_delFeeds:
                 dbClear.execute(R.id.action_delFeeds);
+                break;
+            case R.id.action_pbiggerView:
+                LinearLayout ll = (LinearLayout) findViewById(R.id.verticalSplit);
+                if (ll == null) break;
+                LinearLayout pl = (LinearLayout) findViewById(R.id.thePreview);
+                if (pl == null) break;
+                float wsum = ((LinearLayout.LayoutParams) pl.getLayoutParams()).weight;
+                ll.setWeightSum(ll.getWeightSum()+1);
+                ((LinearLayout.LayoutParams) pl.getLayoutParams()).weight = wsum +1;
+                ll.invalidate();
+                ll.requestLayout();
+                break;
+            case R.id.action_psmallerView:
+                LinearLayout lls = (LinearLayout) findViewById(R.id.verticalSplit);
+                if (lls == null) break;
+                LinearLayout pls = (LinearLayout) findViewById(R.id.thePreview);
+                if (pls == null) break;
+                float wsums = ((LinearLayout.LayoutParams) pls.getLayoutParams()).weight;
+                if (wsums > 1) {
+                    lls.setWeightSum(lls.getWeightSum()-1);
+                    ((LinearLayout.LayoutParams) pls.getLayoutParams()).weight = wsums -1;
+                    lls.invalidate();
+                    lls.requestLayout();
+                }
                 break;
             case R.id.action_biggerText:
                 fontSize = mPreferences.getFloat("font_size", RssOTweet.Config.DEFAULT_FONT_SIZE);

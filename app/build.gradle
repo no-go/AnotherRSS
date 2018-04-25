@@ -6,8 +6,8 @@ android {
         applicationId "de.digisocken.rss_o_tweet"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 823
-        versionName "8.23"
+        versionCode 824
+        versionName "8.24"
     }
     buildTypes {
         release {
@@ -27,5 +27,4 @@ dependencies {
     implementation 'com.twitter.sdk.android:tweet-ui:3.1.1'
     implementation 'com.twitter.sdk.android:tweet-composer:3.1.1'
     implementation 'com.android.support:recyclerview-v7:25.3.1'
-    implementation 'com.mobidevelop.spl:split-pane-layout:1.0.0'
 }

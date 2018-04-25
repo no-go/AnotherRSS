@@ -36,15 +36,17 @@
             android:layout_weight="1"
             android:layout_height="0dp">
 
-            <VideoView
-                android:id="@+id/videoView"
-                android:visibility="visible"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
+            <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
+                android:layout_height="fill_parent"
+                android:background="@android:color/black">
+                <VideoView
+                    android:id="@+id/videoView"
+                    android:visibility="visible"
+                    android:layout_gravity="center"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" />
+            </FrameLayout>
 
             <WebView
                 android:id="@+id/webView"

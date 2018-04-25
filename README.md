@@ -20,7 +20,8 @@ You can get a signed APK from here (Android 4.1+): [APK](https://raw.githubuserc
 - newspaper style
 - everyting in one list
 - RSS images and twitter avatar
-- landscape mode with web preview
+- landscape mode with preview on right side
+- portrait mode with small preview
 - search text content
 - night mode
 - every news is a notification
@@ -44,7 +45,7 @@ You can get a signed APK from here (Android 4.1+): [APK](https://raw.githubuserc
 
 ## Podcast improvement
 
-If a feed url links ends with .mp3, .ogg or .mp4 the App adds a play-icon.
+If a feed url links ends with **.mp3**, **.ogg or **.mp4** the App adds a play-icon.
 It plays the sound and video from the internet (it does not download and cache it!!).
 
 ## Bugs

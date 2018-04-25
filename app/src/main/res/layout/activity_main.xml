@@ -6,11 +6,20 @@
     android:orientation="vertical"
     tools:context="de.digisocken.rss_o_tweet.MainActivity"
     android:background="@color/colorBackground"
-    android:weightSum="4">
+    android:id="@+id/verticalSplit"
+    android:weightSum="10">
+
+    <fragment
+        android:id="@+id/feedlist"
+        android:name="de.digisocken.rss_o_tweet.FeedListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7" />
 
     <LinearLayout
+        android:id="@+id/thePreview"
         android:orientation="vertical"
-        android:layout_weight="1"
+        android:layout_weight="3"
         android:layout_height="0dp"
         android:layout_width="match_parent" >
 
@@ -24,20 +33,30 @@
             android:indeterminateOnly="false"
             android:visibility="gone" />
 
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/tw__composer_font_size_small"
+            android:background="@android:color/black"
+            android:textColor="@color/colorPrimary"
+            android:text="@string/preview" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="0dp">
 
-            <VideoView
-                android:id="@+id/videoView"
-                android:visibility="visible"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
+            <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
+                android:layout_height="fill_parent"
+                android:background="@android:color/black">
+                <VideoView
+                    android:id="@+id/videoView"
+                    android:visibility="visible"
+                    android:layout_gravity="center"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" />
+            </FrameLayout>
 
             <WebView
                 android:id="@+id/webView"
@@ -52,12 +71,5 @@
         </RelativeLayout>
 
     </LinearLayout>
-
-    <fragment
-        android:id="@+id/feedlist"
-        android:name="de.digisocken.rss_o_tweet.FeedListFragment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"></fragment>
 
 </LinearLayout>
