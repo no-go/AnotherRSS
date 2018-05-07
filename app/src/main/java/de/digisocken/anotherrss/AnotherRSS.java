@@ -44,13 +44,13 @@ public class AnotherRSS extends Application {
             false,
             true,
             false,
+            false,
+            false,
+            false,
             true,
             false,
             false,
             true,
-            false,
-            false,
-            false,
             false,
             false
     };
