@@ -109,6 +109,10 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         switch (item.getItemId()) {
+            case R.id.action_home:
+                Intent intent_home = new Intent(MainActivity.this, HomeActivity.class);
+                startActivity(intent_home);
+                break;
             case R.id.action_flattr:
                 Intent intentFlattr = new Intent(Intent.ACTION_VIEW, Uri.parse(FLATTR_LINK));
                 startActivity(intentFlattr);

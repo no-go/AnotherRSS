@@ -10,6 +10,12 @@
         app:showAsAction="ifRoom|collapseActionView" />
 
     <item
+        android:title="home"
+        android:id="@+id/action_home"
+        android:icon="@android:drawable/ic_menu_info_details"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/action_delNotifies"
         android:title="@string/delNotifies">
     </item>

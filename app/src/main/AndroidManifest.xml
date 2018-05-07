@@ -108,6 +108,8 @@
 
         <service android:name="de.digisocken.anotherrss.WidgetUpdateService" />
 
+        <activity android:name=".HomeActivity" android:parentActivityName=".MainActivity" />
+
     </application>
 
 </manifest>
