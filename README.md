@@ -29,6 +29,7 @@ Website: [https://no-go.github.io/AnotherRSS](https://no-go.github.io/AnotherRSS
 - possibility to activate and inactivate feed sources
 - Text and Image is resizeable
 - Tab behavior changeable
+- ogg, mp3 and mp4 audio- and video-podcast improvement
 - many more ...
 
 ## Get the App

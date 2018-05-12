@@ -27,6 +27,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     public Context ctx;
     private BroadcastReceiver alarmReceiver;
     private WebView webView;
+    private VideoView videoView;
     private ProgressBar progressBar;
     private UiModeManager umm;
 
@@ -228,6 +230,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
+
+        videoView = (VideoView) findViewById(R.id.videoView);
         webView = (WebView) findViewById(R.id.webView);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
@@ -236,12 +240,36 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(alarmReceiver, filter);
     }
 
-    public boolean setWebView(String url) {
+    public boolean setMediaView(String url) {
+        if (videoView == null) {
+            if (url.endsWith(".mp4")) {
+                Intent vintent = new Intent(MainActivity.this, VideocastActivity.class);
+                vintent.setData(Uri.parse(url));
+                startActivity(vintent);
+                return true;
+            }
+            return false;
+        }
         if (webView == null) return false;
-        webView.setWebViewClient(new MyWebClient());
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setUseWideViewPort(true);
-        webView.loadUrl(url);
+        if (url.endsWith(".mp4")) {
+            webView.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
+            videoView.setVisibility(View.VISIBLE);
+            Uri uri = Uri.parse(url);
+            videoView.setMediaController(AnotherRSS.mediaController);
+            videoView.setVideoURI(uri);
+            videoView.requestFocus();
+            videoView.start();
+        } else {
+            webView.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
+            videoView.setVisibility(View.GONE);
+            webView.setWebViewClient(new MyWebClient());
+            webView.getSettings().setJavaScriptEnabled(true);
+            webView.getSettings().setLoadWithOverviewMode(true);
+            webView.getSettings().setUseWideViewPort(true);
+            webView.loadUrl(url);
+        }
         return true;
     }
 

@@ -90,7 +90,7 @@ public class FeedListFragment extends ListFragment implements LoaderManager.Load
                         getActivity().getContentResolver().update(uri, values, null, null);
 
                         if (tap_mode.equals("intern")) {
-                            ((MainActivity) getActivity()).setWebView(link);
+                            ((MainActivity) getActivity()).setMediaView(link);
                         } else {
                             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
                             startActivity(i);

@@ -5,18 +5,23 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.text.Spanned;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
+
+import java.io.IOException;
 
 /**
  * Der FeedCursorAdapter verknüpft den Daten(Bank)Cursor mit den Feldern eines Views.
@@ -52,10 +57,11 @@ public class FeedCursorAdapter extends CursorAdapter {
      * @param cursor
      */
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public void bindView(View view, final Context context, Cursor cursor) {
         float fontSize = _pref.getFloat("font_size", AnotherRSS.Config.DEFAULT_FONT_SIZE);
         TextView tt = (TextView) view.findViewById(R.id.feedTitle);
         String title = cursor.getString(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Title));
+        AnotherRSS.mediaController = new MediaController(context);
         if (!AnotherRSS.query.equals("")) {
             tt.setText(highlight(AnotherRSS.query, title));
         } else {
@@ -108,10 +114,65 @@ public class FeedCursorAdapter extends CursorAdapter {
                 iv.setImageBitmap(bmp);
             }
         } else {
-            iv.setPadding( 0, 0, 0, 0);
-            tt.setPadding(20, 10,  5, 0);
-            tb.setPadding(20,  0, 10, 0);
-            sn.setPadding(20,  0, 10, 0);
+            final String link = cursor.getString(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Link));
+            if (link !=null && (link.endsWith(".mp3") || link.endsWith(".mp4") || link.endsWith(".ogg"))) {
+                if (AnotherRSS.mediaPlayer.isPlaying()) {
+                    bmp = BitmapFactory.decodeResource(
+                            AnotherRSS.getContextOfApplication().getResources(),
+                            android.R.drawable.ic_media_pause
+                    );
+                } else {
+                    bmp = BitmapFactory.decodeResource(
+                            AnotherRSS.getContextOfApplication().getResources(),
+                            android.R.drawable.ic_media_play
+                    );
+                }
+                iv.setBackgroundColor(Color.TRANSPARENT);
+                int width = _pref.getInt("image_width", AnotherRSS.Config.DEFAULT_MAX_IMG_WIDTH);
+                iv.setPadding(10, 10, 10, 10);
+                iv.setMaxWidth(width);
+                iv.setImageBitmap(bmp);
+                iv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View viewimg) {
+
+                        if (link.endsWith(".mp4")) {
+                            Log.d(AnotherRSS.TAG, "on click do " + link);
+                            ((MainActivity) context).setMediaView(link);
+
+                        } else {
+                            if (AnotherRSS.mediaPlayer.isPlaying()) {
+                                AnotherRSS.mediaPlayer.pause();
+                                AnotherRSS.mediaPlayer.reset();
+                                AnotherRSS.mediaPlayer.stop();
+                                Bitmap bmp = BitmapFactory.decodeResource(
+                                        AnotherRSS.getContextOfApplication().getResources(),
+                                        android.R.drawable.ic_media_play
+                                );
+                                ((ImageView) viewimg).setImageBitmap(bmp);
+                            } else {
+                                try {
+                                    AnotherRSS.mediaPlayer.setDataSource(link);
+                                    AnotherRSS.mediaPlayer.prepare();
+                                    AnotherRSS.mediaPlayer.start();
+                                    Bitmap bmp = BitmapFactory.decodeResource(
+                                            AnotherRSS.getContextOfApplication().getResources(),
+                                            android.R.drawable.ic_media_pause
+                                    );
+                                    ((ImageView) viewimg).setImageBitmap(bmp);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+                });
+            } else {
+                iv.setPadding( 0, 0, 0, 0);
+                tt.setPadding(20, 10,  5, 0);
+                tb.setPadding(20,  0, 10, 0);
+                sn.setPadding(20,  0, 10, 0);
+            }
         }
         int hasFlag = cursor.getInt(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Flag));
         if (hasFlag == FeedContract.Flag.READED) {

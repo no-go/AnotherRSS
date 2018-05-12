@@ -5,15 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     tools:context="de.digisocken.anotherrss.MainActivity"
-    android:weightSum="2"
+    android:weightSum="1"
     android:background="@color/colorBackground">
-
-    <fragment
-        android:id="@+id/feedlist"
-        android:name="de.digisocken.anotherrss.FeedListFragment"
-        android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent" />
 
     <LinearLayout
         android:orientation="vertical"

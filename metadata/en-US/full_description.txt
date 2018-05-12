@@ -22,6 +22,7 @@ Another-RSS is an RSS and Atom feed reader. You can add many RSS feed urls.
 👉 add many feed urls!
 👉 widget for the first Feed (testing)
 👉 switch feed sources on or off via checkbox
+👉 ogg, mp3 and mp4 audio- and video-podcast improvement
 
 Do not be afraid! The first refresh generates about 150 notifications, but the RSS feed reader has an options menu has a feature to remove all of them.
 

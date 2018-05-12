@@ -18,6 +18,7 @@ Another-RSS ist ein RSS Feed Reader, der viele Bildformate erkennt und als Thumb
 👉 In den Einstellungen lassen sich nun das Verhalten eines "Antippens" (statt dem Kontext-Menu beim "Lange drücken") einstellen. So kann mit einem Klick z.B. der Link zum Feed geöffnet, gelesen und favorisiert werden.
 👉 Als Test existiert nun ein kleines Widget, welches die Title der News der ersten Feedquelle anzeigt.
 👉 Feed Quellen können per Hacken ein- und ausgeschaltet werden, wenn man mal eine Zeit lang keine neuen Nachrichten von der Quelle bekommen will.
+👉 Improvisierte Audio- und Video-Podcast Wiedergabe (ogg, mp3 als Audio und mp4 Video)
 
 <i>Besonderheit</i>: jede einzelne neue Nachricht ist eine eigene Benachrichtigung. Auf diese Weise lassen sich viele Feeds ohne aufruf der App und ggf. mit einer Smartwatch lesen. Eine eigene App + Smartwatch habe ich zumindest selbst gebaut :-D
 

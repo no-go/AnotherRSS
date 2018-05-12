@@ -1,12 +1,11 @@
 package de.digisocken.anotherrss;
 
 import android.app.Application;
-import android.app.UiModeManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatDelegate;
+import android.media.MediaPlayer;
+import android.widget.MediaController;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -21,6 +20,8 @@ import java.util.Calendar;
 public class AnotherRSS extends Application {
     public static boolean showAdditionalFeed = true;
     public static String query = "";
+    public static MediaPlayer mediaPlayer;
+    public static MediaController mediaController;
 
     public static final String urls =
             "http://www.tagesschau.de/xml/rss2 " +
@@ -36,6 +37,11 @@ public class AnotherRSS extends Application {
                     "https://www.umwelt.nrw.de/rss.xml " +
                     "http://feeds.reuters.com/Reuters/UKWorldNews " +
                     "http://feeds.reuters.com/reuters/scienceNews?format=xml " +
+                    "https://www1.wdr.de/mediathek/audio/wdr5/wdr5-alles-in-butter/alles-in-butter106.podcast " +
+                    "https://www1.wdr.de/mediathek/audio/wdr5/polit-wg/polit-wg-104.podcast " +
+                    "https://www.tagesschau.de/export/video-podcast/webm/tagesschau-in-100-sekunden_https " +
+                    "https://thebugcast.org/feed/ogg " +
+                    "http://feeds.feedburner.com/daily_tech_news_show?format=xml " +
                     "http://www.wetterleitstelle.de/nordrhein-westfalen.xml";
 
     public static final boolean feedActive[] = {
@@ -47,9 +53,14 @@ public class AnotherRSS extends Application {
             false,
             false,
             false,
+            false,
+            false,
+            false,
             true,
             false,
+            true,
             false,
+            true,
             true,
             false,
             false
@@ -99,6 +110,7 @@ public class AnotherRSS extends Application {
     public void onCreate() {
         super.onCreate();
         contextOfApplication = getApplicationContext();
+        mediaPlayer = new MediaPlayer();
 
         SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if (!mPreferences.contains("rss_url")) {

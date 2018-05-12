@@ -7,8 +7,8 @@ android {
         minSdkVersion 16
         // we need 23 here for google :-/
         targetSdkVersion 22
-        versionCode 215
-        versionName "2.15"
+        versionCode 217
+        versionName "2.17"
     }
     buildTypes {
         release {
@@ -19,7 +19,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.volley:volley:1.0.0'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:25.3.1'
+    implementation 'com.android.volley:volley:1.0.0'
 }

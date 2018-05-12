@@ -82,6 +82,9 @@
             android:name=".PrefRegexActivity"
             android:parentActivityName=".MainActivity" />
 
+        <activity android:name=".VideocastActivity"
+            android:parentActivityName=".MainActivity" />
+
         <receiver android:name=".Alarm" />
 
         <!-- exported: receive messages from sources outside its application -->

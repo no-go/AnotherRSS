@@ -519,6 +519,8 @@ public class FeedContract {
                 result = FeedContract.scale(result, width);
             } catch (IOException ex) {
                 ex.printStackTrace();
+            } catch (NullPointerException exnull) {
+                return null;
             }
         }
 
