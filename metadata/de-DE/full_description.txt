@@ -14,7 +14,7 @@ Another-RSS ist ein RSS Feed Reader, der viele Bildformate erkennt und als Thumb
 👉 Die als "Mag ich!" (Favourit) markierten Nachrichten Feeds werden beim Menupunkt "Feedsammlung leeren" nicht gelöscht.
 👉 Im Querformat kann durch einen kurzen Klick der Link zum Feed in einem kleinen Browser-Fenster dargestellt werden.
 👉 Das abrufen nach neuen Feeds/Nachrichten kann auf 30 Minuten, 1, 3 oder 6 Stunden eingestellt werden.
-👉 Das Interface der App ist in Deutsch, Japanisch (?!) und Englisch vorhanden.
+👉 Das Interface der App ist in Deutsch, Japanisch (?!), Niederländisch und Englisch vorhanden.
 👉 In den Einstellungen lassen sich nun das Verhalten eines "Antippens" (statt dem Kontext-Menu beim "Lange drücken") einstellen. So kann mit einem Klick z.B. der Link zum Feed geöffnet, gelesen und favorisiert werden.
 👉 Als Test existiert nun ein kleines Widget, welches die Title der News der ersten Feedquelle anzeigt.
 👉 Feed Quellen können per Hacken ein- und ausgeschaltet werden, wenn man mal eine Zeit lang keine neuen Nachrichten von der Quelle bekommen will.

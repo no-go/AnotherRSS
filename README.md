@@ -13,7 +13,7 @@ Website: [https://no-go.github.io/AnotherRSS](https://no-go.github.io/AnotherRSS
 
 ## Features
 
-- english and german interface
+- english, japanese, dutch and german interface
 - it is orange
 - everyting in one list
 - images

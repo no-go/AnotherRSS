@@ -15,7 +15,7 @@ Another-RSS is an RSS and Atom feed reader. You can add many RSS feed urls.
 👉 support for many different versions of images in feeds
 👉 choose your own LED notification color and behavior
 👉 ONE new feed is ONE new notification
-👉 german or english interface
+👉 german, japanese, dutch or english interface
 👉 uses server response code (304 not modified) to reduce data transfer
 👉 auto-delete: deletes no favorite feeds after a configurable set of days
 👉 recheck every 75 sec, if you have no connection to a network

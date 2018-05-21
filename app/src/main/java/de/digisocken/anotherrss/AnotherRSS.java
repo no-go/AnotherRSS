@@ -27,6 +27,7 @@ public class AnotherRSS extends Application {
             "http://www.tagesschau.de/xml/rss2 " +
                     "http://www.taz.de/!p4608;rss/ " +
                     "http://www.deutschlandfunk.de/die-nachrichten.353.de.rss " +
+                    "https://www.npo3.nl/blog.rss " +
                     "http://digisocken.de/_p/wdrWetter/?rss=true " +
                     "http://feeds.bbci.co.uk/news/world/europe/rss.xml " +
                     "http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml " +
@@ -45,10 +46,11 @@ public class AnotherRSS extends Application {
                     "http://www.wetterleitstelle.de/nordrhein-westfalen.xml";
 
     public static final boolean feedActive[] = {
-            true,
+            false,
             true,
             false,
             true,
+            false,
             false,
             false,
             false,

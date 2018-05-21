@@ -39,7 +39,7 @@
 
     <string name="serviceHasNews">de.digisocken.anotherrss.ALARM_HAS_NEWS</string>
     <string name="nightmode">Nachtmodus (geschikt voor Android &gt; 6)</string>
-    <string name="nightmode_summary">Optimaliseer het thema voor donkere omgevingen, zoals 's avonds of 's nachts</string>
+    <string name="nightmode_summary">Optimaliseer het thema voor donkere omgevingen, zoals \'s avonds of \'s nachts</string>
     <string name="nightmode_use">Nachtmodus inschakelen</string>
     <string name="nightmode_use_start">Begintijd (24-uurstijd - alleen per uur)</string>
     <string name="nightmode_use_stop">Eindtijd (24-uurstijd - alleen per uur)</string>

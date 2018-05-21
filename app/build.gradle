@@ -5,10 +5,10 @@ android {
     defaultConfig {
         applicationId "de.digisocken.anotherrss"
         minSdkVersion 16
-        // we need 23 here for google :-/
+        // we need 23 here for google (deadlockz) :-/
         targetSdkVersion 22
-        versionCode 217
-        versionName "2.17"
+        versionCode 218
+        versionName "2.18"
     }
     buildTypes {
         release {
