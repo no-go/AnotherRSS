@@ -1,0 +1,170 @@
+<resources>
+    <string name="app_name">Another RSS</string>
+    <string name="rss_url">Feedbronnen</string>
+    <string name="rss_url_desc">Bewerk het pad naar de rss/atom-feeds</string>
+    <string name="rss_sec">Timer</string>
+    <string name="rss_sec_desc">Controleer op feed-updates, elke &#8230; minuten</string>
+    <string name="feedCheck">Controleer de feeds</string>
+    <string name="preferences">Voorkeuren</string>
+    <string name="notify_type_title">LED-meldingslampje gebruiken</string>
+    <string name="notify_type_desc">Beheer het LED-gedrag</string>
+    <string name="notify_color_title">kleur</string>
+    <string name="notify_color_desc">Wijzig de LED-kleur</string>
+    <string name="tap_behaviour">Aanraakgedrag</string>
+    <string name="tap_behaviour_desc">Wijzig wat er gebeurt bij kort aanraken. "openen" is een alternatieve modus.</string>
+    <string name="delNotifies">Meldingen verwijderen</string>
+    <string name="readedFeeds">Alle feeds markeren als gelezen</string>
+    <string name="delFeeds">Alle feeds verwijderen</string>
+    <string name="delDb">Alle feeds vernietigen (FOUTOPSPORING)</string>
+    <string name="noData">Geen gegevens</string>
+    <string name="dateForm">HH:mm</string>
+    <string name="dateForm2">dd/MM</string>
+
+    <string name="notify_sound_title">Geluid</string>
+    <string name="notify_sound_desc">Wijzig het geluid</string>
+
+    <string name="open">Openen in webbrowser</string>
+    <string name="delete">Verwijderen</string>
+    <string name="destroy">Vernietigen (FOUTOPSPORING)</string>
+
+    <string name="no_readed">(on)gelezen</string>
+    <string name="deleted">verwijderd</string>
+    <string name="destroyed">vernietigd</string>
+
+    <string name="rssUrlWrong">Je feed bevat een onjuiste URL</string>
+    <string name="noConnection">Geen verbinding met website of internet</string>
+    <string name="newFeeds">Nieuwe feeds</string>
+    <string name="responseStrange">Het URL-antwoord is vreemd</string>
+    <string name="waitOnNextSync">Er zijn (nog steeds) geen nieuwe items...</string>
+
+    <string name="serviceHasNews">de.digisocken.anotherrss.ALARM_HAS_NEWS</string>
+    <string name="nightmode">Nachtmodus (geschikt voor Android &gt; 6)</string>
+    <string name="nightmode_summary">Optimaliseer het thema voor donkere omgevingen, zoals 's avonds of 's nachts</string>
+    <string name="nightmode_use">Nachtmodus inschakelen</string>
+    <string name="nightmode_use_start">Begintijd (24-uurstijd - alleen per uur)</string>
+    <string name="nightmode_use_stop">Eindtijd (24-uurstijd - alleen per uur)</string>
+
+    <string name="blacklist">Zwarte lijst (kommagescheiden)</string>
+    <string name="blacklist_desc">Nieuwe items worden genegeerd als ze deze tekens bevatten</string>
+
+    <string name="searching">Bezig met zoeken naar</string>
+    <string name="action_search">zoeken</string>
+    <string name="start_search">Voer een sleutelwoord in</string>
+    <string name="close_search">zoeken voltooid</string>
+
+    <string name="favorite">Markeren als favoriet</string>
+    <string name="nofavorite">De-markeren als favoriet</string>
+
+    <string name="cleanup">Opschonen</string>
+    <string name="removeNonFav">Automatisch verwijderen</string>
+    <string name="removeNonFav_summary">Niet als favoriet gemarkeerde feeds worden na _ dagen verwijderd</string>
+
+    <string name="share">Delen met …</string>
+
+    <string name="flattr_this">Micro-donatie!</string>
+    <string name="projPage">Projectpagina</string>
+
+    <string name="kB_used">kB gebruikt</string>
+    <string name="info">Informatie</string>
+    <string name="zoom">Zoomen en schalen</string>
+
+    <string name="bigger">+ Tekst</string>
+    <string name="smaller">- Tekst</string>
+    <string name="biggerImage">+ Afbeelding</string>
+    <string name="smallerImage">- Afbeelding</string>
+
+    <string name="offline_hint">Melding bij off-line/opnieuw proberen</string>
+    <string name="offline_hint_summary">Creëert, als je off-line bent, een melding die aangeeft dat je off-line bent of dat de feeds niet kunnen worden bijgewerkt.</string>
+
+    <string name="more">Meer …</string>
+    <string name="regex">Reguliere expressies</string>
+    <string name="regex_desc">Dit is alleen voor gevorderde gebruikres. Mislukkingen worden (veelal) verborgen. De REGEX wordt gebruikt in de titel en inhoud, voordat de zwarte lijst wordt toegepast.</string>
+    <string name="regex_all">alles vervangen:</string>
+    <string name="regex_to">door:</string>
+
+    <string-array name="rss_sec_names">
+        <item>10 minuten</item>
+        <item>30 minuten</item>
+        <item>1 uur</item>
+        <item>3 uur</item>
+        <item>6 uur</item>
+        <item>12 uur</item>
+    </string-array>
+
+    <string-array name="rss_sec_values">
+        <item>600</item>
+        <item>1800</item>
+        <item>3600</item>
+        <item>10800</item>
+        <item>21600</item>
+        <item>43200</item>
+    </string-array>
+
+    <string-array name="tap_mode">
+        <item>Openen in landschapsmodus</item>
+        <item>Openen in webbrowser</item>
+        <item>Markeren als (on)gelezen</item>
+        <item>(De-)markeren als favoriet</item>
+    </string-array>
+
+    <string-array name="tap_mode_values">
+        <item>intern</item>
+        <item>extern</item>
+        <item>gelezen</item>
+        <item>gemarkeerd</item>
+    </string-array>
+
+    <string-array name="notify_sound">
+        <item>stil</item>
+        <item>standaard geluid</item>
+        <item>Riiiiing</item>
+        <item>DidelDoing</item>
+        <item>DoDing</item>
+        <item>Ploing</item>
+    </string-array>
+
+    <string-array name="notify_sound_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <string-array name="notify_color">
+        <item>rood</item>
+        <item>groenblauw</item>
+        <item>groen</item>
+        <item>roze</item>
+        <item>wit</item>
+        <item>blauw</item>
+        <item>geel</item>
+    </string-array>
+
+    <string-array name="notify_color_values">
+        <item>#FFFF0000</item>
+        <item>#FF00FFFF</item>
+        <item>#FF00FF00</item>
+        <item>#FFFF00FF</item>
+        <item>#FFFFFFFF</item>
+        <item>#FF0000FF</item>
+        <item>#FFFFFF00</item>
+    </string-array>
+
+    <string-array name="notify_type">
+        <item>geen LED</item>
+        <item>statisch</item>
+        <item>langzaam</item>
+        <item>snel</item>
+        <item>GEEN melding!</item>
+    </string-array>
+
+    <string-array name="notify_type_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+</resources>
