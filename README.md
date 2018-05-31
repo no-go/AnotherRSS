@@ -13,7 +13,7 @@ Website: [https://no-go.github.io/AnotherRSS](https://no-go.github.io/AnotherRSS
 
 ## Features
 
-- english and german interface
+- english, japanese, dutch and german interface
 - it is orange
 - everyting in one list
 - images
@@ -24,7 +24,13 @@ Website: [https://no-go.github.io/AnotherRSS](https://no-go.github.io/AnotherRSS
 - mark feeds as deleted, readed, favourite
 - blacklist
 - regex
-- many more ...
+- open xml links in AnotherRSS
+- widget
+- possibility to activate and inactivate feed sources
+- Text and Image is resizeable
+- Tab behavior changeable
+- ogg, mp3 and mp4 audio- and video-podcast improvement
+- ...
 
 ## Get the App
 
