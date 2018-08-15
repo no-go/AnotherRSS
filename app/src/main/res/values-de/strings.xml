@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Another RSS</string>
+    <string name="app_name">Another RSS opml</string>
     <string name="rss_url">Feed Quellen</string>
     <string name="rss_url_desc">Pflege hier die Pfade zu den RSS/Atom Feeds</string>
     <string name="rss_sec">Synchronisation</string>

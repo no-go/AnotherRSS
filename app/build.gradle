@@ -7,8 +7,8 @@ android {
         minSdkVersion 16
         // we need 23 here for google (deadlockz) :-/
         targetSdkVersion 22
-        versionCode 218
-        versionName "2.18"
+        versionCode 1218
+        versionName "12.18"
     }
     buildTypes {
         release {

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
@@ -14,9 +15,17 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FeedSourcesActivity extends AppCompatActivity {
     private SharedPreferences _pref;
@@ -25,6 +34,7 @@ public class FeedSourcesActivity extends AppCompatActivity {
     private LinearLayout _linearLayout;
     private ArrayList<EditText> _urlEdit;
     private ArrayList<CheckBox> _urlCheck;
+    private Uri datafile = null;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -49,27 +59,84 @@ public class FeedSourcesActivity extends AppCompatActivity {
         }
         _pref = PreferenceManager.getDefaultSharedPreferences(AnotherRSS.getContextOfApplication());
         loadUrls();
+
+        File file = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            file = new File(
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),
+                    AnotherRSS.PACKAGE_NAME
+            );
+        } else {
+            file = new File(Environment.getExternalStorageDirectory() + "/Documents/"+AnotherRSS.PACKAGE_NAME);
+        }
+        String path = file.getPath() + AnotherRSS.OPML_FILENAME;
+        try {
+            Log.d(AnotherRSS.TAG, "mkdirs()");
+            file.mkdirs();
+            file = new File(path);
+            if (!file.exists()) file.createNewFile();
+            datafile = Uri.fromFile(file);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         Intent intent = getIntent();
         Uri data = intent.getData();
         if (data != null) {
-            int id = _urlEdit.size();
-            _active = Arrays.copyOf(_active, _active.length +1);
-            _active[id] = true;
-            CheckBox checkBox = new CheckBox(this);
-            EditText editText = new EditText(this);
-            checkBox.setChecked(true);
-            editText.setText(data.toString());
-            _urlCheck.add(id, checkBox);
-            _urlEdit.add(id, editText);
+            if (!data.toString().startsWith("http")) {
+                try {
+                    InputStream input = getContentResolver().openInputStream(data);
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input));
 
-            LinearLayout dummy = new LinearLayout(AnotherRSS.getContextOfApplication());
-            dummy.setOrientation(LinearLayout.HORIZONTAL);
-            dummy.addView(checkBox, 0);
-            dummy.addView(editText, 1);
-            editText.setMinWidth(AnotherRSS.Config.DEFAULT_MAX_IMG_WIDTH);
-            _linearLayout.addView(dummy, id);
-            storeUrls();
-            editText.requestFocus();
+                    String text = "";
+                    while (bufferedReader.ready()) {
+                        text += bufferedReader.readLine() + "\n";
+                    }
+                    Pattern feedurl = Pattern.compile("xmlUrl=\"(.*?)\"");
+                    Matcher match = feedurl.matcher(text);
+
+                    while (match.find()) {
+                        int id = _urlEdit.size();
+                        _active = Arrays.copyOf(_active, _active.length + 1);
+                        _active[id] = true;
+                        CheckBox checkBox = new CheckBox(this);
+                        EditText editText = new EditText(this);
+                        checkBox.setChecked(true);
+                        editText.setText(match.group(1));
+                        _urlCheck.add(id, checkBox);
+                        _urlEdit.add(id, editText);
+
+                        LinearLayout dummy = new LinearLayout(AnotherRSS.getContextOfApplication());
+                        dummy.setOrientation(LinearLayout.HORIZONTAL);
+                        dummy.addView(checkBox, 0);
+                        dummy.addView(editText, 1);
+                        editText.setMinWidth(AnotherRSS.Config.DEFAULT_MAX_IMG_WIDTH);
+                        _linearLayout.addView(dummy, id);
+                    }
+                    storeUrls();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                int id = _urlEdit.size();
+                _active = Arrays.copyOf(_active, _active.length + 1);
+                _active[id] = true;
+                CheckBox checkBox = new CheckBox(this);
+                EditText editText = new EditText(this);
+                checkBox.setChecked(true);
+                editText.setText(data.toString());
+                _urlCheck.add(id, checkBox);
+                _urlEdit.add(id, editText);
+
+                LinearLayout dummy = new LinearLayout(AnotherRSS.getContextOfApplication());
+                dummy.setOrientation(LinearLayout.HORIZONTAL);
+                dummy.addView(checkBox, 0);
+                dummy.addView(editText, 1);
+                editText.setMinWidth(AnotherRSS.Config.DEFAULT_MAX_IMG_WIDTH);
+                _linearLayout.addView(dummy, id);
+                storeUrls();
+                editText.requestFocus();
+            }
         }
     }
 
@@ -133,6 +200,7 @@ public class FeedSourcesActivity extends AppCompatActivity {
 
     private void storeUrls() {
         String newurls = "";
+        String toOpml = "";
         int i=0;
         int ari=0;
         for (i=0; i < _urlEdit.size(); ) {
@@ -140,6 +208,7 @@ public class FeedSourcesActivity extends AppCompatActivity {
             if (tmp != null && !tmp.equals("")) {
                 newurls += tmp + " ";
                 _active[ari] = _urlCheck.get(i).isChecked();
+                if (_active[ari]) toOpml += tmp + " ";
                 // only write bool value for existing urls
                 ari++;
             }
@@ -147,6 +216,8 @@ public class FeedSourcesActivity extends AppCompatActivity {
         }
         // trim the bool array to the real array size
         _active = Arrays.copyOf(_active, ari);
+
+        saveNow(toOpml.trim().split(" "));
 
         newurls = newurls.trim();
         PreferencesActivity.storeArray(_active, "rss_url_act", AnotherRSS.getContextOfApplication());
@@ -169,5 +240,28 @@ public class FeedSourcesActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         storeUrls();
         super.onSaveInstanceState(outState);
+    }
+
+    void saveNow(String toOpml[]) {
+        if (datafile != null) {
+            String path = datafile.getPath();
+            if (path != null) {
+                try {
+                    Log.d(AnotherRSS.TAG, "saveNow()");
+                    path = PathUtil.getPath(getApplicationContext(), datafile);
+                    File file = new File(path);
+                    FileOutputStream fos = new FileOutputStream(file);
+                    fos.write("<opml version=\"2.0\">\n\t<body>\n\t\t<outline text=\"Subscriptions\" title=\"Subscriptions\">\n".getBytes());
+                    for (int i=0; i < toOpml.length; i++) {
+                        fos.write(("\t\t\t<outline xmlUrl=\""+toOpml[i]+"\" />\n").getBytes());
+                    }
+                    fos.write("\t\t</outline>\n\t</body>\n</opml>\n".getBytes());
+                    fos.flush();
+                    fos.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

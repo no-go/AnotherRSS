@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Another RSS</string>
+    <string name="app_name">Another RSS opml</string>
     <string name="rss_url">Feedbronnen</string>
     <string name="rss_url_desc">Bewerk het pad naar de rss/atom-feeds</string>
     <string name="rss_sec">Timer</string>

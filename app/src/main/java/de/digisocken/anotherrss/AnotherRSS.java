@@ -22,6 +22,7 @@ public class AnotherRSS extends Application {
     public static String query = "";
     public static MediaPlayer mediaPlayer;
     public static MediaController mediaController;
+    public static final String OPML_FILENAME = "/subscriptions.xml";
 
     public static final String urls =
             "http://www.tagesschau.de/xml/rss2 " +
@@ -106,11 +107,13 @@ public class AnotherRSS extends Application {
      */
     public static boolean withGui = false;
     public static final String TAG = AnotherRSS.class.getSimpleName();
+    public static String PACKAGE_NAME;
     private static Context contextOfApplication;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        PACKAGE_NAME = getApplicationContext().getPackageName();
         contextOfApplication = getApplicationContext();
         mediaPlayer = new MediaPlayer();
 
