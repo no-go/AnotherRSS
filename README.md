@@ -6,6 +6,20 @@ this branch I will try to:
 - via filemanger: open xml (opml format) to add urls
 - it is still alpha... ever
 
+
+*green*
+
+![The App is green](img/01.jpg)
+
+*urls stored as Documents/de.digisocken.anotherrss/subscriptions.xml (OPML)* 
+
+![The App is green](img/02.jpg)
+
+*import urls from opml xml files via filemanager*
+
+![The App is green](img/03.jpg)
+
+
 ## License
 
 This is free and unencumbered software released into the public domain.
