@@ -6,7 +6,7 @@
     <item android:id="@+id/action_search"
         app:actionViewClass="android.support.v7.widget.SearchView"
         android:title="@string/action_search"
-        android:icon="@android:drawable/ic_menu_search"
+        android:icon="@drawable/baseline_search_white_24"
         app:showAsAction="ifRoom|collapseActionView" />
 
     <item
@@ -71,13 +71,14 @@
                 android:title="@string/projPage"></item>
 
             <item
-                android:id="@+id/action_flattr"
-                android:title="@string/flattr_this"></item>
+                android:id="@+id/version_info"
+                android:enabled="false"
+                android:title=" "></item>
 
             <item
                 android:id="@+id/size_info"
                 android:enabled="false"
-                android:title=" "></item>
+                android:title="version ?"></item>
         </menu>
     </item>
 

@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -42,8 +44,6 @@ import java.util.TimeZone;
 public class MainActivity extends AppCompatActivity {
 
     private static final String PROJECT_LINK = "https://no-go.github.io/AnotherRSS/";
-    private static final String FLATTR_ID = "o6wo7q";
-    private String FLATTR_LINK;
 
     public Context ctx;
     private BroadcastReceiver alarmReceiver;
@@ -65,6 +65,14 @@ public class MainActivity extends AppCompatActivity {
         File f = this.getDatabasePath(FeedHelper.DATABASE_NAME);
         long dbSize = f.length();
         sizeItem.setTitle(String.valueOf(dbSize/1024) + getString(R.string.kB_used));
+
+        try {
+            MenuItem vItem = menu.findItem(R.id.version_info);
+            PackageInfo pinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            vItem.setTitle("version: " + pinfo.versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -111,10 +119,6 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         switch (item.getItemId()) {
-            case R.id.action_flattr:
-                Intent intentFlattr = new Intent(Intent.ACTION_VIEW, Uri.parse(FLATTR_LINK));
-                startActivity(intentFlattr);
-                break;
             case R.id.action_project:
                 Intent intentProj= new Intent(Intent.ACTION_VIEW, Uri.parse(PROJECT_LINK));
                 startActivity(intentProj);
@@ -191,13 +195,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d(AnotherRSS.TAG, "onCreate");
         ctx = this;
-
-        try {
-            FLATTR_LINK = "https://flattr.com/submit/auto?fid="+FLATTR_ID+"&url="+
-                    java.net.URLEncoder.encode(PROJECT_LINK, "ISO-8859-1");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
 
         setContentView(R.layout.activity_main);
         umm = (UiModeManager) getSystemService(Context.UI_MODE_SERVICE);
