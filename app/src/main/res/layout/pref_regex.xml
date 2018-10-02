@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="10dp"
+    tools:context=".MainActivity">
+
+    <ScrollView android:layout_height="match_parent" android:layout_width="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/regexHint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/regex_desc" />
+
+            <TextView
+                android:id="@+id/textViewRegall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/regex_all" />
+
+            <EditText
+                android:id="@+id/editRegexAll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:enabled="true"
+                android:hint="(\\w)([\\.,])(\\s+)"
+                android:inputType="none"
+                android:typeface="monospace" />
+
+            <TextView
+                android:id="@+id/textViewRegto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/regex_to" />
+
+            <EditText
+                android:id="@+id/editRegexTo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:enabled="true"
+                android:hint="$1 öhm,$3"
+                android:inputType="none"
+                android:typeface="monospace" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

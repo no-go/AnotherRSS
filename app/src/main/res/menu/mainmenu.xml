@@ -6,7 +6,7 @@
     <item android:id="@+id/action_search"
         app:actionViewClass="android.support.v7.widget.SearchView"
         android:title="@string/action_search"
-        android:icon="@android:drawable/ic_menu_search"
+        android:icon="@drawable/baseline_search_white_24"
         app:showAsAction="ifRoom|collapseActionView" />
 
     <item
@@ -25,13 +25,22 @@
     </item>
 
     <item
-        android:id="@+id/action_feedsources"
-        android:title="@string/rss_url">
-    </item>
-
-    <item
-        android:id="@+id/action_preferences"
+        android:id="@+id/action_prefmenu"
         android:title="@string/preferences">
+        <menu>
+            <item
+                android:id="@+id/action_regex"
+                android:title="@string/regex">
+            </item>
+            <item
+                android:id="@+id/action_feedsources"
+                android:title="@string/rss_url">
+            </item>
+            <item
+                android:id="@+id/action_preferences"
+                android:title="@string/more">
+            </item>
+        </menu>
     </item>
 
     <item
@@ -62,13 +71,14 @@
                 android:title="@string/projPage"></item>
 
             <item
-                android:id="@+id/action_flattr"
-                android:title="@string/flattr_this"></item>
+                android:id="@+id/version_info"
+                android:enabled="false"
+                android:title=" "></item>
 
             <item
                 android:id="@+id/size_info"
                 android:enabled="false"
-                android:title=" "></item>
+                android:title="version ?"></item>
         </menu>
     </item>
 

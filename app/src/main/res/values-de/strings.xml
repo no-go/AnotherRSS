@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Another RSS</string>
-    <string name="rss_url">FEED QUELLEN</string>
+    <string name="rss_url">Feed Quellen</string>
     <string name="rss_url_desc">Pflege hier die Pfade zu den RSS/Atom Feeds</string>
     <string name="rss_sec">Synchronisation</string>
     <string name="rss_sec_desc">Check Feed alle &#8230; Minuten</string>
@@ -34,7 +34,7 @@
     <string name="rssUrlWrong">Der Feed hat eine fehlerhafte URL</string>
     <string name="noConnection">Keine Verbindung zu dieser Seite oder Internet</string>
     <string name="newFeeds">Neue Feeds</string>
-    <string name="responseStrange">URL Respose ist unerwartet:</string>
+    <string name="responseStrange">URL Respose ist unerwartet</string>
     <string name="waitOnNextSync">(noch) keine Feeds vorhanden …</string>
 
     <string name="serviceHasNews">de.digisocken.anotherrss.ALARM_HAS_NEWS</string>
@@ -73,18 +73,31 @@
     <string name="biggerImage">+ Bild</string>
     <string name="smallerImage">- Bild</string>
 
+    <string name="offline_hint">Offline Hinweis</string>
+    <string name="offline_hint_summary">Zeigt eine Benachrichtigung, dass das Holen der Feed News z.Z. nicht geht sowie andere Hinweise beim Synchronisieren.</string>
+
+    <string name="more">Mehr …</string>
+    <string name="regex">Regular Expressions</string>
+    <string name="regex_desc">Das ist nur etwas für Experten. Fehler werden (hauptsächlich) unterdrückt. Der REGEX wird auf Titel und Inhalt angewand bevor Blacklist zuschlägt.</string>
+    <string name="regex_all">String.replaceAll:</string>
+    <string name="regex_to">nach:</string>
+
     <string-array name="rss_sec_names">
+        <item>10 Minuten</item>
         <item>30 Minuten</item>
         <item>1 Stunde</item>
         <item>3 Stunden</item>
         <item>6 Stunden</item>
+        <item>12 Stunden</item>
     </string-array>
 
     <string-array name="rss_sec_values">
+        <item>600</item>
         <item>1800</item>
         <item>3600</item>
         <item>10800</item>
         <item>21600</item>
+        <item>43200</item>
     </string-array>
 
     <string-array name="tap_mode">
@@ -144,6 +157,7 @@
         <item>an</item>
         <item>langsam</item>
         <item>schnell</item>
+        <item>KEINE Nachricht!</item>
     </string-array>
 
     <string-array name="notify_type_values">
@@ -151,5 +165,6 @@
         <item>1</item>
         <item>2</item>
         <item>3</item>
+        <item>4</item>
     </string-array>
 </resources>

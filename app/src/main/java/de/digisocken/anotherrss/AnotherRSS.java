@@ -1,13 +1,13 @@
 package de.digisocken.anotherrss;
 
 import android.app.Application;
-import android.app.UiModeManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatDelegate;
+import android.media.MediaPlayer;
+import android.widget.MediaController;
 
+import java.util.Arrays;
 import java.util.Calendar;
 
 /**
@@ -20,30 +20,53 @@ import java.util.Calendar;
 public class AnotherRSS extends Application {
     public static boolean showAdditionalFeed = true;
     public static String query = "";
+    public static MediaPlayer mediaPlayer;
+    public static MediaController mediaController;
 
-    /*
-http://feeds.bbci.co.uk/news/world/europe/rss.xml
-http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml
-http://feeds.t-online.de/rss/nachrichten
-http://www.wz.de/cmlink/wz-rss-uebersicht-1.516698
-http://www.deutschlandfunk.de/die-nachrichten.353.de.rss
-http://www.tagesschau.de/xml/rss2
-http://www.taz.de/!p4608;rss/
-https://www.heise.de/security/news/news-atom.xml
-https://www.amnesty.de/rss/news
-http://digisocken.de/_p/wdrWetter/?rss=true
-https://www.umwelt.nrw.de/rss.xml
-http://feeds.reuters.com/Reuters/UKWorldNews
-http://feeds.reuters.com/reuters/scienceNews?format=xml
-     */
     public static final String urls =
-            "http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml " +
+            "http://www.tagesschau.de/xml/rss2 " +
                     "http://www.taz.de/!p4608;rss/ " +
-                    "https://www.heise.de/security/news/news-atom.xml " +
-                    "https://www.amnesty.de/rss/urgent-actions " +
-                    "http://feeds.reuters.com/Reuters/UKWorldNews " +
                     "http://www.deutschlandfunk.de/die-nachrichten.353.de.rss " +
-                    "http://feeds.bbci.co.uk/news/world/europe/rss.xml";
+                    "https://www.npo3.nl/blog.rss " +
+                    "http://digisocken.de/_p/wdrWetter/?rss=true " +
+                    "http://feeds.bbci.co.uk/news/world/europe/rss.xml " +
+                    "http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml " +
+                    "http://feeds.t-online.de/rss/nachrichten " +
+                    "http://www.wz.de/cmlink/wz-rss-uebersicht-1.516698 " +
+                    "https://www.heise.de/security/news/news-atom.xml " +
+                    "https://www.amnesty.de/rss/news " +
+                    "https://www.umwelt.nrw.de/rss.xml " +
+                    "http://feeds.reuters.com/Reuters/UKWorldNews " +
+                    "http://feeds.reuters.com/reuters/scienceNews?format=xml " +
+                    "https://www1.wdr.de/mediathek/audio/wdr5/wdr5-alles-in-butter/alles-in-butter106.podcast " +
+                    "https://www1.wdr.de/mediathek/audio/wdr5/polit-wg/polit-wg-104.podcast " +
+                    "https://www.tagesschau.de/export/video-podcast/webm/tagesschau-in-100-sekunden_https " +
+                    "https://thebugcast.org/feed/ogg " +
+                    "http://feeds.feedburner.com/daily_tech_news_show?format=xml " +
+                    "http://www.wetterleitstelle.de/nordrhein-westfalen.xml";
+
+    public static final boolean feedActive[] = {
+            false,
+            true,
+            false,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            true,
+            false,
+            true,
+            false,
+            true,
+            true,
+            false,
+            false
+    };
 
     public static class Config {
         /**
@@ -53,7 +76,7 @@ http://feeds.reuters.com/reuters/scienceNews?format=xml
         public static final int DEFAULT_autodelete = 14;
         public static final int DEFAULT_expunge = 5;
         public static final String DEFAULT_rsssec = "10800";
-        public static final String DEFAULT_notifySound = "2";
+        public static final String DEFAULT_notifySound = "0";
         public static final String DEFAULT_notifyColor = "#FF00FFFF";
         public static final String DEFAULT_notifyType = "2";
         public static final int DEFAULT_NIGHT_START = 18;
@@ -61,13 +84,11 @@ http://feeds.reuters.com/reuters/scienceNews?format=xml
         public static final String SEARCH_HINT_COLOR = "#FFAA00";
         public static final float DEFAULT_FONT_SIZE = 14.0f;
         public static final int DEFAULT_MAX_IMG_WIDTH = 120;
-        public static final float IMG_ROUND = 20f;
+        public static final float IMG_ROUND = 15f;
 
-        /**
-         * im Feed Text kann leider einen total überflüssiger Inhalt enthalten,
-         * wo hinter dem Wort {@value #DEFAULT_lastRssWord} abgeschnitten werden muss.
-         */
-        public static final String DEFAULT_lastRssWord = "weiterlesen";
+        public static final String DEFAULT_regexAll = "";
+        public static final String DEFAULT_regexTo = "";
+        public static final boolean DEFAULT_OFFLINEHINT = false;
 
         /**
          * sollte eine Verbindung nicht zu sande kommen, wird ein neuer
@@ -91,16 +112,34 @@ http://feeds.reuters.com/reuters/scienceNews?format=xml
     public void onCreate() {
         super.onCreate();
         contextOfApplication = getApplicationContext();
+        mediaPlayer = new MediaPlayer();
 
         SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if (!mPreferences.contains("rss_url")) {
             mPreferences.edit().putString("rss_url", AnotherRSS.urls).commit();
+            PreferencesActivity.storeArray(feedActive, "rss_url_act", getApplicationContext());
+        } else {
+            if (!mPreferences.contains("rss_url_act_0")) {
+                String[] urls = mPreferences.getString("rss_url", AnotherRSS.urls).split(" ");
+                boolean act[] = new boolean[urls.length];
+                Arrays.fill(act, true);
+                PreferencesActivity.storeArray(act, "rss_url_act", getApplicationContext());
+            }
+        }
+        if (!mPreferences.contains("regexAll")) {
+            mPreferences.edit().putString("regexAll", Config.DEFAULT_regexAll).commit();
+        }
+        if (!mPreferences.contains("regexTo")) {
+            mPreferences.edit().putString("regexTo", Config.DEFAULT_regexTo).commit();
         }
         if (!mPreferences.contains("nightmode_use_start")) {
             mPreferences.edit().putInt("nightmode_use_start", Config.DEFAULT_NIGHT_START).commit();
         }
         if (!mPreferences.contains("nightmode_use_stop")) {
             mPreferences.edit().putInt("nightmode_use_stop", Config.DEFAULT_NIGHT_STOP).commit();
+        }
+        if (!mPreferences.contains("offline_hint")) {
+            mPreferences.edit().putBoolean("offline_hint", Config.DEFAULT_OFFLINEHINT).commit();
         }
         if (!mPreferences.contains("autodelete")) {
             mPreferences.edit().putInt("autodelete", Config.DEFAULT_autodelete).commit();

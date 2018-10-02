@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -27,6 +29,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -41,12 +44,11 @@ import java.util.TimeZone;
 public class MainActivity extends AppCompatActivity {
 
     private static final String PROJECT_LINK = "https://no-go.github.io/AnotherRSS/";
-    private static final String FLATTR_ID = "o6wo7q";
-    private String FLATTR_LINK;
 
     public Context ctx;
     private BroadcastReceiver alarmReceiver;
     private WebView webView;
+    private VideoView videoView;
     private ProgressBar progressBar;
     private UiModeManager umm;
 
@@ -63,6 +65,14 @@ public class MainActivity extends AppCompatActivity {
         File f = this.getDatabasePath(FeedHelper.DATABASE_NAME);
         long dbSize = f.length();
         sizeItem.setTitle(String.valueOf(dbSize/1024) + getString(R.string.kB_used));
+
+        try {
+            MenuItem vItem = menu.findItem(R.id.version_info);
+            PackageInfo pinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            vItem.setTitle("version: " + pinfo.versionName + "g");
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -109,10 +119,6 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         switch (item.getItemId()) {
-            case R.id.action_flattr:
-                Intent intentFlattr = new Intent(Intent.ACTION_VIEW, Uri.parse(FLATTR_LINK));
-                startActivity(intentFlattr);
-                break;
             case R.id.action_project:
                 Intent intentProj= new Intent(Intent.ACTION_VIEW, Uri.parse(PROJECT_LINK));
                 startActivity(intentProj);
@@ -121,6 +127,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent intentfs = new Intent(MainActivity.this, FeedSourcesActivity.class);
                 intentfs.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intentfs);
+                break;
+            case R.id.action_regex:
+                Intent intentreg = new Intent(MainActivity.this, PrefRegexActivity.class);
+                intentreg.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intentreg);
                 break;
             case R.id.action_preferences:
                 Intent intent = new Intent(MainActivity.this, PreferencesActivity.class);
@@ -151,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.action_biggerImageSize:
                 size = mPreferences.getInt("image_width", AnotherRSS.Config.DEFAULT_MAX_IMG_WIDTH);
-                size = size + 10;
+                size = size + 20;
                 mPreferences.edit().putInt("image_width", size).apply();
                 break;
             case R.id.action_smallerImageSize:
@@ -185,13 +196,6 @@ public class MainActivity extends AppCompatActivity {
         Log.d(AnotherRSS.TAG, "onCreate");
         ctx = this;
 
-        try {
-            FLATTR_LINK = "https://flattr.com/submit/auto?fid="+FLATTR_ID+"&url="+
-                    java.net.URLEncoder.encode(PROJECT_LINK, "ISO-8859-1");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
         setContentView(R.layout.activity_main);
         umm = (UiModeManager) getSystemService(Context.UI_MODE_SERVICE);
         AnotherRSS.alarm.restart(this);;
@@ -202,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
                 ab.setDisplayShowHomeEnabled(true);
                 ab.setHomeButtonEnabled(true);
                 ab.setDisplayUseLogoEnabled(true);
-                ab.setLogo(R.mipmap.ic_launcher);
+                ab.setLogo(R.drawable.ic_launcher);
                 ab.setTitle(" " + getString(R.string.app_name));
             }
         } catch (Exception e) {
@@ -223,6 +227,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
+
+        videoView = (VideoView) findViewById(R.id.videoView);
         webView = (WebView) findViewById(R.id.webView);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
@@ -231,12 +237,36 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(alarmReceiver, filter);
     }
 
-    public boolean setWebView(String url) {
+    public boolean setMediaView(String url) {
+        if (videoView == null) {
+            if (url.endsWith(".mp4")) {
+                Intent vintent = new Intent(MainActivity.this, VideocastActivity.class);
+                vintent.setData(Uri.parse(url));
+                startActivity(vintent);
+                return true;
+            }
+            return false;
+        }
         if (webView == null) return false;
-        webView.setWebViewClient(new MyWebClient());
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setUseWideViewPort(true);
-        webView.loadUrl(url);
+        if (url.endsWith(".mp4")) {
+            webView.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
+            videoView.setVisibility(View.VISIBLE);
+            Uri uri = Uri.parse(url);
+            videoView.setMediaController(AnotherRSS.mediaController);
+            videoView.setVideoURI(uri);
+            videoView.requestFocus();
+            videoView.start();
+        } else {
+            webView.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
+            videoView.setVisibility(View.GONE);
+            webView.setWebViewClient(new MyWebClient());
+            webView.getSettings().setJavaScriptEnabled(true);
+            webView.getSettings().setLoadWithOverviewMode(true);
+            webView.getSettings().setUseWideViewPort(true);
+            webView.loadUrl(url);
+        }
         return true;
     }
 

@@ -26,7 +26,7 @@
             android:title="@string/notify_color_title" />
 
     <ListPreference
-        android:defaultValue="2"
+        android:defaultValue="0"
         android:entries="@array/notify_sound"
         android:entryValues="@array/notify_sound_values"
         android:key="notify_sound"
@@ -41,6 +41,12 @@
         android:summary="@string/tap_behaviour_desc"
         android:title="@string/tap_behaviour" />
 
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="offline_hint"
+        android:title="@string/offline_hint"
+        android:summary="@string/offline_hint_summary" />
+
     <PreferenceCategory
         android:title="@string/cleanup" >
 
@@ -52,7 +58,7 @@
             android:maxLength="2" />
 
         <EditTextPreference
-            android:defaultValue="DEG,DfB,Kader,DEL,enalty,pielfeld,DFB,ockey,Rennfahr,Boxwelt,edallie,NBA,EM,WM,Borussia,Fortuna,Basket,Tennis,Boxer,rainer,VfC,Fußball,Wasserball,Handball,sport,Sport,FC ,Spieltag,Bundesliga,ennbahn,eltmeister,UEFA,League"
+            android:defaultValue="Trump,Putin,Merkel,uropacup,Abstiegskampf,HSV,lympia,eltcup,liga,Tabellen,DEG,pielfeld,DfB,ockey,Rennfahr,edallie,Borussia,Fortuna,Basket,Tennis,Boxer,rainer,VfC,Fußball,sport,Sport,FC ,Spieltag,Bundesliga,ennbahn"
             android:key="blacklist"
             android:summary="@string/blacklist_desc"
             android:title="@string/blacklist" />

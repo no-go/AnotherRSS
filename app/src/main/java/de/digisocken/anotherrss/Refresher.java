@@ -55,6 +55,8 @@ public class Refresher {
     private SharedPreferences _pref;
     private int _notifyColor;
     private int _notifyType;
+    private String _regexAll;
+    private String _regexTo;
 
     /**
      * Dieses Array nimmt neue Feeds auf, um beim Erzeugen von Notifikations nicht
@@ -218,14 +220,14 @@ public class Refresher {
         conn.getInputStream().close();
 
         Log.d(AnotherRSS.TAG, "Response Code: " + Integer.toString(responseCode));
-        if (BuildConfig.DEBUG) {
+        if (_pref.getBoolean("offline_hint", false)) {
             error(Integer.toString(responseCode), "if modified since " + now);
         }
         if (responseCode == HttpURLConnection.HTTP_NOT_MODIFIED) {
             return false;
         }
         if (responseCode != HttpURLConnection.HTTP_OK) {
-            error(url.toString(), _ctx.getString(R.string.responseStrange));
+            if (_pref.getBoolean("offline_hint", false)) error(url.toString(), _ctx.getString(R.string.responseStrange));
             Log.e(AnotherRSS.TAG, _ctx.getString(R.string.responseStrange));
             return false;
         }
@@ -257,13 +259,18 @@ public class Refresher {
             e.printStackTrace();
         } catch (MalformedURLException e) {
             e.printStackTrace();
-            error(rssurl, _ctx.getString(R.string.rssUrlWrong));
+            if (_pref.getBoolean("offline_hint", false)) error(rssurl, _ctx.getString(R.string.rssUrlWrong));
             Log.e(AnotherRSS.TAG, _ctx.getString(R.string.rssUrlWrong));
         } catch (Exception e) {
-            error(rssurl, _ctx.getString(R.string.noConnection));
+            if (_pref.getBoolean("offline_hint", false)) error(rssurl, _ctx.getString(R.string.noConnection));
             Log.e(AnotherRSS.TAG, _ctx.getString(R.string.noConnection));
         }
         return null;
+    }
+
+    public String doRegex(String val) {
+        val = val.replaceAll(_regexAll, _regexTo);
+        return val;
     }
 
     /**
@@ -283,6 +290,9 @@ public class Refresher {
 
         String[] blacklist = getBlacklist();
         boolean isRdf = true;
+
+        _regexAll = _pref.getString("regexAll", AnotherRSS.Config.DEFAULT_regexAll);
+        _regexTo = _pref.getString("regexTo", AnotherRSS.Config.DEFAULT_regexTo);
 
         String feedName = null;
         NodeList nodeList = doc.getElementsByTagName("title");
@@ -321,6 +331,12 @@ public class Refresher {
                     dateStr = FeedContract.extract(n, "published");
                 }
                 Date date = FeedContract.rawToDate(dateStr);
+
+                if ((_regexAll.isEmpty() && _regexTo.isEmpty()) == false) {
+                    title = doRegex(title);
+                    body = doRegex(body);
+                }
+
                 for (String bl: blacklist) {
                     Log.v(AnotherRSS.TAG, "Check Blacklist: " + bl);
                     if (body.contains(bl)) {
@@ -338,11 +354,17 @@ public class Refresher {
                     ContentValues values = new ContentValues();
                     values.put(FeedContract.Feeds.COLUMN_Title, title);
                     values.put(FeedContract.Feeds.COLUMN_Date, FeedContract.dbFriendlyDate(date));
-                    if (isRdf) {
-                        values.put(FeedContract.Feeds.COLUMN_Link, FeedContract.extract(n, "link"));
-                    } else {
-                        values.put(FeedContract.Feeds.COLUMN_Link, FeedContract.extract(n, "link", "href"));
+                    String thelink = FeedContract.extract(n, "enclosure", "url");
+                    if (!(
+                            thelink != null && (thelink.endsWith(".ogg") || thelink.endsWith(".mp3") || thelink.endsWith(".mp4"))
+                    )) {
+                        if (isRdf) {
+                            thelink = FeedContract.extract(n, "link");
+                        } else {
+                            thelink = FeedContract.extract(n, "link", "href");
+                        }
                     }
+                    values.put(FeedContract.Feeds.COLUMN_Link, thelink);
                     values.put(FeedContract.Feeds.COLUMN_Body, body);
                     values.put(FeedContract.Feeds.COLUMN_Image, FeedContract.getBytes(
                             FeedContract.getImage(n)
@@ -469,15 +491,18 @@ public class Refresher {
                 .setSmallIcon(R.drawable.logo_sw)
                 .setLargeIcon(largeIcon)
                 .setVibrate(new long[]{2000})
-                .setPriority(Notification.PRIORITY_HIGH);
+                .setPriority(Notification.PRIORITY_LOW);
         Notification noti = mBuilder.build();
         noti.flags |= Notification.FLAG_AUTO_CANCEL;
         NotificationManager mNotifyMgr =
                 (NotificationManager) _ctx.getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotifyMgr.notify(42, noti);
+        mNotifyMgr.notify((int)System.currentTimeMillis(), noti);
     }
 
     private void notify(ContentValues cv, PendingIntent pi, Uri sound, boolean isHeadUp) {
+        // 4 = no notification
+        if (_notifyType == 4) return;
+
         String body = FeedContract.removeHtml(cv.getAsString(FeedContract.Feeds.COLUMN_Body));
         String title= FeedContract.removeHtml(cv.getAsString(FeedContract.Feeds.COLUMN_Title));
         String link = cv.getAsString(FeedContract.Feeds.COLUMN_Link);
@@ -488,8 +513,9 @@ public class Refresher {
         NotificationCompat.BigTextStyle bigStyle = new NotificationCompat.BigTextStyle();
         bigStyle.bigText(body);
 
-        if (largeIcon == null)
-            largeIcon = BitmapFactory.decodeResource(_ctx.getResources(), R.mipmap.ic_launcher);
+        if (largeIcon == null) {
+            largeIcon = BitmapFactory.decodeResource(_ctx.getResources(), R.drawable.ic_launcher);
+        }
 
         mBuilder.setContentTitle(title)
                 .setContentText(body)

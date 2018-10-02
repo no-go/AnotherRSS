@@ -31,10 +31,31 @@
             android:indeterminateOnly="false"
             android:visibility="gone" />
 
-        <WebView
-            android:layout_height="wrap_content"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:id="@+id/webView" />
+            android:layout_weight="1"
+            android:layout_height="0dp">
+
+            <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@android:color/black">
+                <VideoView
+                    android:id="@+id/videoView"
+                    android:visibility="visible"
+                    android:layout_gravity="center"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" />
+            </FrameLayout>
+
+            <WebView
+                android:id="@+id/webView"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent" />
+
+        </RelativeLayout>
+
     </LinearLayout>
 
 

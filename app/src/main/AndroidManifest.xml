@@ -8,8 +8,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
-    <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="22" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -31,6 +29,60 @@
 
         <activity
             android:name=".FeedSourcesActivity"
+            android:parentActivityName=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="http" />
+                <data android:host="*" />
+                <data android:pathPattern=".*xml/" />
+                <data android:pathPattern=".*xml" />
+                <data android:pathPattern=".*rss/" />
+                <data android:pathPattern=".*rss" />
+                <data android:pathPattern=".*rss2" />
+                <data android:pathPattern=".*rdf" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" />
+                <data android:host="*" />
+                <data android:pathPattern=".*xml/" />
+                <data android:pathPattern=".*xml" />
+                <data android:pathPattern=".*rss/" />
+                <data android:pathPattern=".*rss" />
+                <data android:pathPattern=".*rss2" />
+                <data android:pathPattern=".*rdf" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="http"/>
+                <data android:mimeType="text/xml"/>
+                <data android:mimeType="application/rss+xml"/>
+                <data android:mimeType="application/atom+xml"/>
+                <data android:mimeType="application/xml"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="https"/>
+                <data android:mimeType="text/xml"/>
+                <data android:mimeType="application/rss+xml"/>
+                <data android:mimeType="application/atom+xml"/>
+                <data android:mimeType="application/xml"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".PrefRegexActivity"
+            android:parentActivityName=".MainActivity" />
+
+        <activity android:name=".VideocastActivity"
             android:parentActivityName=".MainActivity" />
 
         <receiver android:name=".Alarm" />
