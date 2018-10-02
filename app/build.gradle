@@ -1,14 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 25
     defaultConfig {
         applicationId "de.digisocken.anotherrss"
         minSdkVersion 16
-        // google (deadlockz)
-        targetSdkVersion 26
-        versionCode 220
-        versionName "2.20"
+        targetSdkVersion 22
+        versionCode 221
+        versionName "2.21"
     }
     buildTypes {
         release {
@@ -25,6 +24,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:appcompat-v7:25.3.1'
     implementation 'com.android.volley:volley:1.0.0'
 }
