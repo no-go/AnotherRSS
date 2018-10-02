@@ -5,8 +5,6 @@
 The App *AnotherRSS* is a Atom RSS Feed Reader and very similar to [ViboraFeed](https://github.com/no-go/ViboraFeed).
 You can add many RSS-Urls.
 
-Support me: <a href="https://flattr.com/submit/auto?fid=o6wo7q&url=https%3A%2F%2Fgithub.com%2Fno-go%2FAnotherRSS" target="_blank">![Flattr This](img/flattr-badge-large.png)</a>
-
 Source Code: [https://github.com/no-go/AnotherRSS](https://github.com/no-go/AnotherRSS)
 
 Website: [https://no-go.github.io/AnotherRSS](https://no-go.github.io/AnotherRSS)
@@ -25,7 +23,7 @@ Website: [https://no-go.github.io/AnotherRSS](https://no-go.github.io/AnotherRSS
 - blacklist
 - regex
 - open xml links in AnotherRSS
-- widget
+- widget (not on google play)
 - possibility to activate and inactivate feed sources
 - Text and Image is resizeable
 - Tab behavior changeable
@@ -34,11 +32,9 @@ Website: [https://no-go.github.io/AnotherRSS](https://no-go.github.io/AnotherRSS
 
 ## Get the App
 
-You can get a signed APK from here (Android 4.1+): [APK](https://raw.githubusercontent.com/no-go/AnotherRSS/master/app/release/app-release.apk)
+You can get a signed APK from here (Android 4.1+): [APK](https://raw.githubusercontent.com/no-go/AnotherRSS/master/app/release/de.digisocken.anotherrss.apk)
 
 <a href="https://f-droid.org/repository/browse/?fdid=de.digisocken.anotherrss" target="_blank">![Get it on F-Droid](img/get-it-on-fdroid.png)</a>
-<a href="https://play.google.com/store/apps/details?id=de.digisocken.anotherrss" target="_blank">
-<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="90"/></a>
 
 ## Example Feeds
 
