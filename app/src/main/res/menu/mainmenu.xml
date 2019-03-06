@@ -82,4 +82,12 @@
         </menu>
     </item>
 
+    <group android:checkableBehavior="all">
+        <item
+            android:checked="false"
+            android:id="@+id/action_serif"
+            android:title="@string/serif">
+        </item>
+    </group>
+
 </menu>

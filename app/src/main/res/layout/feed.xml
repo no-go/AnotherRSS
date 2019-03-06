@@ -32,6 +32,7 @@
         android:text="title"
         android:id="@+id/feedTitle"
         android:enabled="false"
+        android:typeface="sans"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_alignTop="@+id/image"
         android:layout_toRightOf="@+id/image"
@@ -46,6 +47,7 @@
         android:text="body"
         android:id="@+id/feedBody"
         android:enabled="false"
+        android:typeface="sans"
         android:layout_below="@+id/feedTitle"
         android:layout_alignLeft="@+id/feedTitle" />
 

@@ -16,6 +16,7 @@ import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
 
+import org.w3c.dom.CharacterData;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -311,6 +312,7 @@ public class FeedContract {
 
     /**
      * Extrahiert aus einem Node bestimmte Daten, die zu einem TAG gehören.
+     * Versucht in CDATA Tags ebenfalls den Text inhalt auszulesen.
      *
      * @param n   das Item des Feed-Documents, aus dem Daten entnommen werden sollen
      * @param tag der Tag
@@ -323,11 +325,22 @@ public class FeedContract {
         e = (Element) n;
         nl = e.getElementsByTagName(tag);
         if (nl == null) return null;
+
         ee = (Element) nl.item(0);
         if (ee == null) return null;
 
         nl = ee.getChildNodes();
         if (nl == null) return null;
+
+        Node child = nl.item(1);
+        if (child != null && child instanceof CharacterData) {
+            CharacterData cd = (CharacterData) child;
+            String dummy = cd.getData();
+            //dummy = dummy.replace("<!\\[CDATA\\[", "");
+            //dummy = dummy.replace("\\]\\]>", "");
+            return dummy;
+        }
+
         Node n2 = (Node) nl.item(0);
         if (n2 == null) return null;
 

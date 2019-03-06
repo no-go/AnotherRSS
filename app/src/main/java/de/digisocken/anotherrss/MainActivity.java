@@ -51,12 +51,15 @@ public class MainActivity extends AppCompatActivity {
     private VideoView videoView;
     private ProgressBar progressBar;
     private UiModeManager umm;
+    private Menu optionsmenu;
+    private SharedPreferences mPreferences;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.mainmenu, menu);
         super.onCreateOptionsMenu(menu);
+        optionsmenu = menu;
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
@@ -112,12 +115,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        optionsmenu.findItem(R.id.action_serif).setChecked(mPreferences.getBoolean("serif", true));
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         DbClear dbClear = new DbClear();
         int size;
         float fontSize;
 
-        SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         switch (item.getItemId()) {
             case R.id.action_project:
                 Intent intentProj= new Intent(Intent.ACTION_VIEW, Uri.parse(PROJECT_LINK));
@@ -137,6 +145,15 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, PreferencesActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
+                break;
+            case R.id.action_serif:
+                if (item.isChecked()) {
+                    item.setChecked(false);
+                    mPreferences.edit().putBoolean("serif", false).apply();
+                } else {
+                    item.setChecked(true);
+                    mPreferences.edit().putBoolean("serif", true).apply();
+                }
                 break;
             case R.id.action_delNotifies:
                 String ns = Context.NOTIFICATION_SERVICE;
@@ -195,6 +212,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d(AnotherRSS.TAG, "onCreate");
         ctx = this;
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         setContentView(R.layout.activity_main);
         umm = (UiModeManager) getSystemService(Context.UI_MODE_SERVICE);
@@ -305,7 +323,6 @@ public class MainActivity extends AppCompatActivity {
         AnotherRSS.withGui = true;
         new DbExpunge().execute();
 
-        SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         boolean night = mPreferences.getBoolean("nightmode_use", false);
         if (night) {
             int startH = mPreferences.getInt("nightmode_use_start", AnotherRSS.Config.DEFAULT_NIGHT_START);
@@ -363,7 +380,6 @@ public class MainActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             Calendar c = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 
-            SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             String[] urls = mPreferences.getString("rss_url", AnotherRSS.urls).split(" ");
 
             for (int urli=0; urli < urls.length; urli++) {
@@ -401,7 +417,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             Calendar c = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-            SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             int autodeleteDays = mPreferences.getInt("autodelete", AnotherRSS.Config.DEFAULT_autodelete);
             if (autodeleteDays < 1) return null;
 

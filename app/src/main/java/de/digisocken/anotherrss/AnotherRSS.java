@@ -32,10 +32,10 @@ public class AnotherRSS extends Application {
                     "http://feeds.bbci.co.uk/news/world/europe/rss.xml " +
                     "http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml " +
                     "http://feeds.t-online.de/rss/nachrichten " +
-                    "http://www.wz.de/cmlink/wz-rss-uebersicht-1.516698 " +
+                    "https://www.wz.de/feed.rss " +
                     "https://www.heise.de/security/news/news-atom.xml " +
                     "https://www.amnesty.de/rss/news " +
-                    "https://www.umwelt.nrw.de/rss.xml " +
+                    "https://rp-online.de/panorama/wissen/feed.rss " +
                     "http://feeds.reuters.com/Reuters/UKWorldNews " +
                     "http://feeds.reuters.com/reuters/scienceNews?format=xml " +
                     "https://www1.wdr.de/mediathek/audio/wdr5/wdr5-alles-in-butter/alles-in-butter106.podcast " +
@@ -47,20 +47,20 @@ public class AnotherRSS extends Application {
 
     public static final boolean feedActive[] = {
             false,
+            false,
+            false,
             true,
-            false,
-            true,
-            false,
-            false,
-            false,
-            false,
             false,
             false,
             false,
             false,
             true,
             false,
+            false,
             true,
+            true,
+            false,
+            false,
             false,
             true,
             true,

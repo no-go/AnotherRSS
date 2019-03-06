@@ -72,6 +72,7 @@
     <string name="smaller">- Tekst</string>
     <string name="biggerImage">+ Afbeelding</string>
     <string name="smallerImage">- Afbeelding</string>
+    <string name="serif">Serief schrift</string>
 
     <string name="offline_hint">Melding bij off-line/opnieuw proberen</string>
     <string name="offline_hint_summary">Creëert, als je off-line bent, een melding die aangeeft dat je off-line bent of dat de feeds niet kunnen worden bijgewerkt.</string>

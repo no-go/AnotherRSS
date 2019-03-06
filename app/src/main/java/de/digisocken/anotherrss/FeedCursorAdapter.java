@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.preference.PreferenceManager;
@@ -59,6 +60,7 @@ public class FeedCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, final Context context, Cursor cursor) {
         float fontSize = _pref.getFloat("font_size", AnotherRSS.Config.DEFAULT_FONT_SIZE);
+        boolean serif = _pref.getBoolean("serif", false);
         TextView tt = (TextView) view.findViewById(R.id.feedTitle);
         String title = cursor.getString(cursor.getColumnIndexOrThrow(FeedContract.Feeds.COLUMN_Title));
         AnotherRSS.mediaController = new MediaController(context);
@@ -68,6 +70,10 @@ public class FeedCursorAdapter extends CursorAdapter {
             tt.setText(title);
         }
         tt.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontSize * 1.25f);
+        if (serif)
+            tt.setTypeface(Typeface.SERIF);
+        else
+            tt.setTypeface(Typeface.SANS_SERIF);
 
         TextView td = (TextView) view.findViewById(R.id.feedDate);
         td.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontSize * 0.75f);
@@ -83,6 +89,11 @@ public class FeedCursorAdapter extends CursorAdapter {
         } else {
             tb.setText(body);
         }
+
+        if (serif)
+            tb.setTypeface(Typeface.SERIF);
+        else
+            tb.setTypeface(Typeface.SANS_SERIF);
 
         TextView sn = (TextView) view.findViewById(R.id.sourceName);
         sn.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontSize * 0.75f);

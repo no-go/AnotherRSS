@@ -72,6 +72,7 @@
     <string name="smaller">- Text</string>
     <string name="biggerImage">+ Bild</string>
     <string name="smallerImage">- Bild</string>
+    <string name="serif">serifen Schrift</string>
 
     <string name="offline_hint">Offline Hinweis</string>
     <string name="offline_hint_summary">Zeigt eine Benachrichtigung, dass das Holen der Feed News z.Z. nicht geht sowie andere Hinweise beim Synchronisieren.</string>

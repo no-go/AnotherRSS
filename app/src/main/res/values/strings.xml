@@ -72,6 +72,7 @@
     <string name="smaller">- Text</string>
     <string name="biggerImage">+ Image</string>
     <string name="smallerImage">- Image</string>
+    <string name="serif">serif font</string>
 
     <string name="offline_hint">offline/retry hint</string>
     <string name="offline_hint_summary">Creates a notification, if you are offline, update hints or getting news does not work.</string>
