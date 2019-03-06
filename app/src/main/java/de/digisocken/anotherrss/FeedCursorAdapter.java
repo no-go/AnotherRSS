@@ -107,7 +107,7 @@ public class FeedCursorAdapter extends CursorAdapter {
         }
 
         tt.setPadding(10, 20,  5, 0);
-        tb.setPadding(10,  0, 10, 0);
+        tb.setPadding(10,  5, 10, 0);
         sn.setPadding(10,  0, 10, 0);
 
         Bitmap bmp = FeedContract.getImage(
@@ -181,7 +181,7 @@ public class FeedCursorAdapter extends CursorAdapter {
             } else {
                 iv.setPadding( 0, 0, 0, 0);
                 tt.setPadding(20, 10,  5, 0);
-                tb.setPadding(20,  0, 10, 0);
+                tb.setPadding(20,  5, 10, 0);
                 sn.setPadding(20,  0, 10, 0);
             }
         }

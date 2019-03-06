@@ -48,6 +48,7 @@
         android:id="@+id/feedBody"
         android:enabled="false"
         android:typeface="sans"
+        android:lineSpacingMultiplier="1.1"
         android:layout_below="@+id/feedTitle"
         android:layout_alignLeft="@+id/feedTitle" />
 
